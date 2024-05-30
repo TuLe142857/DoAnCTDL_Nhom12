@@ -12,9 +12,9 @@ int main(){
     PNode *root = NULL;
 	
 	//Load data
+    readfile(plane_list);
     if(!load_flight_from_file("Data\\Flights.dat", flight_list, plane_list))
     	return 0;
-    readfile(plane_list);
 
       
     //Khoi tao do hoa
