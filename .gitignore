@@ -1,3 +1,9 @@
+#ignore visual code setup, Dev-C++ project file
+.vs/
+.vscode/
+*.layout
+*.win
+
 # Prerequisites
 *.d
 
