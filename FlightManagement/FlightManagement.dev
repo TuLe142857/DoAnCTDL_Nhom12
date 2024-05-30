@@ -29,7 +29,7 @@ IncludeVersionInfo=0
 SupportXPThemes=0
 CompilerSet=3
 CompilerSettings=0000000100000000000000000
-UnitCount=17
+UnitCount=18
 
 [VersionInfo]
 Major=1
@@ -214,6 +214,16 @@ BuildCmd=
 FileName=Plane_processing.h
 CompileCpp=1
 Folder=MainTab
+Compile=1
+Link=1
+Priority=1000
+OverrideBuildCmd=0
+BuildCmd=
+
+[Unit18]
+FileName=DefaultGraphic.h
+CompileCpp=1
+Folder=Graphic
 Compile=1
 Link=1
 Priority=1000
