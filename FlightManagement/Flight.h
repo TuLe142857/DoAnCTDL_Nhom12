@@ -100,7 +100,7 @@ void InsertOrder(PTR_FLIGHT &First, Flight flight){
         prev_node->next = newnode;
         newnode->next = next_node;
     }
-    cout << "Insert: " << flight.flightID << "-" << flight.planeID << endl;
+    
 }
 
 PTR_FLIGHT SerchFlight(PTR_FLIGHT First, char *flightID){

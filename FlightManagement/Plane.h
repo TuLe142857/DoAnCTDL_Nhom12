@@ -34,7 +34,8 @@ int SerchPlane(DSMayBay &ds, char* planeid){
 }
 
 void readfile(DSMayBay &c) {
-    ifstream f("DSMAYBAY.txt");
+    //ifstream f("DSMAYBAY.txt");
+    ifstream f("Data\\Planes.txt");
     if (!f.is_open()) {
         cout << "Khong the mo file" << endl;
         return;
@@ -50,7 +51,8 @@ void readfile(DSMayBay &c) {
 }
 
 void savedata(DSMayBay &c) {
-    ofstream f("DSMAYBAY.txt");
+    //ofstream f("DSMAYBAY.txt");
+    ofstream f("Data\\Planes.txt");
     if (!f.is_open()) {
         cout << "Khong the mo file" << endl;
         return;
