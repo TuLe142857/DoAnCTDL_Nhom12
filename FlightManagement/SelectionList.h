@@ -10,7 +10,7 @@ private:
     int textcolor_normal = BLACK;
     int textcolor_highlight = RED;
     int background_normal = WHITE;
-    int background_highlight = YELLOW;
+    int background_highlight = LIGHTCYAN;
 public:
     void setchoice(int choice);
     void settextcolor(int normal, int highlight);

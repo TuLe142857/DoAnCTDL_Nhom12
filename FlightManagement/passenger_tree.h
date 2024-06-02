@@ -183,7 +183,8 @@ void load(PNode *&root, PNode **&Plist, fstream &f) {
 // fstream f("passenger_db.dat", ios::binary |ios::out|ios::in); 
 
 void loadData(PNode *&root, PNode **&Plist) {
-	fstream f("passengers.dat", ios::binary |ios::out|ios::in); 
+	//fstream f("passengers.dat", ios::binary |ios::out|ios::in); 
+    fstream f("Data\\Passengers.dat", ios::binary |ios::out|ios::in);
 	load(root, Plist, f);
 	f.close();
 }
@@ -201,7 +202,8 @@ void save(PNode *root, fstream &f) {
 }
 
 void saveData(PNode *root) {
-    fstream f("passengers.dat", ios::binary | ios::out | ios::trunc); 
+    //fstream f("passengers.dat", ios::binary | ios::out | ios::trunc); 
+    fstream f("Data\\Passengers.dat", ios::binary | ios::out | ios::trunc); 
     if (!f) {
         cerr << "Error opening file." << endl;
         return;

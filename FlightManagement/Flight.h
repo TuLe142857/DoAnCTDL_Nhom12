@@ -14,7 +14,7 @@ using namespace std;
 #define MAX_PASSENGERID 12
 
 //=============== STRUCT ==========================
-
+const string status_to_string[] = {"Da huy", "Con ve", "Het ve", "Hoan thanh"};
 enum FLIGHT_STATUS{HUYCHUYEN, CONVE, HETVE, HOANTAT};
 struct Flight{
     char flightID[MAX_FLIGHT_ID+1];   // key

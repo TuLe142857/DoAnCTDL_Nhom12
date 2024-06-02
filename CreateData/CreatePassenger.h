@@ -122,14 +122,14 @@ void CreateName(char *ho, char*ten, char *gioitinh){
     }
 }
 
-void CreatePassenger(PNode *root, int n){
+PNode* CreatePassenger(int n){
     string *id = Create_random_ID_arr(n);
     char cccd[13];
     char ho[20];
     char ten[20];
     char sex[4];
     Passenger pas;
-
+    PNode *root = NULL;
     for(int i = 0; i < n; i++){
         strcpy(cccd, id[i].c_str());
         pas.setCccd(cccd);
@@ -140,10 +140,12 @@ void CreatePassenger(PNode *root, int n){
         pas.setSex(sex);
         cout << pas.getCccd() << endl
              << "\t"<< pas.getHo() << "-" <<pas.getTen() << "-" << pas.getSex() << endl << endl;
-        //Insert
-        //...
+        root = insert(root, NULL, pas);
+        if(root ==  NULL) cout << "================================err inser" << endl;
     }
 
+
     delete[] id;
+    return root;
 }
 
