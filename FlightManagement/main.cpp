@@ -6,17 +6,18 @@ int MainMenu();
 void SetupGraphic();
 
 int main(){  
+    cout << "Khoi dong CT" << endl;
     //Khai bao cac danh sach va load data
     DSMayBay plane_list;
     PTR_FLIGHT flight_list = NULL;
-    PNode *root = NULL, **list; 
+    PNode *root = NULL; 
 	
 	//Load data       
     readfile(plane_list);           
     if(!load_flight_from_file("Data\\Flights.dat", flight_list, plane_list))
     	return 0;  
-    loadData(root, list);         
-   
+    loadTreeData(root);           
+   cout << "Load xong tat ca du lieu" << endl;
        
     //Khoi tao do hoa
     initwindow(WINDOW_WIDTH, WINDOW_HEIGHT);                                   

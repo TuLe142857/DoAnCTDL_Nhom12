@@ -163,32 +163,82 @@ void traverTree(PNode *root) {
 }
 
 
-void load(PNode *&root, PNode **&Plist, fstream &f) {
+void loadTreeData(PNode *&root) {
 	Passenger pas; 
-	int n = 0;
-	int NodeCounter;
-	
-
+	//fstream f("passengers.dat", ios::binary |ios::out|ios::in);
+    fstream f("Data\\Passengers.dat", ios::binary |ios::out|ios::in);
 	while(f.read(reinterpret_cast<char*>(& pas), sizeof(Passenger))) {
 		root = insert(root, NULL, pas);
 	}
-	
-	NodeCounter = countNodes(root);
-	
-	Plist = new PNode*[NodeCounter];
-	
-	traverTree_ltl(root, Plist, n);
-}
-
-// fstream f("passenger_db.dat", ios::binary |ios::out|ios::in); 
-
-void loadData(PNode *&root, PNode **&Plist) {
-	//fstream f("passengers.dat", ios::binary |ios::out|ios::in); 
-    fstream f("Data\\Passengers.dat", ios::binary |ios::out|ios::in);
-	load(root, Plist, f);
 	f.close();
 }
 
+// start load data
+
+int countObjects() {
+    //ifstream file("passengers.dat", ios::binary);
+    ifstream file("Data//Passengers.dat", ios::binary);
+    if (!file) {
+        cerr << "Could not open file." << endl;
+        return -1;
+    }
+
+    Passenger temp;
+    int count = 0;
+    while (file.read(reinterpret_cast<char*>(&temp), sizeof(Passenger))) {
+        count++;
+    }
+    
+    return count;
+}
+
+Passenger *buildArrayData(int count){
+	//ifstream file("passengers.dat", ios::binary);
+    ifstream file("Data\\Passengers.dat", ios::binary);
+    if (!file) {
+        cerr << "Could not open file." << endl;
+    }
+
+    Passenger temp;
+
+    Passenger *pas_arr = new Passenger[count];
+    int index = -1;
+    while (file.read(reinterpret_cast<char*>(&temp), sizeof(Passenger))) {
+        pas_arr[index++] = temp;
+    }
+    
+    file.close();
+    return pas_arr;
+}
+
+PNode *build(int start, int end, Passenger* data) {
+	  if (start > end) {
+            return NULL;
+        }
+
+        int mid = start + (end - start) / 2;
+        PNode *node = new PNode;
+        
+        node->pas = data[mid];
+
+        node->left = build(start, mid - 1, data);
+        node->right = build(mid + 1, end, data);
+
+        node->height = 1 + max(height(node->left), height(node->right));
+
+        return node;
+}
+
+PNode *buildAVLTree(){
+	int count = countObjects();
+	Passenger *passenger_array = buildArrayData(count);
+	int start = 0;
+	PNode *root = build(start, count, passenger_array);
+	delete[] passenger_array;
+	return root;
+}
+
+// end load data
 
 void save(PNode *root, fstream &f) {
     if (root) {
@@ -203,7 +253,7 @@ void save(PNode *root, fstream &f) {
 
 void saveData(PNode *root) {
     //fstream f("passengers.dat", ios::binary | ios::out | ios::trunc); 
-    fstream f("Data\\Passengers.dat", ios::binary | ios::out | ios::trunc); 
+    fstream f("Data\\Passengers.dat", ios::binary | ios::out | ios::trunc);
     if (!f) {
         cerr << "Error opening file." << endl;
         return;
@@ -320,15 +370,7 @@ int deleteTree(PNode* &node) {
     return numDeleted;
 }
 
-void free_memory(PNode *&root,PNode **&Plist) {
-	int size = deleteTree(root);
-	
-	for (int i = 0; i < size; ++i) {
-    	delete Plist[i]; 
-	}
 
-	delete[] Plist; 
-}
 
 
 #endif

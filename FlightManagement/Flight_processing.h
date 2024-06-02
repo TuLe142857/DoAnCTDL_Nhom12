@@ -307,6 +307,10 @@ int Flight_processing(PTR_FLIGHT &flight_list, DSMayBay &plane_list, PNode *&roo
                 }
             }
 
+            if(SortType_button.inside(mx, my))
+                SortType_button.hover();
+            else SortType_button.unhover();
+
             if(add_flight_button.inside(mx, my))
                 add_flight_button.hover();
             else add_flight_button.unhover();

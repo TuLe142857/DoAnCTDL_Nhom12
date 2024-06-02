@@ -189,10 +189,10 @@ bool load_flight_from_file(string file_path, PTR_FLIGHT &flight_list, DSMayBay &
         lastnode = lastnode->next;
         
         //in ra man hinh de check
-        cout << newnode->flight.flightID << "-" 
-             << newnode->flight.date.to_string() << "-" 
-             << newnode->flight.planeID << "-" 
-             << newnode->flight.status << endl;
+        // cout << newnode->flight.flightID << "-" 
+        //      << newnode->flight.date.to_string() << "-" 
+        //      << newnode->flight.planeID << "-" 
+        //      << newnode->flight.status << endl;
         
         count ++;
     }
@@ -243,10 +243,10 @@ bool save_flight_to_file(string file_path, PTR_FLIGHT flight_list, DSMayBay &pla
                 file.write(p->flight.ticket[i][j], sizeof(char)*(MAX_PASSENGERID + 1));
 
         //In ra man hinh de check
-        cout << p->flight.flightID << "-" 
-             << p->flight.date.to_string() << "-" 
-             << p->flight.planeID << "-" 
-             << p->flight.status << endl;
+        // cout << p->flight.flightID << "-" 
+        //      << p->flight.date.to_string() << "-" 
+        //      << p->flight.planeID << "-" 
+        //      << p->flight.status << endl;
         count ++;
         p = p->next;
     }

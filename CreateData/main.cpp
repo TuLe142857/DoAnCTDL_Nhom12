@@ -34,8 +34,8 @@ int main(){
     saveData(root);
 
       
-    PNode **list, *load;
-    loadData(load, list);
+    PNode *load;
+    loadTreeData(load);
     
     cout << "test lai du lieu hanh khach trong ram" << endl << endl;
     print_pas(load);

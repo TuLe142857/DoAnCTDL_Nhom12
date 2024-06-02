@@ -398,7 +398,7 @@ void PrintAddPassengerDialog(){
     setbkcolor(WHITE);
     settextjustify(CENTER_TEXT, TOP_TEXT);
     
-    cout << "print" << endl;
+
     settextstyle(2, HORIZ_DIR, 7);
     outtextxy(mediumdialog::x + mediumdialog::width/2, mediumdialog::y + 50, "Them Hanh Khach");
     settextstyle(2, HORIZ_DIR, 6);
@@ -1094,9 +1094,9 @@ void SetupGraphicFlightTab(){
     SortField.setchoice(SORTBY_DATE);
 
     //SortType
-    SortType_button.setup(toolbar_x + toolbar_width - 300, toolbar_y + 10, 100, 30, "Tang dan");
-    SortType_button.settextcolor(BLACK, BLUE, BLUE, BLUE);
-    SortType_button.setbackground(WHITE, GREEN, GREEN, GREEN);
+    SortType_button.setup(toolbar_x + toolbar_width - 300, toolbar_y + 10, 110, 30, "Tang dan");
+    SortType_button.settextcolor(BLACK, BLUE, WHITE, BLACK);
+    SortType_button.setbackground(LIGHTGREEN, CYAN, LIGHTGREEN, BLACK);
     SortType_button.settext(2, HORIZ_DIR, 6);
 
     //================================= ADD FLIGHT/ ADJUST FLIGHT =========================

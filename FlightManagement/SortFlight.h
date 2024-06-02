@@ -46,41 +46,59 @@ void reverse_arr(Flight **arr, int n){
 
 void QuickSortFlight(Flight**arr, int n, int sortby, int sorttype){
     if(n <= 0) return ;
+    cout << "QuickSort flights called : sort by ";
     switch(sortby){
         case SORTBY_DATE:{
-            cout << "sdate";
-            if(sorttype == INCREASE)
+            cout << "DATE, ";
+            if(sorttype == INCREASE){
+                cout << "INCREASE" << endl;
                 QuickSortFlight_byDate_Incre(arr, 0, n-1);
-            else    
+            }
+            else{
+                cout << "DECREASE" << endl;
                 QuickSortFlight_byDate_Decre(arr, 0, n-1);
+            }   
+                
             break;
         }
         case SORTBY_FLIGHTID:{
-            cout << "sfli";
-            if(sorttype == INCREASE)
+            cout << "FLIGHTID, ";
+            if(sorttype == INCREASE){
+                cout << "INCREASE" << endl;
                 QuickSortFlight_byFID_Incre(arr, 0, n-1);
-            else    
+            }
+            else{
+                cout << "DECREASE" << endl;
                 QuickSortFlight_byFID_Decre(arr, 0, n-1);
+            }    
+                
             break;
         }
         //SORTBY_DATE, SORTBY_FLIGHTID, SORTBY_PLANEID, SORTBY_ARRIVE
         case SORTBY_PLANEID:{
-            cout << "spl";
+            cout << "PLANEID, ";
             if(sorttype == INCREASE){
-                cout << "-incr";
+                cout << "INCREASE" << endl;
                 QuickSortFlight_byPLID_Incre(arr, 0, n-1);
             }
-                
-            else
+            else{
+                cout << "DECREASE" << endl;
                 QuickSortFlight_byPLID_Decre(arr, 0, n-1);
+            }
+                
             break;
         }
         case SORTBY_ARRIVE:{
-            cout << "sar";
-            if(sorttype == INCREASE)
+            cout << "ARRIVE, ";
+            if(sorttype == INCREASE){
+                cout << "INCREASE" << endl;
                 QuickSortFlight_byAR_Incre(arr, 0, n-1);
-            else
+            }
+            else{
+                cout << "DECREASE" << endl;
                 QuickSortFlight_byAR_Decre(arr, 0, n-1);
+            }
+                
             break;
         }
     }
@@ -172,7 +190,6 @@ void QuickSortFlight_byFID_Decre(Flight**arr, int low, int high){
 
 //planeid incre
 void QuickSortFlight_byPLID_Incre(Flight**arr, int low, int high){
-    cout << "called" << endl;
     int i = low, j = high;
     char pivot[MAX_PLANE_ID+1];
     Flight* temp;
