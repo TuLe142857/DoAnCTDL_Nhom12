@@ -28,9 +28,10 @@ public:
     void setbackgroundcolor(int normal, int active);
 
     string getcontent();
+    char* getcontent_char();
 
     void print();
-    void Insert(bool (*check)(InsertBox*, char&));
+    bool Insert(bool (*check)(InsertBox*, char&));//tra ve true neu co thay doi noi dung
 
     //Cac ham kiem tra dieu kien nhap 
     friend bool autotrue(InsertBox *ib, char &c); // return true
@@ -44,6 +45,9 @@ public:
     friend bool Insert_day(InsertBox *ib, char &c);
     friend bool Insert_month(InsertBox *ib, char &c);
     //Insert year: Insert_number_only
+
+    friend bool Insert_firstname(InsertBox *ib, char &c);
+    friend bool Insert_lastname(InsertBox *ib, char &c);
 };
 
 void InsertBox::setup(int x, int y, int maxchar, int textfont , int textsize ){
@@ -62,7 +66,7 @@ void InsertBox::setup(int x, int y, int maxchar, int textfont , int textsize ){
     settextstyle(this->textfont, HORIZ_DIR, this->textsize);
     this->height = textheight("QWERTYUIOPASDFGHJKLZXCVBNM|") + 10;
     int maxwidth = (textwidth("W") > textwidth("_")) ? textwidth("W") : textwidth("_");
-    this->width = maxwidth*(this->maxchar + 2) + 10;
+    this->width = maxwidth*(this->maxchar + 1) + 10;
 
     setgraphicsettings(&currentsettings);
 }
@@ -112,6 +116,10 @@ string InsertBox::getcontent(){
     return string(content);
 }
 
+char* InsertBox::getcontent_char(){
+    return content;
+}
+
 void InsertBox::print(){
     graphicsettingstype currentsettings;
     getgraphicsettings(&currentsettings);
@@ -132,9 +140,10 @@ bool autotrue(InsertBox *ib, char &c){
     return true;
 }
 
-void InsertBox::Insert(bool (*check)(InsertBox*, char&) = autotrue){
+bool InsertBox::Insert(bool (*check)(InsertBox*, char&) = autotrue){
     graphicsettingstype currentsettings;
     getgraphicsettings(&currentsettings);
+    string before_insert = string(content);
 
     settextstyle(textfont, HORIZ_DIR, textsize);
     setcolor(textcolor_active);
@@ -203,6 +212,13 @@ void InsertBox::Insert(bool (*check)(InsertBox*, char&) = autotrue){
 
     print();
     setgraphicsettings(&currentsettings);
+    //Bo khoang trang cuoi chuoi
+    if(content[contentsize-1] == ' '){
+        content[contentsize-1] = '\0';
+        contentsize --;
+    }
+    string after_insert = string(content);
+    return (before_insert != after_insert); 
 }
 
 bool Insert_normal_text(InsertBox *ib, char &c){
@@ -261,7 +277,7 @@ bool Insert_hour(InsertBox *ib, char &c){
             ib->content[0] = '0';
             return true;
         }
-        if(c > 4) return false;
+        if(c > '4') return false;
     } 
     return true;
 }
@@ -289,6 +305,49 @@ bool Insert_month(InsertBox *ib, char &c){
     }
     else if(ib->contentsize == 1 && ib->content[0] == '1' && c > '2')
         return false;
+
+    return true;
+}
+
+bool Insert_firstname(InsertBox *ib, char &c){
+    if( !( (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') ||(c == ' ')) ) 
+        return false;
+
+    if(c == ' '){
+        //Khong cho khoang trang o vi tri dau tien
+        if(ib->contentsize == 0){
+             return false;
+        } 
+        else if(ib->contentsize > 0){
+            //khong de 2 khoang trang lien tiep
+            if(ib->content[ib->contentsize-1] == ' ') return false;
+        }
+        return true;
+    }
+
+
+    if(c >= 'a' && c <= 'z'){
+        //Viet hoa chu cai dau tien
+        if(ib->contentsize == 0){
+            c -= 32;
+            return true;
+        }
+        //Tu dong viet hoa sau khoang trang
+        else if(ib->content[ib->contentsize-1] == ' '){
+            c -= 32;
+            return true;
+        }
+    }
+    return true;
+}
+ 
+bool Insert_lastname(InsertBox *ib, char &c){
+    if( !( (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')))
+        return false;
+    
+    //viet hoa chu dau tien
+    if(ib->contentsize == 0 && (c >= 'a' && c <= 'z'))
+        c -= 32;
 
     return true;
 }

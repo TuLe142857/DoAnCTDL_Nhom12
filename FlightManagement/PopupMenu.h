@@ -14,7 +14,16 @@ private:
     int n = 0;
     int width = 10;
     int height = 10;
+
+    int textcolor_normal = BLACK;
+    int textcolor_highlight = RED;
+    int textcolor_unactive = DARKGRAY;
+
+    int background_normal = LIGHTGRAY;
+    int background_highlight = WHITE;
 public:
+    void settextcolor(int normal, int highlight, int unactive);
+    void setbackgroundcolor(int normal, int highlight);
     int getwidth();
     int getheight();
     void add(string option);
@@ -25,6 +34,16 @@ public:
 
     int choose(int x, int y);
 };
+
+void PopupMenu::settextcolor(int normal, int highlight, int unactive){
+    textcolor_normal = normal;
+    textcolor_highlight = highlight;
+    textcolor_unactive = unactive;
+}
+void PopupMenu::setbackgroundcolor(int normal, int highlight){
+    background_normal = normal;
+    background_highlight = highlight;
+}
 
 int PopupMenu::getwidth(){
     return width;
@@ -38,10 +57,14 @@ void PopupMenu::add(string option){
     if(n >= MAX_ITEM_IN_POPUPMENU) return;
     list[n].option = option;
     n++;
-    if(width < (textwidth(option) + 10))
-        width = textwidth(option) + 10;
+    graphicsettingstype currentsettings;
+    getgraphicsettings(&currentsettings);
+    settextstyle(2, HORIZ_DIR, 5);
+    if(width < (textwidth(option) + 20))
+        width = textwidth(option) + 20;
     if(height < (textheight(option) + 10))
         height = textheight(option) + 10;
+    setgraphicsettings(&currentsettings);
 }
 
 void PopupMenu::active_option(int index){
@@ -69,14 +92,14 @@ int PopupMenu::choose(int x, int y){
     graphicsettingstype currentsettings;
     getgraphicsettings(&currentsettings);
     
-    rounded_bar(x, y, width, 10 + (height*n), LIGHTGRAY);
+    rounded_bar(x, y, width, 10 + (height*n), background_normal);
     rounded_rect(x, y, width, 10 + (height*n), BLACK);
 
     settextstyle(2, HORIZ_DIR, 5);
     settextjustify(CENTER_TEXT, TOP_TEXT);
-    setbkcolor(LIGHTGRAY);
+    setbkcolor(background_normal);
     for(int i = 0; i < n; i++){
-        setcolor((list[i].isactive)?(BLACK):(DARKGRAY));
+        setcolor((list[i].isactive)?(textcolor_normal):(textcolor_unactive));
         outtextxy(x + width/2, y + 5 + i*height + (height - textheight(list[i].option))/2, list[i].option);
     }
 
@@ -95,23 +118,23 @@ int PopupMenu::choose(int x, int y){
                     take_an_option = true;
                     if(choice == i) break;
                     if(!list[i].isactive && choice != -1){
-                        setcolor(BLACK);
-                        setbkcolor(LIGHTGRAY);
-                        rounded_bar(x + 5, y + 5 + choice*height, width-10, height, LIGHTGRAY );
+                        setcolor(textcolor_normal);
+                        setbkcolor(background_normal);
+                        rounded_bar(x + 5, y + 5 + choice*height, width-10, height, background_normal );
                         outtextxy(x + width/2, y + 5 + choice*height + (height - textheight(list[choice].option))/2, list[choice].option);
                         choice = -1;
                         break;
                     }
                     else if(list[i].isactive){
-                        setcolor(RED);
-                        setbkcolor(WHITE);
-                        rounded_bar(x + 5, y + 5 + i*height, width-10, height, WHITE );
+                        setcolor(textcolor_highlight);
+                        setbkcolor(background_highlight);
+                        rounded_bar(x + 5, y + 5 + i*height, width-10, height, background_highlight );
                         outtextxy(x + width/2, y + 5 + i*height + (height - textheight(list[i].option))/2, list[i].option);
 
                         if(choice != -1){
-                            setcolor(BLACK);
-                            setbkcolor(LIGHTGRAY);
-                            rounded_bar(x + 5, y + 5 + choice*height, width-10, height, LIGHTGRAY );
+                            setcolor(textcolor_normal);
+                            setbkcolor(background_normal);
+                            rounded_bar(x + 5, y + 5 + choice*height, width-10, height, background_normal );
                             outtextxy(x + width/2, y + 5 + choice*height + (height - textheight(list[choice].option))/2, list[choice].option);
                         }
                         choice = i;
@@ -121,9 +144,9 @@ int PopupMenu::choose(int x, int y){
                 }
             }
             if(!take_an_option && choice != -1){
-                setcolor(BLACK);
-                setbkcolor(LIGHTGRAY);
-                rounded_bar(x + 5, y + 5 + choice*height, width-10, height, LIGHTGRAY );
+                setcolor(textcolor_normal);
+                setbkcolor(background_normal);
+                rounded_bar(x + 5, y + 5 + choice*height, width-10, height, background_normal );
                 outtextxy(x + width/2, y + 5 + choice*height + (height - textheight(list[choice].option))/2, list[choice].option);
                 choice = -1;
             }
