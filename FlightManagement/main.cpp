@@ -5,7 +5,7 @@
 int MainMenu();
 void SetupGraphic();
 
-int main(){  
+int main(){ 
     cout << "Khoi dong CT" << endl;
     //Khai bao cac danh sach va load data
     DSMayBay plane_list;
@@ -21,21 +21,26 @@ int main(){
        
     //Khoi tao do hoa
     initwindow(WINDOW_WIDTH, WINDOW_HEIGHT);                                   
-    SetupGraphic();           
- 
-    int choosen_tab = MainMenu();            
+    SetupGraphic();
+
+    int choosen_tab = MainMenu(); 
+    graphicsettingstype defaultgraphicsettings;
+    getgraphicsettings(&defaultgraphicsettings);           
     while(choosen_tab != EXIT){                             
         switch(choosen_tab){                                       
-            case PLANE_TAB:{              
-                choosen_tab = Plane_processing();  
+            case PLANE_TAB:{        
+                setgraphicsettings(&defaultgraphicsettings);      
+                choosen_tab = Plane_processing(plane_list, flight_list);  
                 break;
             }    
             case FLIGHT_TAB:{
+                setgraphicsettings(&defaultgraphicsettings);
                 choosen_tab = Flight_processing(flight_list, plane_list, root);
                 break;
             }  
             case PASSENGER_TAB:{
-                choosen_tab = Passenger_processing(); 
+                setgraphicsettings(&defaultgraphicsettings);
+                choosen_tab = Passenger_processing(root, flight_list, plane_list); 
                 break;
             }
             case MAIN_MENU:{
