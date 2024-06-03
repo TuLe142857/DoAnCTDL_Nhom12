@@ -1,21 +1,17 @@
 #include"Plane_processing.h"
 #include"Flight_processing.h"
 #include"Passenger_processing.h"
-                            
+
 int MainMenu();
 void SetupGraphic();
-<<<<<<< HEAD
-                    
-=======
-                                       
->>>>>>> memory_and_pagination
+
 int main(){ 
     cout << "Khoi dong CT" << endl;
     //Khai bao cac danh sach va load data
     DSMayBay plane_list;
     PTR_FLIGHT flight_list = NULL;
     PNode *root = NULL; 
-	     
+	
 	//Load data       
     readfile(plane_list);           
     if(!load_flight_from_file("Data\\Flights.dat", flight_list, plane_list))
@@ -26,16 +22,12 @@ int main(){
     //Khoi tao do hoa
     initwindow(WINDOW_WIDTH, WINDOW_HEIGHT);                                   
     SetupGraphic();
-<<<<<<< HEAD
-      
-=======
-                    
->>>>>>> memory_and_pagination
+
     int choosen_tab = MainMenu(); 
     graphicsettingstype defaultgraphicsettings;
     getgraphicsettings(&defaultgraphicsettings);           
     while(choosen_tab != EXIT){                             
-        switch(choosen_tab){                                           
+        switch(choosen_tab){                                       
             case PLANE_TAB:{        
                 setgraphicsettings(&defaultgraphicsettings);      
                 choosen_tab = Plane_processing(plane_list, flight_list);  
@@ -50,28 +42,22 @@ int main(){
                 setgraphicsettings(&defaultgraphicsettings);
                 choosen_tab = Passenger_processing(root, flight_list, plane_list); 
                 break;
-            }    
+            }
             case MAIN_MENU:{
                 choosen_tab = MainMenu();
                 break;
-            }  
-        }      
-<<<<<<< HEAD
-    }           
-=======
-    }                        
->>>>>>> memory_and_pagination
+            }
+        }   
+    }
 
     closegraph();
  
     //Giai phong bo nho cac danh sach, cac bien cap phat dong tai day
     //...
     freeing_flight_memory(flight_list, plane_list);
-    
-    //Free memory passenger tree
-    deleteTree(root);   
+    deleteTree(root);
     return 0;
-}           
+}
 
 int MainMenu(){ 
     setcolor(TEXT_COLOR);
@@ -103,19 +89,19 @@ int MainMenu(){
                     click_tab(i);
                     return i;
                 }
-        }   
+        }
         //di chuyen chuot
         else if(ismouseclick(WM_MOUSEMOVE)){ 
             getmouseclick(WM_MOUSEMOVE, mx, my);
             for(int i = 0; i < MAX_TAB; i++)
                 if(tab_button[i].inside(mx, my))
                     tab_button[i].hover();
-                else       
+                else    
                     tab_button[i].unhover();
-        }                               
+        } 
         delay(100);
-    }  
-}      
+    }
+}
 void SetupGraphic(){
     for(int i = 0; i < MAX_TAB; i++){
         tab_button[i].settext(3, HORIZ_DIR, 1);
