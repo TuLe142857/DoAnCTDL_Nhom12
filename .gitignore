@@ -3,6 +3,9 @@
 .vscode/
 *.layout
 *.win
+#Data file
+*.dat
+*.txt
 
 # Prerequisites
 *.d

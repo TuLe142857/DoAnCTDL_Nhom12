@@ -13,7 +13,7 @@ using namespace std;
 #define MAX_ARRIVE 30
 #define MAX_PASSENGERID 12
 
-//=============== STRUCT ==========================
+//==================== STRUCT ==========================
 const string status_to_string[] = {"Da huy", "Con ve", "Het ve", "Hoan thanh"};
 enum FLIGHT_STATUS{HUYCHUYEN, CONVE, HETVE, HOANTAT};
 struct Flight{
@@ -35,10 +35,12 @@ struct FlightNode{
 };
 typedef FlightNode* PTR_FLIGHT;
 
-//============ FUNTION PROTOTYPE =================
+//================= FUNTION PROTOTYPE ==================
 
 PTR_FLIGHT newFlightNode();
 PTR_FLIGHT newFlightNode(Flight flight);
+char*** newTicket(int num_column, int num_row);
+
 
 int CountFlight(PTR_FLIGHT First);
 void InsertOrder(PTR_FLIGHT &First, Flight flight);
@@ -50,10 +52,10 @@ string get_ticket_name(int column, int row);
 bool load_flight_from_file(string file_path, PTR_FLIGHT &flight_list, DSMayBay &plane_list);
 bool save_flight_to_file(string file_path, PTR_FLIGHT flight_list, DSMayBay &plane_list);
 
-bool freeing_ticket_memory(Flight &flight, DSMayBay &plane_list);
-bool freeing_flight_memory(PTR_FLIGHT &flight_list, DSMayBay &plane_list);
+void deleteTicket(char ***ticket, int num_column, int num_row);
+void freeing_flight_memory(PTR_FLIGHT &flight_list, DSMayBay &plane_list);
 
-//============ FUNCTION DEFINITION ===============
+//================= FUNCTION DEFINITION ================
 
 PTR_FLIGHT newFlightNode(){
     PTR_FLIGHT newnode = new FlightNode;
@@ -66,6 +68,28 @@ PTR_FLIGHT newFlightNode(Flight flight){
     newnode->flight = flight;
     newnode->next = NULL;
     return newnode;
+}
+
+char*** newTicket(int num_column, int num_row){
+    char ***ticket = new char**[num_column];
+    for(int i = 0; i < num_column; i++){
+        ticket[i] = new char*[num_row];
+        for(int j = 0; j < num_row; j++){
+            ticket[i][j] = new char[MAX_PASSENGERID + 1];
+            strcpy(ticket[i][j], "none");
+        }
+    }
+    return ticket;
+}
+
+void deleteTicket(char ***ticket, int num_column, int num_row){
+    for(int i = 0; i < num_column; i++){
+        for(int j = 0; j < num_row; j++){
+            delete [] ticket[i][j];
+        }
+        delete [] ticket[i];
+    }
+    delete [] ticket;
 }
 
 int CountFlight(PTR_FLIGHT First){
@@ -257,48 +281,32 @@ bool save_flight_to_file(string file_path, PTR_FLIGHT flight_list, DSMayBay &pla
     return true;
 }
 
-bool freeing_ticket_memory(Flight &flight, DSMayBay &plane_list){
-    int index = SerchPlane(plane_list, flight.planeID);
-    if(index == -1){
-        return false;
-    }
-
-    int num_col = plane_list.n[index]->SoDay,
-        num_row = plane_list.n[index]->SoDong;
-    for(int i = 0; i < num_col; i++){
-        for(int j = 0; j < num_row; j++){
-            delete[] flight.ticket[i][j];
-        }
-        delete[] flight.ticket[i];
-    }
-    delete[] flight.ticket;
-
-    return true;
-}
-
-bool freeing_flight_memory(PTR_FLIGHT &flight_list, DSMayBay &plane_list){
+void freeing_flight_memory(PTR_FLIGHT &flight_list, DSMayBay &plane_list){
     cout << "==============================================================================================" << endl
          << "\t\t\tGiai phong bo nho danh sach chuyen bay" << endl;
     PTR_FLIGHT p = flight_list,
                q;
-
+    int index,//luu chi so may bay tuong ung
+        i, j;//bien vong lap
     while(p != NULL){
         q = p;
         p = p->next;
 
-        if(!freeing_ticket_memory(q->flight, plane_list)){
+        //Giai phong bo nho danh sach ve
+        index = SerchPlane(plane_list, q->flight.planeID);
+        if(index == -1){
             cout << "Loi khi giai phong bo nho danh sach ve: "
                  << "Khong tim thay may bay ma so: " << q->flight.planeID 
                  << " tuong ung voi chuyen bay: " << q->flight.flightID << endl   
-                 << "\t\t\tGiai phong bo nho danh sach chuyen bay thai bai!" << endl
-                 << "==============================================================================================" << endl << endl;
-            return false; 
+                 << "\tGiai phong bo nho danh sach ve cua chuyen bay " << q->flight.flightID << " that bai!" << endl << endl;
+        }else{
+            deleteTicket(q->flight.ticket, plane_list.n[index]->SoDay, plane_list.n[index]->SoDong);
         }
 
+        //Giai phong bo nho node
         delete q;
     }
 
-    cout << "\t\t\tGiai phong bo nho danh sach chuyen bay thanh cong!" << endl
+    cout << "\t\t\tGiai phong bo nho danh sach chuyen bay hoan tat!" << endl
          << "==============================================================================================" << endl << endl;
-    return true;
 }

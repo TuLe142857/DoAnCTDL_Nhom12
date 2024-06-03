@@ -301,7 +301,7 @@ void PrintSeat(Flight &flight, int numcol, int numrow, int startcol, int startro
         for(int j = 0; j < MAX_SEAT_ROW; j++){
             if(j + startrow >= numrow) break;//for(j)
             Seat[i][j].setstatus(NORMAL);
-            if(strcmp(flight.ticket[i][j], "none") == 0){
+            if(strcmp(flight.ticket[i + startcol][j + startrow], "none") == 0){
                 //Ve chua dat
                 Seat[i][j].setbackground(LIGHTGREEN, GREEN, BLACK, BLACK);
             }else{
