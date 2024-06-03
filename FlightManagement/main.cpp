@@ -4,7 +4,7 @@
 
 int MainMenu();
 void SetupGraphic();
-
+                    
 int main(){ 
     cout << "Khoi dong CT" << endl;
     //Khai bao cac danh sach va load data
@@ -22,12 +22,12 @@ int main(){
     //Khoi tao do hoa
     initwindow(WINDOW_WIDTH, WINDOW_HEIGHT);                                   
     SetupGraphic();
-
+      
     int choosen_tab = MainMenu(); 
     graphicsettingstype defaultgraphicsettings;
     getgraphicsettings(&defaultgraphicsettings);           
     while(choosen_tab != EXIT){                             
-        switch(choosen_tab){                                       
+        switch(choosen_tab){                                           
             case PLANE_TAB:{        
                 setgraphicsettings(&defaultgraphicsettings);      
                 choosen_tab = Plane_processing(plane_list, flight_list);  
@@ -42,19 +42,22 @@ int main(){
                 setgraphicsettings(&defaultgraphicsettings);
                 choosen_tab = Passenger_processing(root, flight_list, plane_list); 
                 break;
-            }
+            }    
             case MAIN_MENU:{
                 choosen_tab = MainMenu();
                 break;
-            }
-        }   
-    }
+            }  
+        }      
+    }           
 
     closegraph();
  
     //Giai phong bo nho cac danh sach, cac bien cap phat dong tai day
     //...
     freeing_flight_memory(flight_list, plane_list);
+    
+    //Free memory passenger tree
+    deleteTree(root);   
     return 0;
 }
 
