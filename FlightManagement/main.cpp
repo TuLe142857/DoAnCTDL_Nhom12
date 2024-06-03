@@ -49,7 +49,7 @@ int main(){
             }
         }   
     }
-
+   
     closegraph();
  
     //Giai phong bo nho cac danh sach, cac bien cap phat dong tai day
