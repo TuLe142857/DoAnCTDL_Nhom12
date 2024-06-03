@@ -823,7 +823,7 @@ bool AdjustFlight(Flight &flight,PTR_FLIGHT &flight_list, DSMayBay &plane_list){
                                 while(p != NULL){
                                     //Tim trong tat cac cac chuyen bay co thoi gian bay chenh lech < 3h voi "thoi gian moi"
                                     if((p->flight.status == CONVE || p->flight.status == HETVE) && 
-                                        (abs(p->flight.date - newflight.date) < 3*60))
+                                        (abs(p->flight.date - newflight.date) < 3*60) && (strcmp(p->flight.flightID, flight.flightID) != 0))
                                     {
                                         int index = SerchPlane(plane_list, p->flight.planeID);
                                         if(index == -1) continue;  //while(p!=NULL)
@@ -871,31 +871,19 @@ bool AdjustFlight(Flight &flight,PTR_FLIGHT &flight_list, DSMayBay &plane_list){
                         //Neu thay doi kich thuoc may bay
                         if( (plane_list.n[new_index]->SoDay != plane_list.n[old_index]->SoDay)||
                             (plane_list.n[new_index]->SoDong != plane_list.n[old_index]->SoDong ))
-                        {
-                            int old_col = plane_list.n[old_index]->SoDay,
-                                old_row = plane_list.n[old_index]->SoDong,
-                                new_col = plane_list.n[new_index]->SoDay,
-                                new_row = plane_list.n[new_index]->SoDong;
-                            //tao ticket moi
-                            char ***newticket = new char**[new_col];
-                            for(int i = 0; i < new_col; i++){
-                                newticket[i] = new char*[new_row];
-                                for(int j = 0; j < new_row; j++ ){
-                                    newticket[i][j] = new char[MAX_PASSENGERID + 1];
-                                    if((i < old_col) && (j < old_row)){
-                                        strcpy(newticket[i][j], flight.ticket[i][j]);
-                                    }else{
-                                        strcpy(newticket[i][j], "none");
-                                    }
-                                }
-                            }
-                            //xoa ticket cu
-                            for(int i = 0; i < old_col; i++){
-                                for(int j = 0; j < old_row; j++)
-                                    delete[] flight.ticket[i][j];
-                                delete[] flight.ticket[i];
-                            }
-                            delete[] flight.ticket;
+                        {   
+
+                            //Tao danh sach ve moi
+                            char ***newticket = newTicket(plane_list.n[new_index]->SoDay, plane_list.n[new_index]->SoDong);
+
+                            //Copy thong tin danh sach ve cu vao
+                            for (int i = 0; i < plane_list.n[old_index]->SoDay; i++)
+                                for(int j = 0; j < plane_list.n[old_index]->SoDong; j++)
+                                    strcpy(newticket[i][j], flight.ticket[i][j]);
+                                    
+                            //xoa danh sach ve cu
+                            deleteTicket(flight.ticket, plane_list.n[old_index]->SoDay, plane_list.n[old_index]->SoDong);
+
                             //Gan ticket moi
                             flight.ticket = newticket;
                             
@@ -1103,14 +1091,14 @@ bool ManageBookingTicket(Flight &flight, PTR_FLIGHT flight_list, DSMayBay &plane
             }
             
             if(choose_seat){
-                if(strcmp(flight.ticket[i][j], "none") == 0){
+                if(strcmp(flight.ticket[i + start_col][j + start_row], "none") == 0){
                     //Ve chua dat
                     if(Confirm("Ban co muon dat ve " + get_ticket_name(start_col + i,start_row +  j) + "?")){
                         //Dat ve
                         if(BookTicketForSeat(flight, i + start_col, j + start_row, flight_list, plane_list, root)){
                             ischange = true;
                             bookedticket++;
-                            if(bookedticket == num_col*num_row) flight.status == HETVE;
+                            if(bookedticket == num_col*num_row) flight.status = HETVE;
                         }
                             
                     }
@@ -1119,7 +1107,7 @@ bool ManageBookingTicket(Flight &flight, PTR_FLIGHT flight_list, DSMayBay &plane
                 }
                 else{
                     //ve da dat
-                    if(Confirm("Ve " + get_ticket_name(i, j) + " da duoc dat",
+                    if(Confirm("Ve " + get_ticket_name(i + start_col, j + start_row) + " da duoc dat",
                                 "CCCD cua hanh khach: " + string(flight.ticket[i][j]), 
                                 "Ban co muon huy khong?" ))
                     {
@@ -1253,7 +1241,7 @@ bool BookTicketForSeat(Flight &flight, int column, int row, PTR_FLIGHT flight_li
                     check = true;
                     PTR_FLIGHT p = flight_list;
                     while(p != NULL){
-                        if(abs(p->flight.date - flight.date) < 3*180){
+                        if(abs(p->flight.date - flight.date) < 3*60){
                             if((p->flight.status == CONVE || p->flight.status == HETVE) && (strcmp(p->flight.flightID, flight.flightID)!=0)){
                                 int k = SerchPlane(plane_list, p->flight.planeID);
                                 if(k == -1) continue;
