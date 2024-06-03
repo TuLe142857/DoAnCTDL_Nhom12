@@ -106,8 +106,8 @@ enum Button_id {ADD_BUTTON = 5, NEXTBUTTON, PREVIOUSBUTTON, SUBMITBUTTON, BACKBU
 //	H_Button (x1, y1, width, height, type, color)
 H_Button addButton(X2_TABLE+ 20,Y1_TABLE - 90, 80, 50,"ADD", 2);
 
-H_Button nextButton(X1_TABLE + 405, Y2_TABLE + 20, 50, 30, ">>", 2);
-H_Button previousButton(X1_TABLE + 275, Y2_TABLE + 20, 50, 30, "<<", 2);
+H_Button nextButton(X1_TABLE + 430, Y2_TABLE + 20, 50, 30, ">>", 2);
+H_Button previousButton(X1_TABLE + 250, Y2_TABLE + 20, 50, 30, "<<", 2);
 
 H_Button submitAddButton(X_FORM + 200, Y_FORM + 320, 100, 50, "SUBMIT", 2);
 H_Button backButton(X_FORM + 460,Y_FORM + 5, 35, 35, "X", 2);
@@ -249,9 +249,7 @@ int Passenger_processing(PNode *&root, PTR_FLIGHT &flight_list, DSMayBay &plane_
 
 			which_hovered_input(mx, my,0,2);
 			which_hovered_row(mx, my, page, pageMax, NodeCounter);
-
-			
-			 getmouseclick(WM_MOUSEMOVE, mx, my);
+ 
             for(int i = 0; i < MAX_TAB; i++){
                 if(tab_button[i].inside(mx, my))
                     tab_button[i].hover();
@@ -428,35 +426,23 @@ void focus_input(InputBox ib, int s, int f) {
 	rectangle(x,y,x + width, y + height);
 	
 	for(int i = s; i < f; i++) {
-		if(strcmp(ib.type, input[i].type) != 0 && strlen(input[i].content) !=0) {
-
-			setbkcolor(15);
+		if(strcmp(ib.type, input[i].type) == 0) {
+			cout << input[i].content << endl;
+			setbkcolor(15);   
 			setfillstyle(SOLID_FILL, 15);
 			bar(input[i].x, input[i].y, input[i].x + input[i].width, input[i].y + input[i].height);
 			setcolor(0);
 			rectangle(input[i].x,input[i].y,input[i].x + input[i].width, input[i].y + input[i].height);
 			moveto(input[i].x + 5, input[i].y + input[i].height/2 - char_height/2);
+			setbkcolor(15);
 			outtext(input[i].content);
-		}else if(strcmp(ib.type, input[i].type) != 0 && strlen(input[i].content) == 0 ) {
+			if(char_counter < ib.width/16){
+				outtextxy(x + char_width*strlen(input[i].content) + 8, y+height/2-5, "-");
+				return;
+			}
+		}else if(strcmp(ib.type, input[i].type) != 0 && strlen(input[i].content) == 0) {
 			input_unhightlight(input[i]);
 		}
-	}
-	
-	if (char_counter == 0) {
-		setcolor(0);
-		setbkcolor(15);
-		moveto(x + 5 , y + height/2 -5);
-		outtext("-");
-	}else {
-		setcolor(0);
-		setbkcolor(15);
-		moveto(x + 5, y+ height/2 - char_height/2);
-		outtext(ib.content);
-
-		if(char_counter < ib.width/16){
-			outtextxy(x + char_width*strlen(ib.content) + 8, y+height/2-5, "-");
-		}
-
 	}
 }
 
@@ -687,10 +673,6 @@ void insert_passenger(int &NodeCounter, PNode *&root, PNode**&Plist) {
 	strcpy(input[ADD_HO_INPUT].content,"");
 	strcpy(input[ADD_TEN_INPUT].content,"");
 
-
-
-    
-
 	checkbox[MALE].isClicked = false;
 	checkbox[FEMALE].isClicked = false;
 	
@@ -768,16 +750,20 @@ void get_input(InputBox ib, int s, int f, PNode **Plist, PNode *root, int &NodeC
 	int char_height = textheight("W");
 
 	int char_counter = strlen(ib.content);
+
 	focus_input(ib,s,f);
 
 	int x = ib.x, y = ib.y, height = ib.height;
 	char c;
 	char str[20];
-	
-	strcpy(str, ib.content);
 
-   
-	while(!ismouseclick(WM_LBUTTONDOWN) && !ismouseclick(WM_RBUTTONDOWN)) {
+	strcpy(str, ib.content);
+	
+	while(kbhit()){
+		getch();
+	}
+
+	while(1) {
 		if(kbhit()) {  	
 			c = getch();
 	
@@ -795,7 +781,7 @@ void get_input(InputBox ib, int s, int f, PNode **Plist, PNode *root, int &NodeC
 					 (isalnum(c) && char_counter < 20 && strcmp(ib.type, "NAME") == 0) ||
 					 (isalnum(c) && char_counter < 20 && strcmp(ib.type, "SURNAME") == 0) || 
 					 (isalnum(c) && char_counter < 15 && ib.id == 1)){
-				
+				cout << "vcl" << endl;
 				if (c >= 'a' && c <= 'z') {
             		 c = c - 'a' + 'A';
        			}
@@ -809,7 +795,8 @@ void get_input(InputBox ib, int s, int f, PNode **Plist, PNode *root, int &NodeC
 				outtext(str);
 				if((char_counter < 12 && strcmp(ib.type, "CCCD") == 0) || 
 				(char_counter < 20 && strcmp(ib.type, "SURNAME") == 0) || 
-				(char_counter < 20 && strcmp(ib.type, "NAME") == 0)) {
+				(char_counter < 20 && strcmp(ib.type, "NAME") == 0)    ||
+				 char_counter < 15 && strcmp(ib.type, "FLIGHT_ID") == 0) {
 					outtextxy(x + char_width*(char_counter-1) + char_width + 8, y+height/2 - 5, "-");
 				}
 			}else if (c == ' ' && char_counter <= 20 && char_counter > 0 && str[char_counter - 1] != ' ') {
@@ -823,7 +810,10 @@ void get_input(InputBox ib, int s, int f, PNode **Plist, PNode *root, int &NodeC
 					moveto(x + 5, y+height/2-char_height/2);
 					strcpy(input[ib.id].content,str);
 					outtext(str);
-					if((char_counter < 11 && strcmp(ib.type, "CCCD"))|| (char_counter < 19 && strcmp(ib.type, "SURNAME")) || (char_counter < 19 && strcmp(ib.type, "NAME"))) {
+					if((char_counter < 11 && strcmp(ib.type, "CCCD"))    || 
+					   (char_counter < 19 && strcmp(ib.type, "SURNAME")) || 
+					   (char_counter < 19 && strcmp(ib.type, "NAME"))    ||
+					   (char_counter < 15 && strcmp(ib.type, "FLIGHT_ID")) ) {
 						outtextxy(x + char_width*(char_counter-1) + char_width +8, y+height/2 - 5, "-");
 					}	
 				}
@@ -832,11 +822,19 @@ void get_input(InputBox ib, int s, int f, PNode **Plist, PNode *root, int &NodeC
 			}else if(c == '\r' && ib.id == 1) {
 				filter_by_flightID(flight_list,  input[ib.id].content, Plist, root, pageMax, page, NodeCounter, plane_list);
 			}
+		}else if(ismouseclick(WM_LBUTTONDOWN)) {
+			int xc, yc;
+			getmouseclick(WM_LBUTTONDOWN, xc, yc);
+			if(!ib.isInside(xc,yc)) {
+				setfillstyle(SOLID_FILL, 15);
+				bar(x + char_width*strlen(input[ib.id].content) +10, y+height/2-5,x + char_width*strlen(input[ib.id].content)+36,y+height/2+5);
+				return;
+			}
 		}
 	}	
 	
 	clearmouseclick(WM_LBUTTONDOWN);
-	clearmouseclick(WM_RBUTTONDOWN);	
+	clearmouseclick(WM_RBUTTONDOWN);
 }
 
 char* removeTrailingSpace(const char* str) {
@@ -1181,9 +1179,12 @@ void render_table_data(int &NodeCounter, int &page, int &pageMax, PNode **&Plist
 	}
 	
 	string navi = to_string(page) + "/" + to_string(pageMax);
-	setcolor(10);
+	setcolor(0);
+	setfillstyle(SOLID_FILL, 11);
+	bar(630, Y2_TABLE + 10, 750, Y2_TABLE + 50);
 	setbkcolor(11);
-	outtextxy(670, Y2_TABLE + 30, navi);
+	
+	outtextxy(650, Y2_TABLE + 30, navi);
 
 	if(NodeCounter != 0) {
 		for(int i = start; i <= end; i++) {
