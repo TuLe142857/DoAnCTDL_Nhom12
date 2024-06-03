@@ -59,7 +59,7 @@ void InsertBox::setup(int x, int y, int maxchar, int textfont , int textsize ){
     this->textsize = textsize;
 
     contentsize = 0;
-    content[contentsize] = '\0';
+    content[contentsize] = '\0'; 
     graphicsettingstype currentsettings;
     getgraphicsettings(&currentsettings);
 

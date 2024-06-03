@@ -106,8 +106,8 @@ enum Button_id {ADD_BUTTON = 5, NEXTBUTTON, PREVIOUSBUTTON, SUBMITBUTTON, BACKBU
 //	H_Button (x1, y1, width, height, type, color)
 H_Button addButton(X2_TABLE+ 20,Y1_TABLE - 90, 80, 50,"ADD", 2);
 
-H_Button nextButton(X1_TABLE + 405, Y2_TABLE + 20, 50, 30, ">>", 2);
-H_Button previousButton(X1_TABLE + 275, Y2_TABLE + 20, 50, 30, "<<", 2);
+H_Button nextButton(X1_TABLE + 430, Y2_TABLE + 20, 50, 30, ">>", 2);
+H_Button previousButton(X1_TABLE + 250, Y2_TABLE + 20, 50, 30, "<<", 2);
 
 H_Button submitAddButton(X_FORM + 200, Y_FORM + 320, 100, 50, "SUBMIT", 2);
 H_Button backButton(X_FORM + 460,Y_FORM + 5, 35, 35, "X", 2);
@@ -249,9 +249,7 @@ int Passenger_processing(PNode *&root, PTR_FLIGHT &flight_list, DSMayBay &plane_
 
 			which_hovered_input(mx, my,0,2);
 			which_hovered_row(mx, my, page, pageMax, NodeCounter);
-
-			
-			 getmouseclick(WM_MOUSEMOVE, mx, my);
+ 
             for(int i = 0; i < MAX_TAB; i++){
                 if(tab_button[i].inside(mx, my))
                     tab_button[i].hover();
@@ -809,7 +807,8 @@ void get_input(InputBox ib, int s, int f, PNode **Plist, PNode *root, int &NodeC
 				outtext(str);
 				if((char_counter < 12 && strcmp(ib.type, "CCCD") == 0) || 
 				(char_counter < 20 && strcmp(ib.type, "SURNAME") == 0) || 
-				(char_counter < 20 && strcmp(ib.type, "NAME") == 0)) {
+				(char_counter < 20 && strcmp(ib.type, "NAME") == 0)    ||
+				 char_counter < 15 strcmp(ib.type, "FLIGHT_ID") == 0) {
 					outtextxy(x + char_width*(char_counter-1) + char_width + 8, y+height/2 - 5, "-");
 				}
 			}else if (c == ' ' && char_counter <= 20 && char_counter > 0 && str[char_counter - 1] != ' ') {
@@ -823,7 +822,10 @@ void get_input(InputBox ib, int s, int f, PNode **Plist, PNode *root, int &NodeC
 					moveto(x + 5, y+height/2-char_height/2);
 					strcpy(input[ib.id].content,str);
 					outtext(str);
-					if((char_counter < 11 && strcmp(ib.type, "CCCD"))|| (char_counter < 19 && strcmp(ib.type, "SURNAME")) || (char_counter < 19 && strcmp(ib.type, "NAME"))) {
+					if((char_counter < 11 && strcmp(ib.type, "CCCD"))    || 
+					   (char_counter < 19 && strcmp(ib.type, "SURNAME")) || 
+					   (char_counter < 19 && strcmp(ib.type, "NAME"))    ||
+					   (char_counter < 15 && strcmp(ib.type, "FLIGHT_ID")) ) {
 						outtextxy(x + char_width*(char_counter-1) + char_width +8, y+height/2 - 5, "-");
 					}	
 				}
@@ -1181,9 +1183,12 @@ void render_table_data(int &NodeCounter, int &page, int &pageMax, PNode **&Plist
 	}
 	
 	string navi = to_string(page) + "/" + to_string(pageMax);
-	setcolor(10);
+	setcolor(0);
+	setfillstyle(SOLID_FILL, 11);
+	bar(630, Y2_TABLE + 10, 750, Y2_TABLE + 50);
 	setbkcolor(11);
-	outtextxy(670, Y2_TABLE + 30, navi);
+	
+	outtextxy(650, Y2_TABLE + 30, navi);
 
 	if(NodeCounter != 0) {
 		for(int i = start; i <= end; i++) {
