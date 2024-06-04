@@ -72,7 +72,7 @@ void unchoose_box(CheckBox cb);
 void fake_btn(int x, int y, int width, int height, int color, char* placeholder);
 
 void render_table_data(int &NodeCounter, int &page, int &pageMax, PNode **&Plist);
-void render_s_table(Flight as[], int counter,int page, int pageMax, char* ticket_list[]);
+void render_s_table(Flight as[], int counter,int page, int pageMax, char* ticket_list[], int& maxRow);
 
 void dropDownOption(int x, int y, int &NodeCounter, int &page, int &pageMax, PNode*& root, PNode**&Plist, PTR_FLIGHT &flight_list, DSMayBay &plane_list
 , char *ticket_list[]);
@@ -96,11 +96,9 @@ void ultimateFilter(PNode **&Plist, PNode *&root, FlightNode *node,int &pageMax,
 void cccd_array_filter(char *cccd, PNode **&Plist, int &page, int &pageMax, int &NodeCounter);
 
 bool isCancel(char *text);
-
 int notification(char *alert);
 void notification_v2(char *alert);
 void notification_v3(char *alert);
-
 
 int load_ticket(FlightNode *node, char *cccd, Flight as[], DSMayBay &plane_list, char *ticket_list[]);
 int *getRCnum(char *mmb, DSMayBay &plane_list);
@@ -1190,16 +1188,6 @@ void render_table_data(int &NodeCounter, int &page, int &pageMax, PNode **&Plist
 		start = 0;
 	}
 	
-//	cout << "start: " << start << endl;
-//	cout << "end: " << end << endl;
-//	cout << "Count: " << NodeCounter << endl;
-//	cout << "Max: " << maxRow << endl;
-//	cout << endl;
-//	for(int i = 0; i < NodeCounter; i++) {
-//		print(Plist[i]->pas);
-//	}
-//	cout << "=================="<<endl;
-//	
 	string navi = to_string(page) + "/" + to_string(pageMax);
 	setcolor(0);
 	setfillstyle(SOLID_FILL, 11);
@@ -1261,6 +1249,7 @@ void drawCancle(){
 }
 
 bool isCancel(char *text) {
+	cout << text << endl;
 	settextstyle(0, HORIZ_DIR, 2);
 	int textw = textwidth(text);
 	
@@ -1277,7 +1266,7 @@ bool isCancel(char *text) {
 	bar(x , y, x+width, y+height);
 	
 	setbkcolor(15);
-	
+	setcolor(0);
 	outtextxy(x + width/2 - textw/2, y+120, text);
 	
 	cancelButton.draw_button();
@@ -1388,9 +1377,9 @@ char* concatenateStrings(const char* prefix, const char* suffix) {
 }
 void viewLogic(int index, PTR_FLIGHT &flight_list, DSMayBay &plane_list, char *ticket_list[], int &NodeCounter, int &page, int &pageMax, PNode **&Plist) {	
 	Flight as[100];
-	
+	bool ok = true;
 	int i;
-	
+	int maxRow;
 	int vpage = 1;
 	int counter = load_ticket(flight_list, displayed_passengers[index].getCccd(), as, plane_list, ticket_list);
 	int vpageMax;
@@ -1407,7 +1396,7 @@ void viewLogic(int index, PTR_FLIGHT &flight_list, DSMayBay &plane_list, char *t
 		 
 	drawViewFlightGUI(index, flight_list);
 	
-	render_s_table(as, counter, vpage, vpageMax, ticket_list);
+	render_s_table(as, counter, vpage, vpageMax, ticket_list, maxRow);
 	
 	int x, y;
 	while(1) {
@@ -1417,71 +1406,74 @@ void viewLogic(int index, PTR_FLIGHT &flight_list, DSMayBay &plane_list, char *t
 				print_workspace();		
 				draw_customer_workspace(NodeCounter, pageMax, page, Plist);
 				return;
-			}else if(x > X_TABLE +1010  && x < X_TABLE + 1080 && y > Y1_TABLE + 50 && y < Y1_TABLE+50 + 50*counter){
-				i = (y - 50 - Y1_TABLE) / 50;
-				char *alert = concatenateStrings("Do you want to cancel ", as[i].flightID);
-				if(as[i].status != HOANTAT) {
+			}else if(x > X_TABLE +1010  && x < X_TABLE + 1080 && y > Y1_TABLE + 50 && y < Y1_TABLE+50 + 42*maxRow){
+				i = (y - 50 - Y1_TABLE) / 42;
+				int id = vpage*10 - 10 + i;
+				cout << id << endl;
+				cout << as[id].flightID << endl;
+				cout << as[id].status << endl;
+				char *alert = concatenateStrings("Do you want to cancel ", as[id].flightID);
+				if(as[id].status != HOANTAT) {
 					if(isCancel(alert)) {
 						drawViewFlightGUI(index, flight_list);
-						render_s_table(as, counter, vpage, vpageMax, ticket_list);
+						render_s_table(as, counter, vpage, vpageMax, ticket_list, maxRow);
 					}else {
-//						cancelSticket(char* mcb, DSMayBay &plane_list, char *cccd, PTR_FLIGHT &flight_list)
-						cancelSticket(as[i].flightID, plane_list,  displayed_passengers[index].getCccd(), flight_list);
-						counter--;
+						cancelSticket(as[id].flightID, plane_list,  displayed_passengers[index].getCccd(), flight_list);
+						counter = load_ticket(flight_list, displayed_passengers[index].getCccd(), as, plane_list, ticket_list);
+						vpage = 1;
 						if(counter % 10 == 0) {
 							if(counter == 0) {
-								vpageMax = 1;
+								vpageMax=1;
 							}else {
 								vpageMax = counter/ 10;
 							}
-							}else {
-								vpageMax = counter/10 + 1;
-							}
-							
-							for(int j = i; j < counter + 1; j++) {
-								as[j] =  as[j+1];
-								ticket_list[j] = ticket_list[j +1];
-							}
-							
-							drawViewFlightGUI(index, flight_list);
-							render_s_table(as, counter, vpage, vpageMax, ticket_list);
+						}else {
+							vpageMax = counter/10 + 1;
 						}
-						
-					
-						
+							
+						drawViewFlightGUI(index, flight_list);
+						render_s_table(as, counter, vpage, vpageMax, ticket_list, maxRow);
+					}					
 				} 
 						
 				delete [] alert;
 			}else if(previousButton.isInside(x, y)) {
-				if (page > 1) {
-					page--;
-					render_s_table(as, counter, vpage, vpageMax, ticket_list);
+				if (vpage > 1) {
+					vpage--;
+					render_s_table(as, counter, vpage, vpageMax, ticket_list, maxRow);
 				}
 			}else if(nextButton.isInside(x,y)) {
-				if(page != pageMax) {
-					page++;
-					render_s_table(as, counter, vpage, vpageMax, ticket_list);
+				if(vpage != vpageMax) {
+					vpage++;
+					render_s_table(as, counter, vpage, vpageMax, ticket_list, maxRow);
 				}
 			}
 			
 		}else if(ismouseclick(WM_MOUSEMOVE)){
 			getmouseclick(WM_MOUSEMOVE, x, y);
-			if(x > X_TABLE +1010  && x < X_TABLE + 1080 && y > Y1_TABLE + 50 && y < Y1_TABLE+50 + 42*counter) {
+			if(x > X_TABLE +1010  && x < X_TABLE + 1080 && y > Y1_TABLE + 50 && y < Y1_TABLE+50 + 42*maxRow) {
+				ok = true;
 				i = (y - 50 - Y1_TABLE) / 42;
-//				fake_btn(X_TABLE + 1010, Y_TABLE+42*i + 55, 70, 38,2, "cancel");
 				setfillstyle(SOLID_FILL, 10);
 				bar(X_TABLE + 1010, Y_TABLE+42*i + 52, X_TABLE + 1010 + 70, Y_TABLE+42*i+52+38);
 				setcolor(0);
 				rectangle(X_TABLE + 1010, Y_TABLE+42*i + 52, X_TABLE + 1010 + 70, Y_TABLE+42*i+52+38);
 				setbkcolor(10);
 				setcolor(15);
-				settextstyle(2, HORIZ_DIR, 5);
+				settextstyle(10, HORIZ_DIR, 1);
 				outtextxy(X_TABLE + 1010 + 35 - textwidth("cancel")/2, Y_TABLE+42*i + 52 + 20 - textheight("cancel")/2, "cancel");
 				
-				for(int j = 0; j < counter; j++) {
+				for(int j = 0; j < maxRow; j++) {
 					if(i != j) {
 						fake_btn(X_TABLE + 1010, Y_TABLE+42*j + 52, 70, 38,2, "cancel");
 					}
+				}
+			}else {
+				if(ok) {
+					for(int j = 0; j < maxRow; j++) {	
+						fake_btn(X_TABLE + 1010, Y_TABLE+42*j + 52, 70, 38,2, "cancel");
+					}
+					ok = false;
 				}
 			}
 			
@@ -1489,7 +1481,7 @@ void viewLogic(int index, PTR_FLIGHT &flight_list, DSMayBay &plane_list, char *t
 			which_hovered_button(x, y,8,9);
 		}
 		
-		delay(100);
+		delay(50);
 	}
 	
 	for(int i = 0;i < counter; i++) {
@@ -1498,6 +1490,7 @@ void viewLogic(int index, PTR_FLIGHT &flight_list, DSMayBay &plane_list, char *t
 }
 
 void cancelSticket(char* mcb, DSMayBay &plane_list, char *cccd, PTR_FLIGHT &flight_list) {
+	cout << mcb << " : " << cccd << endl;
     PTR_FLIGHT node = flight_list;
     while (node != NULL) {
         if (strcmp(node->flight.flightID, mcb) == 0) {
@@ -1516,6 +1509,7 @@ void cancelSticket(char* mcb, DSMayBay &plane_list, char *cccd, PTR_FLIGHT &flig
     }
     
     save_flight_to_file("Data\\Flights.dat", flight_list, plane_list);
+    cout << "canceled" << endl;
 }
 
 int load_ticket(FlightNode *node, char *cccd, Flight as[], DSMayBay &plane_list, char* ticket_list[]) {
@@ -1543,43 +1537,48 @@ int load_ticket(FlightNode *node, char *cccd, Flight as[], DSMayBay &plane_list,
 		node = node->next;
 	}
 	
+	cout << "loaded" << endl;
 	return counter;
 } 
 
-void render_s_table(Flight as[], int counter,int page, int pageMax, char *ticket_list[]) {
+void render_s_table(Flight as[], int counter,int page, int pageMax, char *ticket_list[], int& maxRow) {
 	int start = (page * 10) - 10 ;
 	int end = start + 9;
+	maxRow = 10;
+	
+	setfillstyle(SOLID_FILL, 11);
+	bar(X_TABLE, Y_TABLE + 51, X_TABLE+1100, Y_TABLE+471);
 	
 	if(page == pageMax) {
 		if(counter % 10 == 0) {
 			if(counter == 0) {
 				end = 0;
-			}else {
-				end = 10*page;
-			}
-			
+				maxRow = 10;
+				start = 10;
+			}		
 		}else {
-			end = (counter % 10) + start;
+			end = (counter % 10) + start - 1;
+			maxRow = counter % 10;
 		}
 	}
 		
 	char *dt[4];
 	
 	settextstyle(10, HORIZ_DIR, 1);
-	
-	for(int i = start; i < end; i++) {
-		if(as[i - (page -1)*10].status == HOANTAT) {
-			fake_btn(X_TABLE + 1010, Y_TABLE+42*i + 52, 70, 38,7, "cancel");
+	for(int i = start; i <= end; i++) {
+		int id = i - (page - 1)*10;
+		if(as[id].status == HOANTAT) {
+			fake_btn(X_TABLE + 1010, Y_TABLE+42*id + 52, 70, 38,7, "cancel");
 		}
-		fake_btn(X_TABLE + 1010, Y_TABLE+42*i + 52, 70, 38,2, "cancel");
+		fake_btn(X_TABLE + 1010, Y_TABLE+42*id + 52, 70, 38,2, "cancel");
 		setcolor(0);
 		setfillstyle(SOLID_FILL, 15);
-		rectangle(X_TABLE, Y_TABLE, X_TABLE + 1000, Y_TABLE + 50 + 42*(i+1));
+		rectangle(X_TABLE, Y_TABLE, X_TABLE + 1000, Y_TABLE + 50 + 42*(id+1));
 		setbkcolor(11);
 		
-		dt[0] = as[i - (page -1)*10].flightID;
-		dt[1] = as[i - (page -1)*10].arrive;
-		string str = as[i - (page-1)*10].date.to_string();
+		dt[0] = as[i].flightID;
+		dt[1] = as[i].arrive;
+		string str = as[i].date.to_string();
 		char *temp = new char[str.length() + 1];
 		strcpy(temp, str.c_str());
 		dt[2] = temp;
@@ -1587,8 +1586,8 @@ void render_s_table(Flight as[], int counter,int page, int pageMax, char *ticket
 		dt[3] = ticket_list[i];
 		
 		for(int j = 0; j <= 3; j++) {
-			line(X_TABLE+250*(j), Y_TABLE +52 + 42*i, X_TABLE+250*(j), Y_TABLE + 92 + 42*(i));
-			outtextxy(X_TABLE+250*(j) + 15, Y_TABLE +52 + 42*i + 10, dt[j]);
+			line(X_TABLE+250*(j), Y_TABLE +52 + 42*id, X_TABLE+250*(j), Y_TABLE + 92 + 42*(id));
+			outtextxy(X_TABLE+250*(j) + 15, Y_TABLE +52 + 42*id + 10, dt[j]);
 		}
 	} 
 	
@@ -1597,10 +1596,10 @@ void render_s_table(Flight as[], int counter,int page, int pageMax, char *ticket
 	setbkcolor(11);
 	settextstyle(0, HORIZ_DIR, 2);
 	outtextxy(670, Y2_TABLE + 30, navi);
-	
 }
 
 void fake_btn(int x, int y, int width, int height, int color, char* placeholder) {
+	settextstyle(10, HORIZ_DIR, 1);
 	setfillstyle(SOLID_FILL, color);
 	setcolor(0);
 	
