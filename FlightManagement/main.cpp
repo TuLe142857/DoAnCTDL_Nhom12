@@ -1,12 +1,12 @@
 #include"Plane_processing.h"
 #include"Flight_processing.h"
 #include"Passenger_processing.h"
-  
+                       
 int MainMenu();                 
 void SetupGraphic();    
-                                          
+                                                                      
 int main(){ 
-    cout << "Khoi dong CT" << endl;
+    cout << "Khoi dong CT" << endl;                  
     //Khai bao cac danh sach va load data
     DSMayBay plane_list;
     PTR_FLIGHT flight_list = NULL;
@@ -16,7 +16,7 @@ int main(){
     readfile(plane_list);           
     if(!load_flight_from_file("Data\\Flights.dat", flight_list, plane_list))
      	return 0;  
-        
+                       
    cout << "Load xong tat ca du lieu" << endl;
        
     //Khoi tao do hoa

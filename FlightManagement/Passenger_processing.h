@@ -19,8 +19,6 @@
 #define X_GIOI 1075
 #define TABLE_W 750
 
-//737
-//1391
 #define X_FORM 445
 #define Y_FORM 170
 
@@ -108,7 +106,7 @@ int load_ticket(FlightNode *node, char *cccd, Flight as[], DSMayBay &plane_list,
 int *getRCnum(char *mmb, DSMayBay &plane_list);
 char* concatenateStrings(const char* prefix, const char* suffix);
 char* removeTrailingSpace(const char* str);
-
+void fillText(int i, int bg);
 
 // button definition
 
@@ -122,26 +120,17 @@ H_Button nextButton(X1_TABLE + 430, Y2_TABLE + 20, 50, 30, ">>", 2);
 H_Button previousButton(X1_TABLE + 250, Y2_TABLE + 20, 50, 30, "<<", 2);
 
 H_Button submitAddButton(X_FORM + 200, Y_FORM + 320, 100, 50, "SUBMIT", 2);
-H_Button backButton(X_FORM + 460,Y_FORM + 5, 35, 35, "X", 2);
+H_Button backButton(X_FORM + 460,Y_FORM + 15, 35, 35, "X", 2);
 H_Button xButton(X_FORM + 450,Y_FORM + 60, 35, 35, "X", 2);
 
 H_Button cancelButton(X_FORM + 150, Y_FORM + 250, 100, 50,"CANCEL", 2);
 H_Button yesButton(X_FORM + 270,Y_FORM + 250, 100, 50, "YES", 2);
 
-H_Button viewBackButton(0+ 50, 0 + 50, 100, 50, "BACK", 2);
+H_Button viewBackButton(0+ 25, 0 + 65, 100, 50, "BACK", 2);
 
 
 #define max_btn 9
 extern H_Button btn[max_btn] = {addButton,nextButton, previousButton, submitAddButton, backButton, cancelButton, yesButton, xButton, viewBackButton};
-
-
-
-// Input
-
-//int x1 = X1_TABLE; 
-//int y1 = Y1_TABLE-120; 
-//int x2 = X2_TABLE - 85; 
-//int y2 = Y1_TABLE - 10;
 
 //InputBox(int x, int y, int width, int height, char *type, int color) 
 InputBox userIDInput(X1_TABLE + 30, Y1_TABLE - 120 + 45, 20, 30, 8, "CCCD", 0);
@@ -297,8 +286,6 @@ int Passenger_processing(PNode *&root, PTR_FLIGHT &flight_list, DSMayBay &plane_
 
 // this is draw function for whole customer tab
 void draw_customer_workspace(int NodeCounter,int &pageMax, int& page, PNode **&Plist) {
-	int char_height = textheight("W");
-	
 	if(NodeCounter%10 == 0) {
 		if(NodeCounter == 0) {
 			pageMax = 1;
@@ -316,16 +303,21 @@ void draw_customer_workspace(int NodeCounter,int &pageMax, int& page, PNode **&P
 	draw_table(page, NodeCounter, pageMax, Plist);
 	for(int i = 0; i < 2; i++) {
 		if(strcmp(input[i].content, "") != 0) {
-			setbkcolor(15);   
-			setfillstyle(SOLID_FILL, 15);
-			bar(input[i].x, input[i].y, input[i].x + input[i].width, input[i].y + input[i].height);
-			setcolor(0);
-			rectangle(input[i].x,input[i].y,input[i].x + input[i].width, input[i].y + input[i].height);
-			moveto(input[i].x + 5, input[i].y + input[i].height/2 - char_height/2-2);
-			setbkcolor(15);
-			outtext(input[i].content);
+			fillText(i, 15);
+		}
 	}
 }
+
+void fillText(int i, int bg) {
+	int char_height = textheight("W");
+	setbkcolor(bg);   
+	setfillstyle(SOLID_FILL, bg);
+	bar(input[i].x, input[i].y, input[i].x + input[i].width, input[i].y + input[i].height);
+	setcolor(0);
+	rectangle(input[i].x,input[i].y,input[i].x + input[i].width, input[i].y + input[i].height);
+	moveto(input[i].x + 5, input[i].y + input[i].height/2 - char_height/2);
+	
+	outtext(input[i].content);
 }
 // this is the funntion to draw for the main table
 void draw_table(int &page, int &NodeCounter, int &pageMax, PNode **&Plist) {
@@ -478,7 +470,7 @@ void choose_box(H_CheckBox cb) {
 
 void unchoose_box(H_CheckBox cb) {
 	int cx = cb.cx, cy = cb.cy;
-	setfillstyle(SOLID_FILL, 11);
+	setfillstyle(SOLID_FILL, 15);
 	bar(cx - 16, cy - 16, cx + 16, cy + 16);
 	setcolor(0);
 	circle(cx, cy, 15);
@@ -532,10 +524,9 @@ void draw_add_gui() {
 	int x = xmax/2 - width/2;
 	int y = ymax/2 - height/2;
 
-	setfillstyle(SOLID_FILL, 15);
-	bar(5,55, xmax - 5, ymax - 5);
+	rounded_bar(WORKSPACE_X,WORKSPACE_Y, WORKSPACE_WIDTH, WORKSPACE_HEIGHT, 11);
 	
-	setfillstyle(SOLID_FILL, 11);
+	setfillstyle(SOLID_FILL, 15);
 
 	bar(x , y, x+width, y+height);
 	
@@ -1047,18 +1038,18 @@ void draw_edit_gui(int index) {
 	int x = xmax/2 - width/2;
 	int y = ymax/2 - height/2;
 	
-	setfillstyle(SOLID_FILL, 15);
-	bar(5,55, xmax - 5, ymax - 5);
+	rounded_bar(WORKSPACE_X,WORKSPACE_Y, WORKSPACE_WIDTH, WORKSPACE_HEIGHT, 11);
 	
-	setfillstyle(SOLID_FILL, 11);
+	setfillstyle(SOLID_FILL, 15);
 	bar(x , y, x+width, y+height);
 	
 	addCccdInput.drawInputBox();
 	addHoInput.drawInputBox();
 	addTenInput.drawInputBox();
 	
-	focus_input(input[ADD_HO_INPUT],2,5);
-	focus_input(input[ADD_TEN_INPUT],2,5);
+	fillText(ADD_HO_INPUT, 15);
+	fillText(ADD_TEN_INPUT, 15);
+	fillText(ADD_CCCD_INPUT, 7);
 	
 	male.draw_checkBox();
 	female.draw_checkBox();
@@ -1348,8 +1339,7 @@ int notification(char *alert) {
 // View Feature 
 
 void drawViewFlightGUI(int index, PTR_FLIGHT &flight_list) {
-	setfillstyle(SOLID_FILL, 15);
-	bar(0,40, WINDOW_WIDTH, WINDOW_HEIGHT);
+	rounded_bar(WORKSPACE_X,WORKSPACE_Y, WORKSPACE_WIDTH, WORKSPACE_HEIGHT, 11);
 	
 	char *cccd = displayed_passengers[index].getCccd();
 	char *name = displayed_passengers[index].getTen();
@@ -1360,13 +1350,13 @@ void drawViewFlightGUI(int index, PTR_FLIGHT &flight_list) {
 	char* tt[4] = {"MA CHUYEN BAY", "NOI DEN", "THOI GIAN", "SO VE"};
 	
 	
-	setbkcolor(15);
+	setbkcolor(11);
 	for(int i = 1; i <= 3; i++) {
-		outtextxy(WINDOW_WIDTH/2 - 200, 40*i, ti[i - 1]);
+		outtextxy(WINDOW_WIDTH/2 - 200, 30 + 40*i, ti[i - 1]);
 	}
 		
 	for(int i = 1; i <= 3; i++) {
-		outtextxy(WINDOW_WIDTH/2 - 60, 40*i, ke[i - 1]);
+		outtextxy(WINDOW_WIDTH/2 - 60, 30 + 40*i, ke[i - 1]);
 	}
 	
 	viewBackButton.draw_button();
@@ -1374,10 +1364,10 @@ void drawViewFlightGUI(int index, PTR_FLIGHT &flight_list) {
 	setcolor(0);
 	rectangle(X_TABLE, Y_TABLE, X_TABLE + 1000, Y_TABLE + 50);
 	
-	setbkcolor(15);
+	setbkcolor(11);
 	for(int i = 0; i <= 3; i++) {
 		line(X_TABLE+250*(i+1), Y_TABLE, X_TABLE+250*(i+1), Y_TABLE +50);
-		outtextxy(X_TABLE+250*(i) + 15 , Y_TABLE + 15, tt[i]);
+		outtextxy(X_TABLE+250*(i) + 15 , Y_TABLE + 17, tt[i]);
 	}
 	
 	previousButton.draw_button();
@@ -1511,6 +1501,7 @@ void cancelSticket(char* mcb, DSMayBay &plane_list, char *cccd, PTR_FLIGHT &flig
     PTR_FLIGHT node = flight_list;
     while (node != NULL) {
         if (strcmp(node->flight.flightID, mcb) == 0) {
+        	node->flight.status = CONVE;
             int *n = getRCnum(node->flight.planeID, plane_list);
             for (int i = 0; i < n[0]; i++) {
                 for (int j = 0; j < n[1]; j++) {
@@ -1523,14 +1514,15 @@ void cancelSticket(char* mcb, DSMayBay &plane_list, char *cccd, PTR_FLIGHT &flig
         }
         node = node->next;
     }
+    
+    save_flight_to_file("Data\\Flights.dat", flight_list, plane_list);
 }
 
 int load_ticket(FlightNode *node, char *cccd, Flight as[], DSMayBay &plane_list, char* ticket_list[]) {
 	int counter = 0;
 	while(node != NULL) {
 		if(node->flight.status == CONVE || node->flight.status == HETVE) {
-			if(strcmp(node->flight.flightID, "A") != 0) {
-				int *ar = getRCnum(node->flight.planeID, plane_list);
+			int *ar = getRCnum(node->flight.planeID, plane_list);
 			for(int i = 0; i < ar[0]; i++) {
 				for(int j  = 0; j < ar[1]; j++) {
 					if(strcmp(cccd, node->flight.ticket[i][j]) == 0) {
@@ -1546,9 +1538,7 @@ int load_ticket(FlightNode *node, char *cccd, Flight as[], DSMayBay &plane_list,
 					}
 				}
 			}
-			delete[] ar;
-			}
-			
+			delete[] ar;	
 		} 		    
 		node = node->next;
 	}
@@ -1575,7 +1565,7 @@ void render_s_table(Flight as[], int counter,int page, int pageMax, char *ticket
 		
 	char *dt[4];
 	
-	settextstyle(2, HORIZ_DIR, 5);
+	settextstyle(10, HORIZ_DIR, 1);
 	
 	for(int i = start; i < end; i++) {
 		if(as[i - (page -1)*10].status == HOANTAT) {
@@ -1585,7 +1575,7 @@ void render_s_table(Flight as[], int counter,int page, int pageMax, char *ticket
 		setcolor(0);
 		setfillstyle(SOLID_FILL, 15);
 		rectangle(X_TABLE, Y_TABLE, X_TABLE + 1000, Y_TABLE + 50 + 42*(i+1));
-		setbkcolor(15);
+		setbkcolor(11);
 		
 		dt[0] = as[i - (page -1)*10].flightID;
 		dt[1] = as[i - (page -1)*10].arrive;
@@ -1598,13 +1588,13 @@ void render_s_table(Flight as[], int counter,int page, int pageMax, char *ticket
 		
 		for(int j = 0; j <= 3; j++) {
 			line(X_TABLE+250*(j), Y_TABLE +52 + 42*i, X_TABLE+250*(j), Y_TABLE + 92 + 42*(i));
-			outtextxy(X_TABLE+250*(j) + 15, Y_TABLE +52 + 42*i + 15, dt[j]);
+			outtextxy(X_TABLE+250*(j) + 15, Y_TABLE +52 + 42*i + 10, dt[j]);
 		}
 	} 
 	
 	string navi = to_string(page) + "/" + to_string(pageMax);
-	setcolor(10);
-	setbkcolor(15);
+	setcolor(0);
+	setbkcolor(11);
 	settextstyle(0, HORIZ_DIR, 2);
 	outtextxy(670, Y2_TABLE + 30, navi);
 	
@@ -1667,7 +1657,7 @@ void notification_v3(char *alert) {
 		
 	outtextxy(x + width/2 - textwidth(alert)/2, y +30 - textheight(alert)/2, alert);
 	delay(1500);
-	setfillstyle(SOLID_FILL, 15);
+	setfillstyle(SOLID_FILL, 11);
 	bar(x-2, y-2, x + width+2, y + height + 2);
 }
 

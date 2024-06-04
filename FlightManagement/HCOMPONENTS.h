@@ -113,7 +113,7 @@ void H_CheckBox::draw_checkBox() {
 	int w = textwidth(content);
 	
 	setcolor(0);
-	setbkcolor(11);
+	setbkcolor(15);
 	moveto(x + width/2 - w/2, y + height/2 - h/2);
 	outtext(content);
 	
