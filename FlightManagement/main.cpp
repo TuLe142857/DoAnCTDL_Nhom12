@@ -1,10 +1,10 @@
 #include"Plane_processing.h"
 #include"Flight_processing.h"
 #include"Passenger_processing.h"
-                       
+                              
 int MainMenu();                 
 void SetupGraphic();    
-                                                                      
+                                                                                                    
 int main(){ 
     cout << "Khoi dong CT" << endl;                  
     //Khai bao cac danh sach va load data
@@ -18,20 +18,20 @@ int main(){
      	return 0;  
                        
    cout << "Load xong tat ca du lieu" << endl;
-       
+                                                            
     //Khoi tao do hoa
     initwindow(WINDOW_WIDTH, WINDOW_HEIGHT);                                   
     SetupGraphic();
     int choosen_tab = MainMenu(); 
     graphicsettingstype defaultgraphicsettings;
-    getgraphicsettings(&defaultgraphicsettings);           
+    getgraphicsettings(&defaultgraphicsettings);                                 
     while(choosen_tab != EXIT){                             
         switch(choosen_tab){                                                
-            case PLANE_TAB:{        
+            case PLANE_TAB:{           
                 setgraphicsettings(&defaultgraphicsettings);      
                 choosen_tab = Plane_processing(plane_list, flight_list);  
                 break;
-            }    
+            }                      
             case FLIGHT_TAB:{
                 setgraphicsettings(&defaultgraphicsettings);
                 choosen_tab = Flight_processing(flight_list, plane_list, root);
@@ -47,8 +47,8 @@ int main(){
                 break;
             }          
         }   
-    }
-                                                                 
+    }      
+                                                                            
     closegraph();
  
     //Giai phong bo nho cac danh sach, cac bien cap phat dong tai day
@@ -56,7 +56,7 @@ int main(){
     freeing_flight_memory(flight_list, plane_list);
     deleteTree(root);
     return 0;
-}
+}       
 
 int MainMenu(){ 
     setcolor(TEXT_COLOR);
