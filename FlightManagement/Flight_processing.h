@@ -1481,13 +1481,13 @@ void ShowPassengerList(Flight flight, DSMayBay &plane_list, PNode *root){
     getgraphicsettings(&currentsettings);
     setcolor(BLACK);
     setbkcolor(WORKSPACE_COLOR);
-    settextstyle(3, HORIZ_DIR, 1);
+    settextstyle(F_FONT, HORIZ_DIR, F_LARGE);
     settextjustify(CENTER_TEXT, TOP_TEXT);
     outtextxy(WORKSPACE_X + WORKSPACE_WIDTH/2, WORKSPACE_Y + 20, "DANH SACH HANH KHACH THUOC CHUYEN BAY:  " + string(flight.flightID));
     outtextxy(WORKSPACE_X + WORKSPACE_WIDTH/2, WORKSPACE_Y + 50, "Ngay khoi hanh: " + flight.date.to_string() + "    Noi den: " + string(flight.arrive));
-    settextstyle(2, HORIZ_DIR, 5);
+    settextstyle(F_FONT, HORIZ_DIR, 1);
     settextjustify(LEFT_TEXT, TOP_TEXT);
-    outtextxy(WORKSPACE_X + 50, WORKSPACE_Y + 70, "Da dat: " + to_string(n) + "/" + to_string(num_col*num_row) + " ve");
+    outtextxy(WORKSPACE_X + 50, WORKSPACE_Y + WORKSPACE_HEIGHT - 50, "Da dat: " + to_string(n) + "/" + to_string(num_col*num_row) + " ve");
     back_button.print();
 
 

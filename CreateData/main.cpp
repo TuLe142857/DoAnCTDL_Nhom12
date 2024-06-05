@@ -32,16 +32,7 @@ int main(){
     freeing_flight_memory(flight_list, plane_list);
     savedata(plane_list);
     saveData(root);
-
-      
-    PNode *load;
-    loadTreeData(load);
     
-    cout << "test lai du lieu hanh khach trong ram" << endl << endl;
-    print_pas(load);
-    cout << "so sanh voi du lieu truoc khi save" << endl;
-    print_pas(root);
-
     cout << "OK" << endl;
     return 0;
 }

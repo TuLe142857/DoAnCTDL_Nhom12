@@ -5,6 +5,11 @@
 #include"SortFlight.h"
 #include<math.h>
 
+#define F_FONT 10   //text font in Flight tab
+#define F_SMALL 2   //small text size in Flight tab
+#define F_MEDIUM 3  //medium text size
+#define F_LARGE 4   //large text size
+
 #define MAX_FLIGHT_FIELD 8
 #define MAX_FLIGHT_STATUS 4
 #define MAX_SEAT_COLUMN 26  
@@ -126,21 +131,21 @@ bool Confirm(string s1, string s2, string s3);
 void PrintToolBar(){
     graphicsettingstype currentsettings;
     getgraphicsettings(&currentsettings);
-    setbkcolor(WHITE);
-    settextstyle(2, HORIZ_DIR, 6);
+    setbkcolor(WHITE); 
+    settextstyle(F_FONT, HORIZ_DIR, F_SMALL); 
     rounded_bar(toolbar_x, toolbar_y, toolbar_width, toolbar_height, WHITE);
 
     for(int i = 0; i < MAX_FLIGHT_FIELD; i++)
         FilterFlightBox[i].print();
-    outtextxy(FilterFlightBox[FLIGHTID].getx() - textwidth("Ma chuyen bay") - 10, FilterFlightBox[FLIGHTID].gety() + 5, "Ma chuyen bay");
-    outtextxy(FilterFlightBox[PLANEID].getx() - textwidth("Mamay bay") - 10, FilterFlightBox[PLANEID].gety() + 5, "Ma may bay");
-    outtextxy(FilterFlightBox[HOUR].getx() - textwidth("Thoi gian") - 10, FilterFlightBox[HOUR].gety() + 5, "Thoi gian");
-    outtextxy(FilterFlightBox[ARRIVE].getx() - textwidth("Noi den") - 10, FilterFlightBox[ARRIVE].gety() + 5, "Noi den");
+    outtextxy(FilterFlightBox[FLIGHTID].getx() - textwidth("Ma chuyen bay") - 15, FilterFlightBox[FLIGHTID].gety() + 5, "Ma chuyen bay");
+    outtextxy(FilterFlightBox[PLANEID].getx() - textwidth("Mamay bay") - 15, FilterFlightBox[PLANEID].gety() + 5, "Ma may bay");
+    outtextxy(FilterFlightBox[HOUR].getx() - textwidth("Thoi gian") - 15, FilterFlightBox[HOUR].gety() + 5, "Thoi gian");
+    outtextxy(FilterFlightBox[ARRIVE].getx() - textwidth("Noi den") - 15, FilterFlightBox[ARRIVE].gety() + 5, "Noi den");
 
-    outtextxy(FilterFlightBox[MINUTE].getx() - 10, FilterFlightBox[MINUTE].gety() + 5, ":" );
-    outtextxy(FilterFlightBox[DAY].getx() - 10, FilterFlightBox[DAY].gety() + 5, "-" );
-    outtextxy(FilterFlightBox[MONTH].getx() - 10, FilterFlightBox[MONTH].gety() + 5, "/" );
-    outtextxy(FilterFlightBox[YEAR].getx() - 10, FilterFlightBox[YEAR].gety() + 5, "/" );
+    outtextxy(FilterFlightBox[MINUTE].getx() - 15, FilterFlightBox[MINUTE].gety() + 5, ":" );
+    outtextxy(FilterFlightBox[DAY].getx() - 15, FilterFlightBox[DAY].gety() + 5, "-" );
+    outtextxy(FilterFlightBox[MONTH].getx() - 15, FilterFlightBox[MONTH].gety() + 5, "/" );
+    outtextxy(FilterFlightBox[YEAR].getx() - 15, FilterFlightBox[YEAR].gety() + 5, "/" );
 
     for(int i = 0; i < MAX_FLIGHT_STATUS; i++)
         StatusCheckBox[i].print();
@@ -206,14 +211,14 @@ void PrintFlightTable(Flight **array, int n, int start){
 
     int color = getcolor();
     setcolor(RED);
-    outtextxy(WORKSPACE_X + 10, WORKSPACE_Y + WORKSPACE_HEIGHT - 30, "*An chuot trai vao chuyen bay trong bang de chon chuc nang");
+    outtextxy(WORKSPACE_X + 10, WORKSPACE_Y + WORKSPACE_HEIGHT - 30, "*An chuot trai vao bang de chon chuc nang");
     setcolor(color);
 }
 
 void PrintAddFlightDialog(){
     graphicsettingstype currentsettings;
     getgraphicsettings(&currentsettings);
-    settextstyle(3, HORIZ_DIR, 1);
+    settextstyle(F_FONT, HORIZ_DIR, F_MEDIUM);
     setcolor(BLACK);
     setbkcolor(WORKSPACE_COLOR);
 
@@ -228,10 +233,10 @@ void PrintAddFlightDialog(){
     outtextxy(InsertFlightBox[HOUR].getx() - 10 - textwidth("Thoi gian"), InsertFlightBox[HOUR].gety(), "Thoi gian");
     outtextxy(InsertFlightBox[ARRIVE].getx() - 10 - textwidth("Noi den"), InsertFlightBox[ARRIVE].gety(), "Noi den");
     
-    outtextxy(InsertFlightBox[MINUTE].getx() - 10, InsertFlightBox[MINUTE].gety() + 5, ":"  );
-    outtextxy(InsertFlightBox[DAY].getx() - 10, InsertFlightBox[DAY].gety() +5, "-"  );
-    outtextxy(InsertFlightBox[MONTH].getx() - 10, InsertFlightBox[MONTH].gety()+5, "/"  );
-    outtextxy(InsertFlightBox[YEAR].getx() - 10, InsertFlightBox[YEAR].gety()+5, "/"  );
+    outtextxy(InsertFlightBox[MINUTE].getx() - 30, InsertFlightBox[MINUTE].gety() + 5, ":"  );
+    outtextxy(InsertFlightBox[DAY].getx() - 30, InsertFlightBox[DAY].gety() +5, "-"  );
+    outtextxy(InsertFlightBox[MONTH].getx() - 30, InsertFlightBox[MONTH].gety()+5, "/"  );
+    outtextxy(InsertFlightBox[YEAR].getx() - 30, InsertFlightBox[YEAR].gety()+5, "/"  );
     apply_button.print();
     cancel_button.print();
     choose_plane_button.print();
@@ -242,7 +247,7 @@ void PrintAddFlightDialog(){
 void PrintAdjustFlightDialog(Flight flight){
     graphicsettingstype currentsettings;
     getgraphicsettings(&currentsettings);
-    settextstyle(3, HORIZ_DIR, 1);
+    settextstyle(F_FONT, HORIZ_DIR, F_MEDIUM);
     setcolor(BLACK);
     setbkcolor(WORKSPACE_COLOR);
 
@@ -257,10 +262,10 @@ void PrintAdjustFlightDialog(Flight flight){
     outtextxy(InsertFlightBox[HOUR].getx() - 10 - textwidth("Thoi gian"), InsertFlightBox[HOUR].gety(), "Thoi gian");
     outtextxy(InsertFlightBox[ARRIVE].getx() - 10 - textwidth("Noi den"), InsertFlightBox[ARRIVE].gety(), "Noi den");
     
-    outtextxy(InsertFlightBox[MINUTE].getx() - 10, InsertFlightBox[MINUTE].gety() + 5, ":"  );
-    outtextxy(InsertFlightBox[DAY].getx() - 10, InsertFlightBox[DAY].gety() +5, "-"  );
-    outtextxy(InsertFlightBox[MONTH].getx() - 10, InsertFlightBox[MONTH].gety()+5, "/"  );
-    outtextxy(InsertFlightBox[YEAR].getx() - 10, InsertFlightBox[YEAR].gety()+5, "/"  );
+    outtextxy(InsertFlightBox[MINUTE].getx() - 30, InsertFlightBox[MINUTE].gety() + 5, ":"  );
+    outtextxy(InsertFlightBox[DAY].getx() - 30, InsertFlightBox[DAY].gety() +5, "-"  );
+    outtextxy(InsertFlightBox[MONTH].getx() - 30, InsertFlightBox[MONTH].gety()+5, "/"  );
+    outtextxy(InsertFlightBox[YEAR].getx() - 30, InsertFlightBox[YEAR].gety()+5, "/"  );
     apply_button.print();
     cancel_button.print();
     choose_plane_button.print();
@@ -272,7 +277,7 @@ void PrintAdjustFlightDialog(Flight flight){
 void PrintManageTicketDialog(Flight &flight){
     graphicsettingstype currentsettings;
     getgraphicsettings(&currentsettings);
-    settextstyle(3, HORIZ_DIR, 1);
+    settextstyle(F_FONT, HORIZ_DIR, F_MEDIUM);
     setcolor(BLACK);
     setbkcolor(WORKSPACE_COLOR);
     
@@ -370,9 +375,9 @@ void PrintBookingTicketDialog(string ticketname){
     rounded_rect(mediumdialog::x, mediumdialog::y, mediumdialog::width, mediumdialog::height, BLACK);
 
     settextjustify(CENTER_TEXT, TOP_TEXT);
-    settextstyle(2, HORIZ_DIR, 7);
+    settextstyle(F_FONT, HORIZ_DIR, F_MEDIUM);
     outtextxy(mediumdialog::x + mediumdialog::width/2, mediumdialog::y + 20, "DAT VE");
-    settextstyle(2, HORIZ_DIR, 6);
+    settextstyle(F_FONT, HORIZ_DIR, F_SMALL);
     outtextxy(mediumdialog::x + mediumdialog::width/2, mediumdialog::y + 50, "Ma so ve: " + ticketname);
     outtextxy(mediumdialog::x + mediumdialog::width/2, mediumdialog::y + 80, "Vui long nhap so CCCD cua hanh khach ben duoi");
     
@@ -399,9 +404,9 @@ void PrintAddPassengerDialog(){
     settextjustify(CENTER_TEXT, TOP_TEXT);
     
 
-    settextstyle(2, HORIZ_DIR, 7);
+    settextstyle(F_FONT, HORIZ_DIR, F_MEDIUM);
     outtextxy(mediumdialog::x + mediumdialog::width/2, mediumdialog::y + 50, "Them Hanh Khach");
-    settextstyle(2, HORIZ_DIR, 6);
+    settextstyle(F_FONT, HORIZ_DIR, F_SMALL);
     settextjustify(LEFT_TEXT, TOP_TEXT);
     
     mediumdialog::InsertPassID.print();
@@ -409,10 +414,10 @@ void PrintAddPassengerDialog(){
     mediumdialog::InsertLastname.print();
     mediumdialog::male.print();
     mediumdialog::female.print();
-    outtextxy(mediumdialog::InsertPassID.getx() - textwidth("CCCD") - 10, mediumdialog::InsertPassID.gety() + 5, "CCCD");
-    outtextxy(mediumdialog::InsertFirstname.getx() - textwidth("Ho") - 10, mediumdialog::InsertFirstname.gety() + 5, "Ho ");
-    outtextxy(mediumdialog::InsertLastname.getx() - textwidth("Ten") - 10, mediumdialog::InsertLastname.gety() + 5, "Ten");
-    outtextxy(mediumdialog::male.getx() - textwidth("Gioi tinh") - 10, mediumdialog::male.gety() + 5, "Gioi tinh");
+    outtextxy(mediumdialog::InsertPassID.getx() - textwidth("CCCD") - 15, mediumdialog::InsertPassID.gety() + 5, "CCCD");
+    outtextxy(mediumdialog::InsertFirstname.getx() - textwidth("Ho") - 15, mediumdialog::InsertFirstname.gety() + 5, "Ho ");
+    outtextxy(mediumdialog::InsertLastname.getx() - textwidth("Ten") - 15, mediumdialog::InsertLastname.gety() + 5, "Ten");
+    outtextxy(mediumdialog::male.getx() - textwidth("Gioi tinh") - 15, mediumdialog::male.gety() + 5, "Gioi tinh");
     outtextxy(mediumdialog::male.getx() + mediumdialog::male.getsize() + 10, mediumdialog::male.gety() + 5, "Nam");
     outtextxy(mediumdialog::female.getx() + mediumdialog::female.getsize() + 10, mediumdialog::female.gety() + 5, "Nu");
     mediumdialog::apply_button.print();
@@ -783,7 +788,7 @@ void Notification(string s){
     rounded_rect(smalldialog::x, smalldialog::y, smalldialog::width, smalldialog::height, BLACK);
 
     settextjustify(CENTER_TEXT, TOP_TEXT);
-    settextstyle(2, HORIZ_DIR, 5);
+    settextstyle(F_FONT, HORIZ_DIR, 1);
     setcolor(BLACK);
     setbkcolor(WHITE);
     outtextxy(smalldialog::x + smalldialog::width/2, smalldialog::y + 100, s);
@@ -815,12 +820,12 @@ void Notification(string s1, string s2){
     rounded_rect(smalldialog::x, smalldialog::y, smalldialog::width, smalldialog::height, BLACK);
 
     settextjustify(CENTER_TEXT, TOP_TEXT);
-    settextstyle(2, HORIZ_DIR, 5);
+    settextstyle(F_FONT, HORIZ_DIR, 1);
     setcolor(BLACK);
     setbkcolor(WHITE);
 
     outtextxy(smalldialog::x + smalldialog::width/2, smalldialog::y + 50, s1);
-    outtextxy(smalldialog::x + smalldialog::width/2, smalldialog::y + 80, s2);
+    outtextxy(smalldialog::x + smalldialog::width/2, smalldialog::y + 100, s2);
     smalldialog::ok_button.print();
     int mx, my;
     while(1){
@@ -849,13 +854,13 @@ void Notification(string s1, string s2, string s3){
     rounded_rect(smalldialog::x, smalldialog::y, smalldialog::width, smalldialog::height, BLACK);
 
     settextjustify(CENTER_TEXT, TOP_TEXT);
-    settextstyle(2, HORIZ_DIR, 5);
+    settextstyle(F_FONT, HORIZ_DIR, 1);
     setcolor(BLACK);
     setbkcolor(WHITE);
 
     outtextxy(smalldialog::x + smalldialog::width/2, smalldialog::y + 50, s1);
-    outtextxy(smalldialog::x + smalldialog::width/2, smalldialog::y + 80, s2);
-    outtextxy(smalldialog::x + smalldialog::width/2, smalldialog::y + 120, s3);
+    outtextxy(smalldialog::x + smalldialog::width/2, smalldialog::y + 100, s2);
+    outtextxy(smalldialog::x + smalldialog::width/2, smalldialog::y + 150, s3);
     smalldialog::ok_button.print();
     int mx, my;
     while(1){
@@ -886,7 +891,7 @@ bool Confirm(string s){
     rounded_rect(smalldialog::x, smalldialog::y, smalldialog::width, smalldialog::height, BLACK);
 
     settextjustify(CENTER_TEXT, TOP_TEXT);
-    settextstyle(2, HORIZ_DIR, 5);
+    settextstyle(F_FONT, HORIZ_DIR, 1);
     setcolor(BLACK);
     setbkcolor(WHITE);
 
@@ -933,12 +938,12 @@ bool Confirm(string s1, string s2){
     rounded_rect(smalldialog::x, smalldialog::y, smalldialog::width, smalldialog::height, BLACK);
 
     settextjustify(CENTER_TEXT, TOP_TEXT);
-    settextstyle(2, HORIZ_DIR, 5);
+    settextstyle(F_FONT, HORIZ_DIR, 1);
     setcolor(BLACK);
     setbkcolor(WHITE);
 
     outtextxy(smalldialog::x + smalldialog::width/2, smalldialog::y + 50, s1);
-    outtextxy(smalldialog::x + smalldialog::width/2, smalldialog::y + 80, s2);
+    outtextxy(smalldialog::x + smalldialog::width/2, smalldialog::y + 100, s2);
     smalldialog::apply_button.print();
     smalldialog::cancel_button.print();
     int mx, my;
@@ -981,13 +986,13 @@ bool Confirm(string s1, string s2, string s3){
     rounded_rect(smalldialog::x, smalldialog::y, smalldialog::width, smalldialog::height, BLACK);
 
     settextjustify(CENTER_TEXT, TOP_TEXT);
-    settextstyle(2, HORIZ_DIR, 5);
+    settextstyle(F_FONT, HORIZ_DIR, 1);
     setcolor(BLACK);
     setbkcolor(WHITE);
 
     outtextxy(smalldialog::x + smalldialog::width/2, smalldialog::y + 50, s1);
-    outtextxy(smalldialog::x + smalldialog::width/2, smalldialog::y + 80, s2);
-    outtextxy(smalldialog::x + smalldialog::width/2, smalldialog::y + 120, s3);
+    outtextxy(smalldialog::x + smalldialog::width/2, smalldialog::y + 100, s2);
+    outtextxy(smalldialog::x + smalldialog::width/2, smalldialog::y + 150, s3);
     smalldialog::apply_button.print();
     smalldialog::cancel_button.print();
     int mx, my;
@@ -1031,14 +1036,14 @@ void SetupGraphicFlightTab(){
     toolbar_height = 200;
 
     //Cac o insert
-    FilterFlightBox[FLIGHTID].  setup(toolbar_x + 200, toolbar_y + 5 + 50*0, MAX_FLIGHT_ID);
-    FilterFlightBox[PLANEID].   setup(toolbar_x + 200, toolbar_y + 5 + 50*1, MAX_PLANE_ID);
-    FilterFlightBox[HOUR].      setup(toolbar_x + 200, toolbar_y + 5 + 50*2, 2);
-    FilterFlightBox[MINUTE].    setup(toolbar_x + 275, toolbar_y + 5 + 50*2, 2);
-    FilterFlightBox[DAY].       setup(toolbar_x + 350, toolbar_y + 5 + 50*2, 2);
-    FilterFlightBox[MONTH].     setup(toolbar_x + 425, toolbar_y + 5 + 50*2, 2);
-    FilterFlightBox[YEAR].      setup(toolbar_x + 500, toolbar_y + 5 + 50*2, 4);
-    FilterFlightBox[ARRIVE].    setup(toolbar_x + 200, toolbar_y + 5 + 50*3, MAX_ARRIVE);
+    FilterFlightBox[FLIGHTID].  setup(toolbar_x + 200, toolbar_y + 5 + 50*0, MAX_FLIGHT_ID, F_FONT, F_SMALL);
+    FilterFlightBox[PLANEID].   setup(toolbar_x + 200, toolbar_y + 5 + 50*1, MAX_PLANE_ID, F_FONT, F_SMALL);
+    FilterFlightBox[HOUR].      setup(toolbar_x + 200, toolbar_y + 5 + 50*2, 2, F_FONT, F_SMALL);
+    FilterFlightBox[MINUTE].    setup(toolbar_x + 275, toolbar_y + 5 + 50*2, 2, F_FONT, F_SMALL);
+    FilterFlightBox[DAY].       setup(toolbar_x + 350, toolbar_y + 5 + 50*2, 2, F_FONT, F_SMALL);
+    FilterFlightBox[MONTH].     setup(toolbar_x + 425, toolbar_y + 5 + 50*2, 2, F_FONT, F_SMALL);
+    FilterFlightBox[YEAR].      setup(toolbar_x + 500, toolbar_y + 5 + 50*2, 4, F_FONT, F_SMALL);
+    FilterFlightBox[ARRIVE].    setup(toolbar_x + 200, toolbar_y + 5 + 50*3, MAX_ARRIVE, F_FONT, F_SMALL);
 
 
     FilterFlightBox[FLIGHTID].  settitle("MAX 15 ky tu");
@@ -1051,7 +1056,6 @@ void SetupGraphicFlightTab(){
     FilterFlightBox[ARRIVE].    settitle("MAX 30 ky tu");
     for(int i = 0; i < MAX_FLIGHT_FIELD; i++){
         FilterFlightBox[i].setbackgroundcolor(LIGHTGRAY, LIGHTCYAN);
-        FilterFlightBox[i].settext(2, HORIZ_DIR , 6);
     }
         
     //checkBox
@@ -1063,6 +1067,7 @@ void SetupGraphicFlightTab(){
 
     //FlightTable
     //Cac cot:flighid, planeid , date, arrive, status
+    FlightTable.settext(F_FONT, HORIZ_DIR, F_SMALL);
     FlightTable.setup(toolbar_x, toolbar_y + toolbar_height + 10, 
                       toolbar_width, WORKSPACE_Y + WORKSPACE_HEIGHT - 70 - (toolbar_y + toolbar_height + 10),
                        11, 5 );
@@ -1071,8 +1076,8 @@ void SetupGraphicFlightTab(){
     //Button
     add_flight_button.  setup(toolbar_x + toolbar_width - 105, toolbar_y + 10, 100, 30, "Add");
     reset_button.       setup(toolbar_x + toolbar_width - 105, toolbar_y + 50, 100, 30, "Reset");
-    add_flight_button.  settext(3, HORIZ_DIR, 1);
-    reset_button.       settext(3, HORIZ_DIR, 1);
+    add_flight_button.  settext(F_FONT, HORIZ_DIR, F_SMALL);
+    reset_button.       settext(F_FONT, HORIZ_DIR, F_SMALL);
     prev_page_button.setup(WORKSPACE_X + WORKSPACE_WIDTH/2 - 100, WORKSPACE_Y + WORKSPACE_HEIGHT - 40, 50, 30, "<<");
     next_page_button.setup(WORKSPACE_X + WORKSPACE_WIDTH/2 + 50, WORKSPACE_Y + WORKSPACE_HEIGHT - 40, 50, 30, ">>");
     //PopupMenu
@@ -1086,30 +1091,31 @@ void SetupGraphicFlightTab(){
 
     //Selection list
     SortField.setup(toolbar_x + toolbar_width - 300, toolbar_y + 50, 100, 25);
-    SortField.settext(2, HORIZ_DIR, 6);
+    SortField.settext(F_FONT, HORIZ_DIR, F_SMALL);
     SortField.add_option("Date");       //SORTBY_DATE
     SortField.add_option("FlightID");   //SORTBY_FLIGHTID
     SortField.add_option("PlaneID");    //SORTBY_PLANEID
     SortField.add_option("Arrive");     //SORTBY_ARRIVE
     SortField.setchoice(SORTBY_DATE);
+    SortField.settext(F_FONT, HORIZ_DIR, F_SMALL);
 
     //SortType
     SortType_button.setup(toolbar_x + toolbar_width - 300, toolbar_y + 10, 110, 30, "Tang dan");
     SortType_button.settextcolor(BLACK, BLUE, WHITE, BLACK);
     SortType_button.setbackground(LIGHTGREEN, CYAN, LIGHTGREEN, BLACK);
-    SortType_button.settext(2, HORIZ_DIR, 6);
+    SortType_button.settext(F_FONT, HORIZ_DIR, F_SMALL);
 
     //================================= ADD FLIGHT/ ADJUST FLIGHT =========================
     //Button apply_button, cancel_button, choose_plane_button;
     //InsertBox InsertFlightBox[MAX_FLIGHT_FIELD];
-    InsertFlightBox[FLIGHTID].  setup(WORKSPACE_X + 400, WORKSPACE_Y + 100*1, MAX_FLIGHT_ID, 3, 1);
-    InsertFlightBox[PLANEID].   setup(WORKSPACE_X + 400, WORKSPACE_Y + 100*2, MAX_PLANE_ID, 3, 1);
-    InsertFlightBox[HOUR].      setup(WORKSPACE_X + 400, WORKSPACE_Y + 100*3, 2, 3, 1);
-    InsertFlightBox[MINUTE].    setup(WORKSPACE_X + 500, WORKSPACE_Y + 100*3, 2, 3, 1);
-    InsertFlightBox[DAY].       setup(WORKSPACE_X + 600, WORKSPACE_Y + 100*3, 2, 3, 1);
-    InsertFlightBox[MONTH].     setup(WORKSPACE_X + 700, WORKSPACE_Y + 100*3, 2, 3, 1);
-    InsertFlightBox[YEAR].      setup(WORKSPACE_X + 800, WORKSPACE_Y + 100*3, 4, 3, 1);
-    InsertFlightBox[ARRIVE].    setup(WORKSPACE_X + 400, WORKSPACE_Y + 100*4, MAX_ARRIVE, 3, 1);
+    InsertFlightBox[FLIGHTID].  setup(WORKSPACE_X + 400, WORKSPACE_Y + 100*1, MAX_FLIGHT_ID, F_FONT, F_MEDIUM);
+    InsertFlightBox[PLANEID].   setup(WORKSPACE_X + 400, WORKSPACE_Y + 100*2, MAX_PLANE_ID, F_FONT, F_MEDIUM);
+    InsertFlightBox[HOUR].      setup(WORKSPACE_X + 400, WORKSPACE_Y + 100*3, 2, F_FONT, F_MEDIUM);
+    InsertFlightBox[MINUTE].    setup(WORKSPACE_X + 500, WORKSPACE_Y + 100*3, 2, F_FONT, F_MEDIUM);
+    InsertFlightBox[DAY].       setup(WORKSPACE_X + 600, WORKSPACE_Y + 100*3, 2, F_FONT, F_MEDIUM);
+    InsertFlightBox[MONTH].     setup(WORKSPACE_X + 700, WORKSPACE_Y + 100*3, 2, F_FONT, F_MEDIUM);
+    InsertFlightBox[YEAR].      setup(WORKSPACE_X + 800, WORKSPACE_Y + 100*3, 4, F_FONT, F_MEDIUM);
+    InsertFlightBox[ARRIVE].    setup(WORKSPACE_X + 400, WORKSPACE_Y + 100*4, MAX_ARRIVE, F_FONT, F_MEDIUM);
 
     InsertFlightBox[FLIGHTID].  settitle("MAX 15 ky tu");
     InsertFlightBox[PLANEID].   settitle("MAX 15 ky tu");
@@ -1122,10 +1128,10 @@ void SetupGraphicFlightTab(){
 
     apply_button.setup(WORKSPACE_X + WORKSPACE_WIDTH/2 - 200, WORKSPACE_Y + WORKSPACE_HEIGHT - 100, 100, 40, "Ok");
     cancel_button.setup(WORKSPACE_X + WORKSPACE_WIDTH/2 + 100, WORKSPACE_Y + WORKSPACE_HEIGHT - 100, 100, 40, "Cancel");
-    apply_button.settext(3, HORIZ_DIR, 1);
-    cancel_button.settext(3, HORIZ_DIR, 1);
+    apply_button.settext(F_FONT, HORIZ_DIR, F_MEDIUM);
+    cancel_button.settext(F_FONT, HORIZ_DIR, F_MEDIUM);
     choose_plane_button.setup(InsertFlightBox[PLANEID].getx() + InsertFlightBox[PLANEID].getwidth() + 10, InsertFlightBox[PLANEID].gety(), 30, 30, "+");
-    choose_plane_button.settext(3, HORIZ_DIR, 1);
+    choose_plane_button.settext(F_FONT, HORIZ_DIR, F_MEDIUM);
 
     //================================= MANAGE TICKET =====================================
     // int SeatBox_x, SeatBox_y, SeatBox_width, SeatBox_height;
@@ -1145,15 +1151,15 @@ void SetupGraphicFlightTab(){
             Seat[i][j].setbackground(LIGHTGREEN, GREEN, GREEN, GREEN);
         }
     back_button.setup(WORKSPACE_X + 10, WORKSPACE_Y + 10, 100, 40, "BACK");
-    back_button.settext(2, HORIZ_DIR, 6);
+    back_button.settext(F_FONT, HORIZ_DIR, F_MEDIUM);
     back_button.settextcolor(BLUE, WHITE, WHITE, WHITE);
-    up_button.      setup(SeatBox_x + SeatBox_width/2 - 30/2, SeatBox_y + SeatBox_height + 25 , 30, 30, ">>");
-	down_button.    setup(SeatBox_x + SeatBox_width/2 - 30/2, SeatBox_y + SeatBox_height + 95 , 30, 30, "<<");
-	left_button.    setup(SeatBox_x + SeatBox_width/2 - 55, SeatBox_y + SeatBox_height + 60 , 30, 30, "<<");
-	right_button.   setup(SeatBox_x + SeatBox_width/2 + 25, SeatBox_y + SeatBox_height + 60 , 30, 30, ">>");
+    up_button.      setup(SeatBox_x + SeatBox_width/2 - 30/2, SeatBox_y + SeatBox_height + 25 , 35, 35, ">>");
+	down_button.    setup(SeatBox_x + SeatBox_width/2 - 30/2, SeatBox_y + SeatBox_height + 95 , 35, 35, "<<");
+	left_button.    setup(SeatBox_x + SeatBox_width/2 - 55, SeatBox_y + SeatBox_height + 60 , 35, 35, "<<");
+	right_button.   setup(SeatBox_x + SeatBox_width/2 + 25, SeatBox_y + SeatBox_height + 60 , 35, 35, ">>");
     
-    up_button.settext(2, VERT_DIR, 5);
-    down_button.settext(2, VERT_DIR, 5);
+    up_button.settext(F_FONT, VERT_DIR, F_SMALL);
+    down_button.settext(F_FONT, VERT_DIR, F_SMALL);
 
     
 
@@ -1178,8 +1184,8 @@ void SetupGraphicFlightTab(){
 
     //================================== Cac hop thoai ====================================
     //Small dialog : notification + confirm
-    smalldialog::width = 400;
-    smalldialog::height = 200;
+    smalldialog::width = 500;
+    smalldialog::height = 250;
     smalldialog::x = WORKSPACE_X + WORKSPACE_WIDTH/2 -smalldialog::width/2;
     smalldialog::y = WORKSPACE_Y + WORKSPACE_HEIGHT/2 - smalldialog::height/2;
     smalldialog::apply_button.setup(smalldialog::x + 100, smalldialog::y + smalldialog::height - 50, 80, 30, "Ok");
@@ -1194,18 +1200,22 @@ void SetupGraphicFlightTab(){
     mediumdialog::x = WORKSPACE_X + WORKSPACE_WIDTH/2 - mediumdialog::width/2;
     mediumdialog::y = WORKSPACE_Y + WORKSPACE_HEIGHT/2 - mediumdialog::height/2;
 
-    mediumdialog::InsertPassID.   setup(mediumdialog::x + 200, mediumdialog::y + 130, MAX_PASSENGERID, 2, 6);
-    mediumdialog::InsertFirstname.setup(mediumdialog::x + 200, mediumdialog::y + 180, 19, 2, 6);
-    mediumdialog::InsertLastname. setup(mediumdialog::x + 200, mediumdialog::y + 230, 19, 2, 6);
+    mediumdialog::InsertPassID.   setup(mediumdialog::x + 250, mediumdialog::y + 130, MAX_PASSENGERID, F_FONT, F_SMALL);
+    mediumdialog::InsertFirstname.setup(mediumdialog::x + 250, mediumdialog::y + 180, 19, F_FONT, F_SMALL);
+    mediumdialog::InsertLastname. setup(mediumdialog::x + 250, mediumdialog::y + 230, 19, F_FONT, F_SMALL);
 
     mediumdialog::InsertPassID.   settitle("MAX 12 ky tu");
     mediumdialog::InsertFirstname.settitle("MAX 19 ky tu");
     mediumdialog::InsertLastname. settitle("MAX 19 ky tu");
 
+    mediumdialog::InsertPassID.   setbackgroundcolor(LIGHTGRAY, LIGHTCYAN);
+    mediumdialog::InsertFirstname.setbackgroundcolor(LIGHTGRAY, LIGHTCYAN);
+    mediumdialog::InsertLastname. setbackgroundcolor(LIGHTGRAY, LIGHTCYAN);
+
 
     mediumdialog::choose_passenger_button.setup(mediumdialog::InsertPassID.getx() + mediumdialog::InsertPassID.getwidth() + 10, mediumdialog::InsertPassID.gety(), 30, 30, "+");
-    mediumdialog::male.   setup(mediumdialog::x + 200, mediumdialog::y + 280, 30);
-    mediumdialog::female. setup(mediumdialog::x + 400, mediumdialog::y + 280, 30);
+    mediumdialog::male.   setup(mediumdialog::x + 250, mediumdialog::y + 280, 30);
+    mediumdialog::female. setup(mediumdialog::x + 450, mediumdialog::y + 280, 30);
     mediumdialog::apply_button.setup(mediumdialog::x + mediumdialog::width/2 - 180, mediumdialog::y + mediumdialog::height - 50, 80, 30, "Ok");
     mediumdialog::cancel_button.setup(mediumdialog::x + mediumdialog::width/2 + 100, mediumdialog::y + mediumdialog::height - 50, 80, 30, "Cancel");
 

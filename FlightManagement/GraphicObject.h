@@ -8,9 +8,9 @@ protected:
     int width;
     int height;
 
-    int textfont = 2;
+    int textfont = 10;
     int textdirection = HORIZ_DIR;  //horizon direction
-    int textsize = 5;
+    int textsize = 2;
 public:
     void setup(int x, int y, int width, int height);
     void setx(int x);

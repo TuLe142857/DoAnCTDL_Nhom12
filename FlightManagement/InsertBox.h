@@ -16,7 +16,7 @@ private:
     int textcolor_normal = DARKGRAY;
     int textcolor_active = BLACK;
 public:
-    void setup(int x, int y, int maxchar, int textfont = 2, int textsize = 5);
+    void setup(int x, int y, int maxchar, int textfont = 10, int textsize = 2);
 
     void setcontent(string content);
     void setcontent(char *content);

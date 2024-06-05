@@ -21,9 +21,16 @@ private:
 
     int background_normal = LIGHTGRAY;
     int background_highlight = WHITE;
+
+    int textfont = 10;
+    int textsize = 1;
 public:
     void settextcolor(int normal, int highlight, int unactive);
     void setbackgroundcolor(int normal, int highlight);
+    void settext(int font, int size){
+        textfont = font;
+        textsize = size;
+    }
     int getwidth();
     int getheight();
     void add(string option);
@@ -59,7 +66,7 @@ void PopupMenu::add(string option){
     n++;
     graphicsettingstype currentsettings;
     getgraphicsettings(&currentsettings);
-    settextstyle(2, HORIZ_DIR, 5);
+    settextstyle(textfont, HORIZ_DIR, textsize);
     if(width < (textwidth(option) + 20))
         width = textwidth(option) + 20;
     if(height < (textheight(option) + 10))
@@ -95,7 +102,7 @@ int PopupMenu::choose(int x, int y){
     rounded_bar(x, y, width, 10 + (height*n), background_normal);
     rounded_rect(x, y, width, 10 + (height*n), BLACK);
 
-    settextstyle(2, HORIZ_DIR, 5);
+    settextstyle(textfont, HORIZ_DIR, textsize);
     settextjustify(CENTER_TEXT, TOP_TEXT);
     setbkcolor(background_normal);
     for(int i = 0; i < n; i++){

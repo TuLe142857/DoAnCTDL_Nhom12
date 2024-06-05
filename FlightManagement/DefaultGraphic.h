@@ -14,8 +14,8 @@
 
 //Font / size chu
 #define TEXT_COLOR BLACK
-#define TEXT_FONT 2
-#define TEXT_SIZE 5
+#define TEXT_FONT 10
+#define TEXT_SIZE 2
 
 //Work space
 #define WORKSPACE_COLOR LIGHTCYAN
