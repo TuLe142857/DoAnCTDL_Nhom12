@@ -177,7 +177,7 @@ void loadTreeData(PNode *&root) {
 
 int countObjects() {
     //ifstream file("passengers.dat", ios::binary);
-    ifstream file("Data//Passengers.dat", ios::binary);
+    ifstream file("Data//Passengers.dat", ios::binary |ios::in |ios::out);
     if (!file) {
         cerr << "Could not open file." << endl;
         return -1;
@@ -193,8 +193,7 @@ int countObjects() {
 }
 
 Passenger *buildArrayData(int count){
-	//ifstream file("passengers.dat", ios::binary);
-    ifstream file("Data\\Passengers.dat", ios::binary);
+    ifstream file("Data\\Passengers.dat", ios::binary|ios::in |ios::out);
     if (!file) {
         cerr << "Could not open file." << endl;
     }
@@ -202,9 +201,10 @@ Passenger *buildArrayData(int count){
     Passenger temp;
 
     Passenger *pas_arr = new Passenger[count];
-    int index = -1;
+    int index = 0;
     while (file.read(reinterpret_cast<char*>(&temp), sizeof(Passenger))) {
-        pas_arr[index++] = temp;
+        pas_arr[index] = temp;
+        index++;
     }
     
     file.close();
@@ -233,7 +233,7 @@ PNode *buildAVLTree(){
 	int count = countObjects();
 	Passenger *passenger_array = buildArrayData(count);
 	int start = 0;
-	PNode *root = build(start, count, passenger_array);
+	PNode *root = build(start, count-1, passenger_array);
 	delete[] passenger_array;
 	return root;
 }

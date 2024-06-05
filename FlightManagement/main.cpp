@@ -1,38 +1,37 @@
 #include"Plane_processing.h"
 #include"Flight_processing.h"
 #include"Passenger_processing.h"
-
-int MainMenu();
-void SetupGraphic();
-
+                              
+int MainMenu();                 
+void SetupGraphic();    
+                                                                                                    
 int main(){ 
-    cout << "Khoi dong CT" << endl;
+    cout << "Khoi dong CT" << endl;                  
     //Khai bao cac danh sach va load data
     DSMayBay plane_list;
     PTR_FLIGHT flight_list = NULL;
-    PNode *root = NULL; 
-	
-	//Load data       
+    PNode *root = buildAVLTree(); 
+	     
+	//Load data            
     readfile(plane_list);           
     if(!load_flight_from_file("Data\\Flights.dat", flight_list, plane_list))
-    	return 0;  
-    loadTreeData(root);           
+     	return 0;  
+                       
    cout << "Load xong tat ca du lieu" << endl;
-       
+                                                            
     //Khoi tao do hoa
     initwindow(WINDOW_WIDTH, WINDOW_HEIGHT);                                   
     SetupGraphic();
-
     int choosen_tab = MainMenu(); 
     graphicsettingstype defaultgraphicsettings;
-    getgraphicsettings(&defaultgraphicsettings);           
+    getgraphicsettings(&defaultgraphicsettings);                                 
     while(choosen_tab != EXIT){                             
-        switch(choosen_tab){                                       
-            case PLANE_TAB:{        
+        switch(choosen_tab){                                                
+            case PLANE_TAB:{           
                 setgraphicsettings(&defaultgraphicsettings);      
                 choosen_tab = Plane_processing(plane_list, flight_list);  
                 break;
-            }    
+            }                      
             case FLIGHT_TAB:{
                 setgraphicsettings(&defaultgraphicsettings);
                 choosen_tab = Flight_processing(flight_list, plane_list, root);
@@ -43,13 +42,13 @@ int main(){
                 choosen_tab = Passenger_processing(root, flight_list, plane_list); 
                 break;
             }
-            case MAIN_MENU:{
-                choosen_tab = MainMenu();
+            case MAIN_MENU:{      
+                choosen_tab = MainMenu();  
                 break;
-            }
+            }          
         }   
-    }
-   
+    }      
+                                                                            
     closegraph();
  
     //Giai phong bo nho cac danh sach, cac bien cap phat dong tai day
@@ -57,7 +56,7 @@ int main(){
     freeing_flight_memory(flight_list, plane_list);
     deleteTree(root);
     return 0;
-}
+}       
 
 int MainMenu(){ 
     setcolor(TEXT_COLOR);
@@ -101,14 +100,14 @@ int MainMenu(){
         } 
         delay(100);
     }
-}
+}                                             
 void SetupGraphic(){
     for(int i = 0; i < MAX_TAB; i++){
         tab_button[i].settext(3, HORIZ_DIR, 1);
         tab_button[i].settextcolor(BLACK, BLUE, BLUE, BLUE);
         tab_button[i].setbackground(BACKGROUND_COLOR, WORKSPACE_COLOR, WORKSPACE_COLOR, WORKSPACE_COLOR);
     }
-
+         
     int tabw = (WORKSPACE_WIDTH-10-30)/(3);
     tab_button[PLANE_TAB].      setup(WORKSPACE_X + 5 + tabw*0, 10, tabw-5, 30, "MAY BAY");
     tab_button[FLIGHT_TAB].     setup(WORKSPACE_X + 5 + tabw*1, 10, tabw-5, 30, "CHUYEN BAY");
