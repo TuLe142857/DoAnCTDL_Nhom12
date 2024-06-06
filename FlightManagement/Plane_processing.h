@@ -1498,13 +1498,13 @@ int Plane_processing(DSMayBay &maybay,FlightNode* CB){
     while(true){
         if(ismouseclick(WM_LBUTTONDOWN)){
             getmouseclick(WM_LBUTTONDOWN, mx, my);
-			
-            
             for(int i = 0; i < MAX_TAB; i++){
                 if(tab_button[i].inside(mx, my)){
                     unclick_tab(PLANE_TAB);
                     if(i == PLANE_TAB) return MAIN_MENU;
                     click_tab(i);
+                    setfillstyle(1,3);
+					bar(10,50,1390,740);
                     return i;
                 }
             }
