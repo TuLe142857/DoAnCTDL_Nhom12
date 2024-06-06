@@ -8,16 +8,20 @@
 #include <windows.h>
 #include <fstream>
 #define MAX 300 
+//moi sua
+#define CN 2//(1: Nhap lien tuc phai co gia tri, 2: Nhap don le ko can co gia tri)
 using namespace std;
 struct ThongKe{
 	char soHieuMB[16]; 
 	int dem; 
 };
+
 void dondep(){
 	while(kbhit()){
 		char d=getch(); 
 	} 
 }
+
 void Turn(){
 	clearmouseclick(WM_RBUTTONDOWN);
 	setfillstyle(1,15);
@@ -33,7 +37,6 @@ void drawCenteredText(int x, int y, char* text) {
     int textHeight = textheight(text); 
     outtextxy(x - textWidth / 2, y - textHeight / 2, text); 
 }
-typedef struct ChuyenBay* chuyenbay; 
 
 char* itochar(int n){
 	char *c=new char[5];
@@ -55,6 +58,7 @@ char* itochar(int n){
 	} 
 	return c; 
 } 
+
 void outtoxy(int x,int y, int n) {
 	char *c = itochar(n);
 	outtextxy(x, y, c);
@@ -77,6 +81,7 @@ void nhap(char* n, int l, int x, int y){
 	}
 	else
 	outtextxy(x+textwidth(n),y,"_");
+	char A[]="      ";
 	while(1){
 		while ((tm = getch()) != 13) {
 			if (i < l) {
@@ -94,7 +99,6 @@ void nhap(char* n, int l, int x, int y){
 				}
 			}
 			if (tm == 8 && i > 0) { 
-				char A[]="      ";
 				outtextxy(x + (textwidth(n) - textwidth(&n[i - 1])), y, A); 
 				i--;
 				n[i] = '\0'; 
@@ -106,15 +110,22 @@ void nhap(char* n, int l, int x, int y){
 			else
 			outtextxy(x+textwidth(n),y,"_");
 		}
-
-		if(i>0){
-			setbkcolor(8);
-			outtextxy(x, y, n); 
-			outtextxy(x+textwidth(n),y,"  ");
+//moi sua
+		if(CN==1){
+			if(i>0){
+				setbkcolor(8);
+				outtextxy(x, y, n); 
+				outtextxy(x+textwidth(n),y,"  ");
+				break;
+			}
+		}
+		else{
 			break;
 		}
 	}
+	outtextxy(x + textwidth(n), y, A); 
 }
+
 int nhapso2(int &m, int l, int x, int y) {
 	char tm = 0;
 	int n=m;
@@ -158,9 +169,15 @@ int nhapso2(int &m, int l, int x, int y) {
 			else
 			outtextxy(x+textwidth(c),y,"_");
 		}
-		if(m>0){//
-			break;
+		//moi sua
+		if(CN==1){
+			if(m>0){//
+				break;
+			}
 		}
+		else{
+			break;
+		}	
 	}//
 	setbkcolor(8);
 	if(m!=0){
@@ -172,6 +189,7 @@ int nhapso2(int &m, int l, int x, int y) {
 	}
 	return m;
 }
+
 void graphic(){
 	setfillstyle(1,0); 
 	settextstyle(10, 0, 2);
@@ -184,6 +202,7 @@ void graphic(){
 	drawCenteredText(640,705,"<");
 	drawCenteredText(760,705,">");
 } 
+
 void Chucnang1(int x,int y,DSMayBay maybay, int n){
 	setbkcolor(0); 
 	setcolor(11);
@@ -241,6 +260,7 @@ void Chucnang1(int x,int y,DSMayBay maybay, int n){
 	} 
 	delay(50);
 } 
+
 void xoa(DSMayBay &maybay, int i){
 	delete maybay.n[i-1];
 	for(int j=i-1;j<maybay.SoMayBay;j++){
@@ -280,6 +300,7 @@ void xoa(DSMayBay &maybay, int i){
 		}
 	}
 }
+
 void them(DSMayBay &maybay){
 	setfillstyle(1,15);
 	bar(10,50,1390,740);
@@ -349,10 +370,7 @@ void them(DSMayBay &maybay){
 	A->SoDong=0;
 	memset(A->LoaiMB , '\0', sizeof(A->LoaiMB));
 	memset(A->SoHieuMB , '\0', sizeof(A->SoHieuMB ));
-	//moi sua
 	int bo=0;
-	//MOI SUA: chon kieu nhap ban muon
-	int choose=1;
 	while(1){
 		setbkcolor(8);
 		if(ismouseclick(WM_LBUTTONDOWN)){
@@ -391,16 +409,16 @@ void them(DSMayBay &maybay){
 								continue;
 							}
 							setfillstyle(1,14);
-
 							bar(400,120,1000,180);
-							setfillstyle(1,8);
-							setcolor(4);
-							setbkcolor(7); 
-							setfillstyle(1,7);
-							bar(400,185,1000,235);
 							outtextxy(420,200,A->SoHieuMB);
 //							Chuc nang bo xung cho phep nhap lien tuc 
-							if(bo==0&&choose==1){
+							if(bo==0&&CN==1){
+								setfillstyle(1,8);
+								setcolor(4);
+								setbkcolor(7); 
+								setfillstyle(1,7);
+								bar(400,185,1000,235);
+								outtextxy(420,200,A->SoHieuMB);
 								for(int i=1;i<4;i++){//CHUC NANG BO XUNG
 									if(i==1){
 										setcolor(11);
@@ -428,7 +446,7 @@ void them(DSMayBay &maybay){
 										bar(400,185+100*i,1000,235+100*i);
 										nhapso2(A->SoDong,2,420,400);
 									}
-									else{
+									else {
 										setcolor(4);
 										setbkcolor(7); 
 										setfillstyle(1,7);
@@ -469,24 +487,27 @@ void them(DSMayBay &maybay){
 
 							break; 
 						}
+						//moi sua 
+						setcolor(15);
+						if(A->SoHieuMB[0]=='\0'){
+							outtextxy(420,200,MENU2[0]);
+						} 
 					}
-					//moi sua 
-					if(choose==1){
-						if(i==1&&A->SoHieuMB[0]=='\0'){
-							setcolor(15);
-							outtextxy(420,300,MENU2[1]);
-						}
-						if(i==2&&A->SoHieuMB[0]=='\0'){
-							setcolor(15);
-							outtextxy(420,400,MENU2[2]);
-						}
-						if(i==3&&A->SoHieuMB[0]=='\0'){
-							setcolor(15);
-							outtextxy(420,500,MENU2[3]);
-						}
-					}
-					//moi sua
-					if(choose==1){
+//					if(CN==1){
+//						if(i==1&&A->SoHieuMB[0]=='\0'){
+//							setcolor(15);
+//							outtextxy(420,300,MENU2[1]);
+//						}
+//						if(i==2&&A->SoHieuMB[0]=='\0'){
+//							setcolor(15);
+//							outtextxy(420,400,MENU2[2]);
+//						}
+//						if(i==3&&A->SoHieuMB[0]=='\0'){
+//							setcolor(15);
+//							outtextxy(420,500,MENU2[3]);
+//						}
+//					}
+					if(CN==1){
 						if(i==1&&A->SoHieuMB[0]!='\0'){
 							nhap(A->LoaiMB,40,420,300);
 						}
@@ -532,6 +553,11 @@ void them(DSMayBay &maybay){
 					else{
 						if(i==1){
 							nhap(A->LoaiMB,40,420,300);
+							//moi sua
+							if(A->LoaiMB[0]=='\0'){
+								setcolor(15);
+								outtextxy(420,300,MENU2[1]);
+							} 
 						}
 						if(i==2){
 							while(1){
@@ -550,6 +576,11 @@ void them(DSMayBay &maybay){
 								else if(A->SoDay==0){
 									nhapso2(A->SoDong,2,420,400);
 								}
+								//moi sua 
+								if(A->SoDong==0){
+									setcolor(15);
+									outtextxy(420,400,MENU2[2]);
+								} 
 								setfillstyle(1,14); 
 								bar(400,340,1000,370); 
 	
@@ -572,6 +603,11 @@ void them(DSMayBay &maybay){
 								else if(A->SoDong==0){
 									nhapso2(A->SoDay,2,420,500);
 								}
+								//moi sua 
+								if(A->SoDay==0){
+									setcolor(15);
+									outtextxy(420,500,MENU2[2]);
+								} 
 								setfillstyle(1,14); 
 								bar(400,440,1000,470); 
 								break;
@@ -914,6 +950,7 @@ void them(DSMayBay &maybay){
 
 	} 
 }
+
 void sua(DSMayBay &maybay, int x, int y,int n,int CK,FlightNode* &CB){
 	setfillstyle(1,15);
 	bar(10,50,1390,740);
@@ -980,7 +1017,6 @@ void sua(DSMayBay &maybay, int x, int y,int n,int CK,FlightNode* &CB){
 	strcpy(TAM.SoHieuMB,maybay.n[m]->SoHieuMB);
 	TAM.SoDay=maybay.n[m]->SoDay;
 	TAM.SoDong=maybay.n[m]->SoDong; 
-	//moi sua 
 	setcolor(1);
 	bar(1085,95,1370,150); 
 	rectangle(1085,95,1370,150);
@@ -992,8 +1028,8 @@ void sua(DSMayBay &maybay, int x, int y,int n,int CK,FlightNode* &CB){
 		outtextxy(1100,125,"cai dat cho chuyen bay");
 	}
 	else{
-		outtoxy(1315,330,TAM.SoDong+1);
-		outtoxy(1315,360,TAM.SoDay+1);
+		outtoxy(1315,330,TAM.SoDong);
+		outtoxy(1315,360,TAM.SoDay);
 		outtextxy(1100,100," May bay nay da duoc");
 		outtextxy(1100,125,"cai dat cho chuyen bay");
 	}
@@ -1053,7 +1089,7 @@ void sua(DSMayBay &maybay, int x, int y,int n,int CK,FlightNode* &CB){
 					if(i==2){
 						if(CK==1){
 							while(1){
-								if(nhapso2(maybay.n[m]->SoDong,2,420,400)<=TAM.SoDong){
+								if(nhapso2(maybay.n[m]->SoDong,2,420,400)<TAM.SoDong){
 									setbkcolor(14); 
 									setfillstyle(1,14); 
 									bar(400,340,1000,370); 
@@ -1094,7 +1130,7 @@ void sua(DSMayBay &maybay, int x, int y,int n,int CK,FlightNode* &CB){
 					if(i==3){
 						if(CK==1){
 							while(1){
-								if(nhapso2(maybay.n[m]->SoDay,2,420,500)<=TAM.SoDay){
+								if(nhapso2(maybay.n[m]->SoDay,2,420,500)<TAM.SoDay){
 									setbkcolor(14); 
 									setfillstyle(1,14); 
 									bar(400,440,1000,470); 
@@ -1178,11 +1214,22 @@ void sua(DSMayBay &maybay, int x, int y,int n,int CK,FlightNode* &CB){
 									Turn();
 									FlightNode* P=CB;
 									while(P!=NULL){
-										if(strcmp(TAM.LoaiMB,P->flight.planeID)==0){
+										if(strcmp(TAM.SoHieuMB,P->flight.planeID)==0){
 											strcpy(P->flight.planeID,maybay.n[m]->SoHieuMB);
+											char ***newticket = newTicket(maybay.n[m]->SoDay,maybay.n[m]->SoDong);
+											for(int i=0;i<TAM.SoDay;i++){
+												for(int j=0;j<TAM.SoDong;j++){
+													strcpy(newticket[i][j],P->flight.ticket[i][j]);
+												}
+											}
+											deleteTicket(P->flight.ticket,TAM.SoDay,TAM.SoDong);
+											P->flight.ticket=newticket;
+											if(P->flight.status==HETVE)
+												P->flight.status=CONVE;
 										}
 										P=P->next;
 									}
+									delete P; 
 									return; 
 								} 
 								else if(z==1){
@@ -1246,6 +1293,7 @@ void sua(DSMayBay &maybay, int x, int y,int n,int CK,FlightNode* &CB){
 		delay(50);
 	}
 }
+
 void CurrentTime(Date &a) {
      time_t currentTime =  time(nullptr);
      tm* localTime =  localtime(&currentTime);
@@ -1278,13 +1326,13 @@ bool Time(Flight A){
         return 0;
     } 
 }
+
 void swap(ThongKe* a, ThongKe* b) {
     ThongKe temp = *a;
     *a = *b;
     *b = temp;
 }
 
-// Function to sort the ThongKe list based on frequency
 void Sort(ThongKe* L[], int n) {
     for (int i = 0; i < n - 1; ++i) {
         for (int j = 0; j < n - i - 1; ++j) {
@@ -1294,7 +1342,7 @@ void Sort(ThongKe* L[], int n) {
         }
     }
 }
-//moi sua 
+
 void THONGKE(DSMayBay &maybay, FlightNode *A){
 	ThongKe *LIST[maybay.SoMayBay]; 
     for (int i = 0; i < maybay.SoMayBay; i++) {
@@ -1429,6 +1477,7 @@ void THONGKE(DSMayBay &maybay, FlightNode *A){
 		}
 	} 
 }
+
 int Plane_processing(DSMayBay &maybay,FlightNode* CB){
     print_workspace();
 	int start = 1; 
@@ -1461,7 +1510,6 @@ int Plane_processing(DSMayBay &maybay,FlightNode* CB){
             }
             int Check=0;
 			for(int i=start;i<start+10;i++){
-				//moi sua 
 				if(i<=maybay.SoMayBay){
 					if(mx>=100&&mx<=1300&&my>=100+50*(i-start+1)&&my<=150+50*(i-start+1)){
 						MayBay Temp;
@@ -1493,7 +1541,7 @@ int Plane_processing(DSMayBay &maybay,FlightNode* CB){
 					else if(i==1&&start+10<=maybay.SoMayBay){
 						start+=10;
 						setfillstyle(1,0); 
-						bar(100,100,1300,665); //moi sua 
+						bar(100,100,1300,665);  
 					}
 				}
 			}
@@ -1670,7 +1718,7 @@ int Plane_processing(DSMayBay &maybay,FlightNode* CB){
 										bar(15,55,1385,735);
 										settextstyle(10,0,2); 
 										setbkcolor(14); 
-										outtextxy(250,100,"VI MA MAY BAY     DA DUOC THIET LAP CHO CAC CHUYEN BAY SAU, NEN KHONG THE XOA");
+										outtextxy(250,100,"VI MA MAY BAY       DA DUOC THIET LAP CHO CAC CHUYEN BAY SAU, NEN KHONG THE XOA");
 										setcolor(1); 
 										outtextxy(420,100,maybay.n[i-1]->SoHieuMB); 
 										FlightNode* PP=CB;
@@ -1688,27 +1736,47 @@ int Plane_processing(DSMayBay &maybay,FlightNode* CB){
 													outtoxy(490,215+50*k,PP->flight.date.hour);
 												} 
 												else{
+													outtoxy(490,215+50*k,0);
 													outtoxy(500,215+50*k,PP->flight.date.hour);
 												} 
 												outtextxy(520,215+50*k,":");
-												outtoxy(535,215+50*k,PP->flight.date.minute);
+												if(PP->flight.date.minute>9) {
+													outtoxy(535,215+50*k,PP->flight.date.minute);
+												}
+												else{
+													outtoxy(535,215+50*k,0);
+													outtoxy(545,215+50*k,PP->flight.date.minute);
+												} 
 												if(PP->flight.date.day>9){
 													outtoxy(575,215+50*k,PP->flight.date.day);
 												} 
 												else{
-													outtoxy(582,215+50*k,PP->flight.date.day);
+													outtoxy(575,215+50*k,0);
+													outtoxy(585,215+50*k,PP->flight.date.day);
 												} 
 												outtextxy(600,215+50*k,"/");
 												if(PP->flight.date.month>9){
 													outtoxy(617,215+50*k,PP->flight.date.month);
 												} 
 												else{
-													outtoxy(622,215+50*k,PP->flight.date.month);
+													outtoxy(617,215+50*k,0);
+													outtoxy(627,215+50*k,PP->flight.date.month);
 												} 
 												outtextxy(645,215+50*k,"/");
 												outtoxy(660,215+50*k,PP->flight.date.year);
 												drawCenteredText(1000,225+50*k,PP->flight.arrive);
-												outtoxy(1270,215+50*k,PP->flight.status);
+												if(PP->flight.status==0){
+													drawCenteredText(1275,225+50*k,"HUY CHUYEN");
+												} 
+												if(PP->flight.status==1){
+													drawCenteredText(1275,225+50*k,"CON VE");
+												} 
+												if(PP->flight.status==2){
+													drawCenteredText(1275,225+50*k,"HET VE");
+												} 
+												if(PP->flight.status==3){
+													drawCenteredText(1275,225+50*k,"HOAN TAT");
+												} 
 												k++; 
 											}
 											PP=PP->next;
@@ -1728,7 +1796,7 @@ int Plane_processing(DSMayBay &maybay,FlightNode* CB){
 										rectangle(1200,150,1350,200+50*k); 
 										setbkcolor(14); 
 										setcolor(4); 
-										outtextxy(100,230+50*k,"Trang Thai( 0: Huy chuyen, 1: Con ve, 2: het ve, 3: hoan tat )");
+									//	outtextxy(100,230+50*k,"Trang Thai( 0: Huy chuyen, 1: Con ve, 2: het ve, 3: hoan tat )");
 										setfillstyle(1,7); 
 										bar(20,80,80,140);
 										settextstyle(10, 0, 1);
