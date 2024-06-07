@@ -1229,6 +1229,9 @@ void sua(DSMayBay &maybay, int x, int y,int n,int CK,FlightNode* &CB){
 										}
 										P=P->next;
 									}
+									if(!save_flight_to_file("Data\\Flights.dat", CB, maybay)){
+										cout<<"Luu khong thanh cong!"<<'\n';
+									}
 									delete P; 
 									return; 
 								} 
