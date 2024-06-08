@@ -13,7 +13,9 @@ int main(){
     PNode *root = buildAVLTree(); 
 	     
 	//Load data            
-    readfile(plane_list);           
+    if(!readfile(plane_list)){
+    	return 0;
+	}         
     if(!load_flight_from_file("Data\\Flights.dat", flight_list, plane_list))
      	return 0;  
                        
