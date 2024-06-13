@@ -1450,33 +1450,34 @@ void viewLogic(int index, PTR_FLIGHT &flight_list, DSMayBay &plane_list, char *t
 			}
 			
 		}else if(ismouseclick(WM_MOUSEMOVE)){
-			getmouseclick(WM_MOUSEMOVE, x, y);
-			if(x > X_TABLE +1010  && x < X_TABLE + 1080 && y > Y1_TABLE + 50 && y < Y1_TABLE+50 + 42*maxRow) {
-				ok = true;
-				i = (y - 50 - Y1_TABLE) / 42;
-				setfillstyle(SOLID_FILL, 10);
-				bar(X_TABLE + 1010, Y_TABLE+42*i + 52, X_TABLE + 1010 + 70, Y_TABLE+42*i+52+38);
-				setcolor(0);
-				rectangle(X_TABLE + 1010, Y_TABLE+42*i + 52, X_TABLE + 1010 + 70, Y_TABLE+42*i+52+38);
-				setbkcolor(10);
-				setcolor(15);
-				settextstyle(10, HORIZ_DIR, 1);
-				outtextxy(X_TABLE + 1010 + 35 - textwidth("cancel")/2, Y_TABLE+42*i + 52 + 20 - textheight("cancel")/2, "cancel");
-				
-				for(int j = 0; j < maxRow; j++) {
-					if(i != j) {
-						fake_btn(X_TABLE + 1010, Y_TABLE+42*j + 52, 70, 38,2, "cancel");
+			if(counter != 0){
+				getmouseclick(WM_MOUSEMOVE, x, y);
+				if(x > X_TABLE +1010  && x < X_TABLE + 1080 && y > Y1_TABLE + 50 && y < Y1_TABLE+50 + 42*maxRow) {
+					ok = true;
+					i = (y - 50 - Y1_TABLE) / 42;
+					setfillstyle(SOLID_FILL, 10);
+					bar(X_TABLE + 1010, Y_TABLE+42*i + 52, X_TABLE + 1010 + 70, Y_TABLE+42*i+52+38);
+					setcolor(0);
+					rectangle(X_TABLE + 1010, Y_TABLE+42*i + 52, X_TABLE + 1010 + 70, Y_TABLE+42*i+52+38);
+					setbkcolor(10);
+					setcolor(15);
+					settextstyle(10, HORIZ_DIR, 1);
+					outtextxy(X_TABLE + 1010 + 35 - textwidth("cancel")/2, Y_TABLE+42*i + 52 + 20 - textheight("cancel")/2, "cancel");
+					
+					for(int j = 0; j < maxRow; j++) {
+						if(i != j) {
+							fake_btn(X_TABLE + 1010, Y_TABLE+42*j + 52, 70, 38,2, "cancel");
+						}
+					}
+				}else {
+					if(ok) {
+						for(int j = 0; j < maxRow; j++) {	
+							fake_btn(X_TABLE + 1010, Y_TABLE+42*j + 52, 70, 38,2, "cancel");
+						}
+						ok = false;
 					}
 				}
-			}else {
-				if(ok) {
-					for(int j = 0; j < maxRow; j++) {	
-						fake_btn(X_TABLE + 1010, Y_TABLE+42*j + 52, 70, 38,2, "cancel");
-					}
-					ok = false;
-				}
-			}
-			
+			}		
 			which_hovered_button(x, y,1,3);
 			which_hovered_button(x, y,8,9);
 		}
@@ -1509,7 +1510,6 @@ void cancelSticket(char* mcb, DSMayBay &plane_list, char *cccd, PTR_FLIGHT &flig
     }
     
     save_flight_to_file("Data\\Flights.dat", flight_list, plane_list);
-    cout << "canceled" << endl;
 }
 
 int load_ticket(FlightNode *node, char *cccd, Flight as[], DSMayBay &plane_list, char* ticket_list[]) {
@@ -1536,8 +1536,6 @@ int load_ticket(FlightNode *node, char *cccd, Flight as[], DSMayBay &plane_list,
 		} 		    
 		node = node->next;
 	}
-	
-	cout << "loaded" << endl;
 	return counter;
 } 
 
@@ -1556,41 +1554,42 @@ void render_s_table(Flight as[], int counter,int page, int pageMax, char *ticket
 				maxRow = 10;
 				start = 10;
 			}		
-		}else {
+		}else{
 			end = (counter % 10) + start - 1;
 			maxRow = counter % 10;
 		}
 	}
 		
 	char *dt[4];
-	
 	settextstyle(10, HORIZ_DIR, 1);
-	for(int i = start; i <= end; i++) {
-		int id = i - (page - 1)*10;
-		if(as[id].status == HOANTAT) {
-			fake_btn(X_TABLE + 1010, Y_TABLE+42*id + 52, 70, 38,7, "cancel");
+	if(counter != 0) {
+		for(int i = start; i <= end; i++) {
+			int id = i - (page - 1)*10;
+			if(as[id].status == HOANTAT) {
+				fake_btn(X_TABLE + 1010, Y_TABLE+42*id + 52, 70, 38,7, "cancel");
+			}
+			fake_btn(X_TABLE + 1010, Y_TABLE+42*id + 52, 70, 38,2, "cancel");
+			setcolor(0);
+			setfillstyle(SOLID_FILL, 15);
+			rectangle(X_TABLE, Y_TABLE, X_TABLE + 1000, Y_TABLE + 50 + 42*(id+1));
+			setbkcolor(11);
+			
+			dt[0] = as[i].flightID;
+			dt[1] = as[i].arrive;
+			string str = as[i].date.to_string();
+			char *temp = new char[str.length() + 1];
+			strcpy(temp, str.c_str());
+			dt[2] = temp;
+			delete[] temp;		  
+			dt[3] = ticket_list[i];
+			
+			for(int j = 0; j <= 3; j++) {
+				line(X_TABLE+250*(j), Y_TABLE +52 + 42*id, X_TABLE+250*(j), Y_TABLE + 92 + 42*(id));
+				outtextxy(X_TABLE+250*(j) + 15, Y_TABLE +52 + 42*id + 10, dt[j]);
+			}
 		}
-		fake_btn(X_TABLE + 1010, Y_TABLE+42*id + 52, 70, 38,2, "cancel");
-		setcolor(0);
-		setfillstyle(SOLID_FILL, 15);
-		rectangle(X_TABLE, Y_TABLE, X_TABLE + 1000, Y_TABLE + 50 + 42*(id+1));
-		setbkcolor(11);
+	}
 		
-		dt[0] = as[i].flightID;
-		dt[1] = as[i].arrive;
-		string str = as[i].date.to_string();
-		char *temp = new char[str.length() + 1];
-		strcpy(temp, str.c_str());
-		dt[2] = temp;
-		delete[] temp;		  
-		dt[3] = ticket_list[i];
-		
-		for(int j = 0; j <= 3; j++) {
-			line(X_TABLE+250*(j), Y_TABLE +52 + 42*id, X_TABLE+250*(j), Y_TABLE + 92 + 42*(id));
-			outtextxy(X_TABLE+250*(j) + 15, Y_TABLE +52 + 42*id + 10, dt[j]);
-		}
-	} 
-	
 	string navi = to_string(page) + "/" + to_string(pageMax);
 	setcolor(0);
 	setbkcolor(11);

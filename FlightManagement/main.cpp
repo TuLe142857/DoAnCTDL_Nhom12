@@ -4,14 +4,14 @@
                               
 int MainMenu();                 
 void SetupGraphic();    
-                                                                                                    
+                                                                                                                               
 int main(){ 
     cout << "Khoi dong CT" << endl;                  
     //Khai bao cac danh sach va load data
     DSMayBay plane_list;
     PTR_FLIGHT flight_list = NULL;
     PNode *root = buildAVLTree(); 
-	     
+	        
 	//Load data            
     readfile(plane_list);           
     if(!load_flight_from_file("Data\\Flights.dat", flight_list, plane_list))
