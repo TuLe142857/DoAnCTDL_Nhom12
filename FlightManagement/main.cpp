@@ -3,8 +3,7 @@
 #include"Passenger_processing.h"
                               
 int MainMenu();                 
-void SetupGraphic();    
-                                                                                                    
+void SetupGraphic();                                                                                   
 int main(){ 
     cout << "Khoi dong CT" << endl;                  
     //Khai bao cac danh sach va load data
@@ -56,6 +55,7 @@ int main(){
     //Giai phong bo nho cac danh sach, cac bien cap phat dong tai day
     //...
     freeing_flight_memory(flight_list, plane_list);
+    freeing_plane(plane_list);
     deleteTree(root);
     return 0;
 }       
@@ -74,10 +74,9 @@ int MainMenu(){
     outtextxy(WORKSPACE_X + 100, WORKSPACE_Y + 100, "DE TAI: VIET CHUONG TRINH QUAN LY CHUYEN BAY");
     outtextxy(WORKSPACE_X + 100, WORKSPACE_Y + 150, "NHOM: 12");
     outtextxy(WORKSPACE_X + 100, WORKSPACE_Y + 200, "THANH VIEN:");
-    outtextxy(WORKSPACE_X + 150, WORKSPACE_Y + 250, "");
+	outtextxy(WORKSPACE_X + 150, WORKSPACE_Y + 250, "");
     outtextxy(WORKSPACE_X + 150, WORKSPACE_Y + 300, "");
     outtextxy(WORKSPACE_X + 150, WORKSPACE_Y + 350, "");
-
     for(int i = 0; i < MAX_TAB; i++)    
         tab_button[i].print();        
     int mx, my;//luu toa do chuot                                             
