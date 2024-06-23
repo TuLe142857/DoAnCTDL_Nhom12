@@ -8,11 +8,13 @@
 #include <windows.h>
 #include <fstream>
 #define MAX 300 
+#define MaMayBay 15
+#define LoaiMayBay 40 
 using namespace std;
 
 struct MayBay {
-    char SoHieuMB[16];
-    char LoaiMB[41];
+    char SoHieuMB[MaMayBay+1];
+    char LoaiMB[LoaiMayBay+1];
     int SoDay;
     int SoDong; 
 };
