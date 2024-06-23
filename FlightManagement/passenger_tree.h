@@ -90,7 +90,7 @@ PNode *doubleRotateRight(PNode *z) {
     return singleRotateRight(z);
 }
 
-PNode *insert(PNode *root, PNode *parent, Passenger pas) {
+PNode *insert(PNode *root, Passenger pas) {
     if (!root) {
         root = new PNode;
         if (!root) {
@@ -101,7 +101,7 @@ PNode *insert(PNode *root, PNode *parent, Passenger pas) {
             root->left = root->right = NULL;
         }
     } else if (atoll(pas.getCccd()) < atoll(root->pas.getCccd())) {
-        root->left = insert(root->left, root, pas);
+        root->left = insert(root->left, pas);
         if (height(root->left) - height(root->right) == 2) {
             if (atoll(pas.getCccd()) < atoll(root->left->pas.getCccd())) {
                 root = singleRotateLeft(root);
@@ -110,7 +110,7 @@ PNode *insert(PNode *root, PNode *parent, Passenger pas) {
             }
         }
     } else if (atoll(pas.getCccd()) > atoll(root->pas.getCccd())) {
-        root->right = insert(root->right, root, pas);
+        root->right = insert(root->right, pas);
         if (height(root->right) - height(root->left) == 2) {
             if (atoll(pas.getCccd()) > atoll(root->right->pas.getCccd())) {
                 root = singleRotateRight(root);
@@ -168,11 +168,11 @@ void loadTreeData(PNode *&root) {
 	//fstream f("passengers.dat", ios::binary |ios::out|ios::in);
     fstream f("Data\\Passengers.dat", ios::binary |ios::out|ios::in);
 	while(f.read(reinterpret_cast<char*>(& pas), sizeof(Passenger))) {
-		root = insert(root, NULL, pas);
+		root = insert(root, pas);
 	}
 	f.close();
 }
-
+  
 // start load data
 
 int countObjects() {

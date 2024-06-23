@@ -304,6 +304,10 @@ void draw_customer_workspace(int NodeCounter,int &pageMax, int& page, PNode **&P
 			fillText(i, 15);
 		}
 	}
+	
+	setbkcolor(11);
+	setcolor(0);
+	outtextxy(50, Y2_TABLE + 20, "*Right click to open menu");
 }
 
 void fillText(int i, int bg) {
@@ -672,7 +676,7 @@ void insert_passenger(int &NodeCounter, PNode *&root, PNode**&Plist) {
     
     Passenger pas(cccd, ho, ten, sex); 
     
-    root = insert(root, NULL, pas); 
+    root = insert(root, pas); 
     
     delete []Plist;
 	NodeCounter++;
@@ -905,26 +909,14 @@ void which_hovered_row(int x, int y, int &page, int &pageMax, int &NodeCounter) 
 		if(hovered_row != index && hovered_row >= 0 && hovered_row <= 9 && index <= 9 ) {
 			row_hightlight(index, displayed_passengers[index]);
 			draw_row(Y_FIRSTROW+LINE_HEIGHT*hovered_row, displayed_passengers[hovered_row]);
+			hovered_row = index;
 		}
-		
 	}else {
-		int hehe;
-	
-		if(page == pageMax) {
-			if(NodeCounter % 10 == 0) {
-				hehe = 10;
-			}else { 
-				hehe = NodeCounter % 10;
-			}
-		}else {
-			hehe = 10;
-		}
-	
-		if(hovered_row >= 0 && hovered_row < hehe && NodeCounter != 0) {
+		if(hovered_row != NULL){
 			draw_row(Y_FIRSTROW+LINE_HEIGHT*hovered_row, displayed_passengers[hovered_row]);
+			hovered_row = NULL;
 		}
 	}	
-	hovered_row = index;
 }
 
 
@@ -1249,7 +1241,6 @@ void drawCancle(){
 }
 
 bool isCancel(char *text) {
-	cout << text << endl;
 	settextstyle(0, HORIZ_DIR, 2);
 	int textw = textwidth(text);
 	
@@ -1409,9 +1400,6 @@ void viewLogic(int index, PTR_FLIGHT &flight_list, DSMayBay &plane_list, char *t
 			}else if(x > X_TABLE +1010  && x < X_TABLE + 1080 && y > Y1_TABLE + 50 && y < Y1_TABLE+50 + 42*maxRow){
 				i = (y - 50 - Y1_TABLE) / 42;
 				int id = vpage*10 - 10 + i;
-				cout << id << endl;
-				cout << as[id].flightID << endl;
-				cout << as[id].status << endl;
 				char *alert = concatenateStrings("Do you want to cancel ", as[id].flightID);
 				if(as[id].status != HOANTAT) {
 					if(isCancel(alert)) {
@@ -1491,7 +1479,6 @@ void viewLogic(int index, PTR_FLIGHT &flight_list, DSMayBay &plane_list, char *t
 }
 
 void cancelSticket(char* mcb, DSMayBay &plane_list, char *cccd, PTR_FLIGHT &flight_list) {
-	cout << mcb << " : " << cccd << endl;
     PTR_FLIGHT node = flight_list;
     while (node != NULL) {
         if (strcmp(node->flight.flightID, mcb) == 0) {

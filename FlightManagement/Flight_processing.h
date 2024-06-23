@@ -1380,7 +1380,7 @@ void AddPassenger(PNode *&root){
                     newpassenger.setSex("Nu");
                 //=============== xac nhan them hanh khach
                 if(Confirm("Ban co xac nhan them hanh khach")){
-                    root = insert(root, NULL, newpassenger);
+                    root = insert(root, newpassenger);
                     saveData(root);
                     Notification("Them thanh cong!");
                     break;
