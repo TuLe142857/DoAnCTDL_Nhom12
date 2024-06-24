@@ -1,16 +1,16 @@
 #include"Plane_processing.h"
 #include"Flight_processing.h"
 #include"Passenger_processing.h"
-                              
+                                                      
 int MainMenu();                 
 void SetupGraphic();                                                                                   
 int main(){ 
     cout << "Khoi dong CT" << endl;                  
     //Khai bao cac danh sach va load data
-    DSMayBay plane_list;
+    DSMayBay plane_list;               
     PTR_FLIGHT flight_list = NULL;
     PNode *root = buildAVLTree(); 
-	     
+	        
 	//Load data            
     if(!readfile(plane_list)){
     	return 0;
