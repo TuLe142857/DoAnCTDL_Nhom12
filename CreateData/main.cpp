@@ -3,7 +3,7 @@
 #include"CreatePassenger.h"
 #include"CreatePlane.h"
 #include"CreateFlight.h"
-
+#include<windows.h>
 #include<iostream>
 using namespace std;
 void print_pas(PNode *root){
@@ -14,7 +14,25 @@ void print_pas(PNode *root){
         print_pas(root->right);
     }
 }
-int main(){    
+int main(){
+    //Tao folder(code tao folde loot tren chatCPT :)) )
+    LPCWSTR folderName = L"Data";
+    if (!(CreateDirectoryW(folderName, NULL) || ERROR_ALREADY_EXISTS == GetLastError())) {
+        cout << "Tao folder loi!" << endl;
+        return 0;
+    }
+        
+	//Tao file
+	fstream file1("Data\\Flights.dat", ios::out);
+	fstream file2("Data\\Planes.txt", ios::out);
+	fstream file3("Data\\Passengers.dat", ios::out);
+	if(!(file1 && file2 && file3)){
+		cout << "Error creating file" << endl;
+		return 0;
+	}
+	file1.close();
+	file2.close();
+	file3.close();    
     system("cls");
     srand(time(0)); 
     DSMayBay plane_list;
