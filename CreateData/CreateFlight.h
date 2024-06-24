@@ -1,6 +1,6 @@
 #pragma once
 #include"Random.h"
-#include"E:\\DoAnCTDL_Nhom12\\FlightManagement\\Flight.h"
+#include"..\\FlightManagement\\Flight.h"
 
 void CreateFlight(PTR_FLIGHT &flight_list, DSMayBay &plane_list, int n){
     Flight flight;

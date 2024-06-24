@@ -1,5 +1,5 @@
-#include"E:\\DoAnCTDL_Nhom12\\FlightManagement\\Plane.h"
-#include"E:\\DoAnCTDL_Nhom12\\FlightManagement\\Flight.h"
+#include"..\\FlightManagement\\Plane.h"
+#include"..\\FlightManagement\\Flight.h"
 #include"CreatePassenger.h"
 #include"CreatePlane.h"
 #include"CreateFlight.h"
@@ -51,7 +51,7 @@ int main(){
     savedata(plane_list);
     saveData(root);
     
-    cout << "OK" << endl;
+    system("pause");
     return 0;
 }
 

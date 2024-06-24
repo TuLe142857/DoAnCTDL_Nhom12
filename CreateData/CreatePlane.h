@@ -1,6 +1,6 @@
 #pragma once
 #include"Random.h"
-#include"E:\\DoAnCTDL_Nhom12\\FlightManagement\\Plane.h"
+#include"..\\FlightManagement\\Plane.h"
 
 string PlaneType[] = {"BOEING123", "BOEING456", "BOEING789", "AIRBUS123", "AIRBUS456", "AIRBUS789"};
 void CreatePlane(DSMayBay &plane_list, int n){
