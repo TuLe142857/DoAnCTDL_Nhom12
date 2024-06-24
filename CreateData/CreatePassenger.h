@@ -1,6 +1,6 @@
 #pragma once
 #include"Random.h"
-#include"E:\\DoAnCTDL_Nhom12\\FlightManagement\\passenger_tree.h"
+#include"..\\FlightManagement\\passenger_tree.h"
 
 string Ho[] = {
     "Nguyen", "Tran", "Le", "Pham", "Huynh", "Vo", "Phan", "Truong", "Bui", "Dang",
@@ -67,7 +67,7 @@ string HoLotNam[] = {"Van", "Minh", "Duc", "Thanh", "Quoc", "Hoang", "Ngoc", "Qu
 string to_stringn(int a, int n);
 string* Create_random_ID_arr(int n);
 void CreateName(char *ho, char*ten, char *gioitinh);
-void CreatePassenger(PNode *root, int n);
+
 
 
 //====================================
@@ -140,7 +140,7 @@ PNode* CreatePassenger(int n){
         pas.setSex(sex);
         cout << pas.getCccd() << endl
              << "\t"<< pas.getHo() << "-" <<pas.getTen() << "-" << pas.getSex() << endl << endl;
-        root = insert(root, NULL, pas);
+        root = insert(root, pas);
         if(root ==  NULL) cout << "================================err inser" << endl;
     }
 
