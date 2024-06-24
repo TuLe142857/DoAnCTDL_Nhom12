@@ -1694,7 +1694,7 @@ void cccd_array_filter(char *cccd, PNode **&Plist, int &page, int &pageMax, int 
 void filter_by_flightID(FlightNode *node, char *flightID, PNode **&Plist, PNode *root, int &pageMax, int &page, int &NodeCounter, DSMayBay &plane_list) {			
 		PTR_FLIGHT nod = SerchFlight(node, flightID);
 		
-		if(nod == NULL) {
+		if(nod == NULL || nod->flight.status == HUYCHUYEN || nod->flight.status == HOANTAT) {
 			delete []Plist;
 			page = 1;
 			pageMax = 1;
