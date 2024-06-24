@@ -8,11 +8,13 @@
 #include <windows.h>
 #include <fstream>
 #define MAX 300 
+#define MaMayBay 15
+#define LoaiMayBay 40 
 using namespace std;
 
 struct MayBay {
-    char SoHieuMB[16];
-    char LoaiMB[41];
+    char SoHieuMB[MaMayBay+1];
+    char LoaiMB[LoaiMayBay+1];
     int SoDay;
     int SoDong; 
 };
@@ -33,25 +35,29 @@ int SerchPlane(DSMayBay &ds, char* planeid){
     return index;
 }
 
-void readfile(DSMayBay &c) {
-    //ifstream f("DSMAYBAY.txt");
+int readfile(DSMayBay &c) {
     ifstream f("Data\\Planes.txt");
     if (!f.is_open()) {
         cout << "Khong the mo file" << endl;
-        return;
+        return 0;
     }
 
     string line;
     while (getline(f, line)) {
         MayBay *newMayBay = new MayBay;
         sscanf(line.c_str(), "%[^|]|%[^|]|%d|%d", newMayBay->SoHieuMB, newMayBay->LoaiMB, &newMayBay->SoDong, &newMayBay->SoDay);
+        for(int i=0;i<c.SoMayBay;i++){
+        	if(strcmp(newMayBay->SoHieuMB,c.n[i]->SoHieuMB)==0){
+        		cout<<"Load file may bay khong thanh cong!"<<endl;
+        		return 0;
+			}
+		}
         c.n[c.SoMayBay++] = newMayBay;
     }
     f.close();
 }
 
 void savedata(DSMayBay &c) {
-    //ofstream f("DSMAYBAY.txt");
     ofstream f("Data\\Planes.txt");
     if (!f.is_open()) {
         cout << "Khong the mo file" << endl;
@@ -62,3 +68,5 @@ void savedata(DSMayBay &c) {
     }
     f.close();
 }
+
+
