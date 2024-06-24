@@ -1274,7 +1274,7 @@ bool BookTicketForSeat(Flight &flight, int column, int row, PTR_FLIGHT flight_li
                     strcpy(flight.ticket[column][row], mediumdialog::InsertPassID.getcontent_char());
                     Notification("Dat ve thanh cong!");
                     mediumdialog::InsertPassID.setcontent("");
-                    return true;;
+                    return true;
                 }
                 PrintBookingTicketDialog(get_ticket_name(column, row));
             }
@@ -1347,12 +1347,12 @@ void AddPassenger(PNode *&root){
                     PrintAddPassengerDialog();
                     continue;//while(true)
                 }
-                if(mediumdialog::InsertFirstname.getcontent().size() == 0){
+                if(mediumdialog::InsertLastname.getcontent().size() == 0){
                     Notification("Khong duoc de trong ho");
                     PrintAddPassengerDialog();
                     continue;//while(true)
                 }
-                if(mediumdialog::InsertLastname.getcontent().size() == 0){
+                if(mediumdialog::InsertFirstname.getcontent().size() == 0){
                     Notification("Khong duoc de trong ten");
                     PrintAddPassengerDialog();
                     continue;//while(true)
@@ -1372,8 +1372,8 @@ void AddPassenger(PNode *&root){
 
                 //=============== Load du lieu vao newpassenger
                 newpassenger.setCccd(mediumdialog::InsertPassID.getcontent_char());
-                newpassenger.setHo(mediumdialog::InsertFirstname.getcontent_char());
-                newpassenger.setTen(mediumdialog::InsertLastname.getcontent_char());
+                newpassenger.setHo(mediumdialog::InsertLastname.getcontent_char());
+                newpassenger.setTen(mediumdialog::InsertFirstname.getcontent_char());
                 if(mediumdialog::male.isclicked())
                     newpassenger.setSex("Nam");
                 else 
