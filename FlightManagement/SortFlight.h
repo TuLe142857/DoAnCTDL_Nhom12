@@ -121,8 +121,8 @@ void QuickSortFlight_byDate_Incre(Flight**arr, int low, int high){
             j--;
         }
     }while(i <= j);
-    if(j > low && j != high) QuickSortFlight_byDate_Incre(arr, low, j);
-    if(i < high && i != low) QuickSortFlight_byDate_Incre(arr, i, high);
+    if(j > low /*&& j != high*/) QuickSortFlight_byDate_Incre(arr, low, j);
+    if(i < high /*&& i != low*/) QuickSortFlight_byDate_Incre(arr, i, high);
 }
 
 void QuickSortFlight_byDate_Decre(Flight**arr, int low, int high){
@@ -142,8 +142,8 @@ void QuickSortFlight_byDate_Decre(Flight**arr, int low, int high){
             j--;
         }
     }while(i <= j);
-    if(j > low && j != high) QuickSortFlight_byDate_Decre(arr, low, j);
-    if(i < high && i != low) QuickSortFlight_byDate_Decre(arr, i, high);
+    if(j > low /*&& j != high*/) QuickSortFlight_byDate_Decre(arr, low, j);
+    if(i < high /*&& i != low*/) QuickSortFlight_byDate_Decre(arr, i, high);
 }
 
 void QuickSortFlight_byFID_Incre(Flight**arr, int low, int high){
@@ -163,8 +163,8 @@ void QuickSortFlight_byFID_Incre(Flight**arr, int low, int high){
             j--;
         }
     }while(i <= j);
-    if(j > low && j != high) QuickSortFlight_byFID_Incre(arr, low, j);
-    if(i < high && i != low) QuickSortFlight_byFID_Incre(arr, i, high);
+    if(j > low /*&& j != high*/) QuickSortFlight_byFID_Incre(arr, low, j);
+    if(i < high /*&& i != low*/) QuickSortFlight_byFID_Incre(arr, i, high);
 }
 
 void QuickSortFlight_byFID_Decre(Flight**arr, int low, int high){
@@ -184,8 +184,8 @@ void QuickSortFlight_byFID_Decre(Flight**arr, int low, int high){
             j--;
         }
     }while(i <= j);
-    if(j > low && j != high) QuickSortFlight_byFID_Decre(arr, low, j);
-    if(i < high && i != low) QuickSortFlight_byFID_Decre(arr, i, high);
+    if(j > low /*&& j != high*/) QuickSortFlight_byFID_Decre(arr, low, j);
+    if(i < high /*&& i != low*/) QuickSortFlight_byFID_Decre(arr, i, high);
 }
 
 //planeid incre
@@ -206,8 +206,8 @@ void QuickSortFlight_byPLID_Incre(Flight**arr, int low, int high){
         }
 
     }while(i <= j);
-    if(j > low && j != high) QuickSortFlight_byPLID_Incre(arr, low, j);
-    if(i < high && i != low) QuickSortFlight_byPLID_Incre(arr, i, high);
+    if(j > low /*&& j != high*/) QuickSortFlight_byPLID_Incre(arr, low, j);
+    if(i < high /*&& i != low*/) QuickSortFlight_byPLID_Incre(arr, i, high);
 }
 
 //planeid decre
@@ -228,8 +228,8 @@ void QuickSortFlight_byPLID_Decre(Flight**arr, int low, int high){
         }
 
     }while(i <= j);
-    if(j > low && j != high) QuickSortFlight_byPLID_Decre(arr, low, j);
-    if(i < high && i != low) QuickSortFlight_byPLID_Decre(arr, i, high);
+    if(j > low /*&& j != high*/) QuickSortFlight_byPLID_Decre(arr, low, j);
+    if(i < high /*&& i != low*/) QuickSortFlight_byPLID_Decre(arr, i, high);
 }
 
 //arrive incre
@@ -252,8 +252,8 @@ void QuickSortFlight_byAR_Incre(Flight**arr, int low, int high){
         }
 
     }while(i <= j);
-    if(j > low && j != high) QuickSortFlight_byAR_Incre(arr, low, j);
-    if(i < high && i != low) QuickSortFlight_byAR_Incre(arr, i, high);
+    if(j > low /*&& j != high*/) QuickSortFlight_byAR_Incre(arr, low, j);
+    if(i < high /*&& i != low*/) QuickSortFlight_byAR_Incre(arr, i, high);
 }
 //arrive decre
 void QuickSortFlight_byAR_Decre(Flight**arr, int low, int high){
@@ -274,6 +274,6 @@ void QuickSortFlight_byAR_Decre(Flight**arr, int low, int high){
         }
 
     }while(i <= j);
-    if(j > low && j != high) QuickSortFlight_byAR_Decre(arr, low, j);
-    if(i < high && i != low) QuickSortFlight_byAR_Decre(arr, i, high);
+    if(j > low /*&& j != high*/) QuickSortFlight_byAR_Decre(arr, low, j);
+    if(i < high /*&& i != low*/) QuickSortFlight_byAR_Decre(arr, i, high);
 }

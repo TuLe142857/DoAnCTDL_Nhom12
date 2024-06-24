@@ -415,14 +415,14 @@ void PrintAddPassengerDialog(){
     mediumdialog::male.print();
     mediumdialog::female.print();
     outtextxy(mediumdialog::InsertPassID.getx() - textwidth("CCCD") - 15, mediumdialog::InsertPassID.gety() + 5, "CCCD");
-    outtextxy(mediumdialog::InsertFirstname.getx() - textwidth("Ho") - 15, mediumdialog::InsertFirstname.gety() + 5, "Ho ");
-    outtextxy(mediumdialog::InsertLastname.getx() - textwidth("Ten") - 15, mediumdialog::InsertLastname.gety() + 5, "Ten");
+    outtextxy(mediumdialog::InsertLastname.getx() - textwidth("Ho") - 15, mediumdialog::InsertLastname.gety() + 5, "Ho");
+    outtextxy(mediumdialog::InsertFirstname.getx() - textwidth("Ten") - 15, mediumdialog::InsertFirstname.gety() + 5, "Ten");
     outtextxy(mediumdialog::male.getx() - textwidth("Gioi tinh") - 15, mediumdialog::male.gety() + 5, "Gioi tinh");
     outtextxy(mediumdialog::male.getx() + mediumdialog::male.getsize() + 10, mediumdialog::male.gety() + 5, "Nam");
     outtextxy(mediumdialog::female.getx() + mediumdialog::female.getsize() + 10, mediumdialog::female.gety() + 5, "Nu");
     mediumdialog::apply_button.print();
     mediumdialog::cancel_button.print();
-    mediumdialog::choose_passenger_button.print();
+    //mediumdialog::choose_passenger_button.print();
 
     setgraphicsettings(&currentsettings);
 }
@@ -1201,8 +1201,8 @@ void SetupGraphicFlightTab(){
     mediumdialog::y = WORKSPACE_Y + WORKSPACE_HEIGHT/2 - mediumdialog::height/2;
 
     mediumdialog::InsertPassID.   setup(mediumdialog::x + 250, mediumdialog::y + 130, MAX_PASSENGERID, F_FONT, F_SMALL);
-    mediumdialog::InsertFirstname.setup(mediumdialog::x + 250, mediumdialog::y + 180, 19, F_FONT, F_SMALL);
-    mediumdialog::InsertLastname. setup(mediumdialog::x + 250, mediumdialog::y + 230, 19, F_FONT, F_SMALL);
+    mediumdialog::InsertLastname.setup(mediumdialog::x + 250, mediumdialog::y + 180, 19, F_FONT, F_SMALL);
+    mediumdialog::InsertFirstname. setup(mediumdialog::x + 250, mediumdialog::y + 230, 19, F_FONT, F_SMALL);
 
     mediumdialog::InsertPassID.   settitle("MAX 12 ky tu");
     mediumdialog::InsertFirstname.settitle("MAX 19 ky tu");

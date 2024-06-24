@@ -309,45 +309,65 @@ bool Insert_month(InsertBox *ib, char &c){
     return true;
 }
 
-bool Insert_firstname(InsertBox *ib, char &c){
-    if( !( (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') ||(c == ' ')) ) 
-        return false;
+//Ho + ten dem
+bool Insert_lastname(InsertBox *ib, char &c){
+    // if( !( (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z') ||(c == ' ')) ) 
+    //     return false;
 
+    // if(c == ' '){
+    //     //Khong cho khoang trang o vi tri dau tien
+    //     if(ib->contentsize == 0){
+    //          return false;
+    //     } 
+    //     else if(ib->contentsize > 0){
+    //         //khong de 2 khoang trang lien tiep
+    //         if(ib->content[ib->contentsize-1] == ' ') return false;
+    //     }
+    //     return true;
+    // }
+
+
+    // if(c >= 'a' && c <= 'z'){
+    //     //Viet hoa chu cai dau tien
+    //     if(ib->contentsize == 0){
+    //         c -= 32;
+    //         return true;
+    //     }
+    //     //Tu dong viet hoa sau khoang trang
+    //     else if(ib->content[ib->contentsize-1] == ' '){
+    //         c -= 32;
+    //         return true;
+    //     }
+    // }
+    // return true;
+    if(c >= 'a' && c <= 'z') c-= 32;
     if(c == ' '){
-        //Khong cho khoang trang o vi tri dau tien
-        if(ib->contentsize == 0){
-             return false;
-        } 
-        else if(ib->contentsize > 0){
-            //khong de 2 khoang trang lien tiep
-            if(ib->content[ib->contentsize-1] == ' ') return false;
-        }
+        //Khong de khoang trang vi tri dau tien
+        if(ib->contentsize == 0)
+            return false;
+        
+        //Khong de hai khoang trang lien tiep
+        else if(ib->content[ib->contentsize-1] == ' ')
+            return false;
         return true;
     }
-
-
-    if(c >= 'a' && c <= 'z'){
-        //Viet hoa chu cai dau tien
-        if(ib->contentsize == 0){
-            c -= 32;
-            return true;
-        }
-        //Tu dong viet hoa sau khoang trang
-        else if(ib->content[ib->contentsize-1] == ' '){
-            c -= 32;
-            return true;
-        }
-    }
-    return true;
+    if(c >= 'A' && c <= 'Z')
+        return true;
+    return false;
 }
- 
-bool Insert_lastname(InsertBox *ib, char &c){
-    if( !( (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')))
-        return false;
-    
-    //viet hoa chu dau tien
-    if(ib->contentsize == 0 && (c >= 'a' && c <= 'z'))
-        c -= 32;
 
-    return true;
+//Ten 
+bool Insert_firstname(InsertBox *ib, char &c){
+    // if( !( (c >= 'a' && c <= 'z') || (c >= 'A' && c <= 'Z')))
+    //     return false;
+    
+    // //viet hoa chu dau tien
+    // if(ib->contentsize == 0 && (c >= 'a' && c <= 'z'))
+    //     c -= 32;
+
+    // return true;
+    if(c >= 'a' && c <= 'z') c-= 32;
+    if(c >= 'A' && c <= 'Z') return true;
+    return false;
+
 }
