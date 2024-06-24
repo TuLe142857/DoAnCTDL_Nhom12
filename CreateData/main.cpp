@@ -3,7 +3,7 @@
 #include"CreatePassenger.h"
 #include"CreatePlane.h"
 #include"CreateFlight.h"
-
+#include<windows.h>
 #include<iostream>
 using namespace std;
 void print_pas(PNode *root){
@@ -15,6 +15,13 @@ void print_pas(PNode *root){
     }
 }
 int main(){
+    //Tao folder(code tao folde loot tren chatCPT :)) )
+    LPCWSTR folderName = L"Data";
+    if (!(CreateDirectoryW(folderName, NULL) || ERROR_ALREADY_EXISTS == GetLastError())) {
+        cout << "Tao folder loi!" << endl;
+        return 0;
+    }
+        
 	//Tao file
 	fstream file1("Data\\Flights.dat", ios::out);
 	fstream file2("Data\\Planes.txt", ios::out);
