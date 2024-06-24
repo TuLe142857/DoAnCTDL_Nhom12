@@ -487,7 +487,7 @@ bool AddFlight(PTR_FLIGHT &flight_list, DSMayBay &plane_list){
                 }
                 //PlaneID
                 if(InsertFlightBox[PLANEID].getcontent().size() == 0){
-                    Notification("Khong duoc de trong  ma chuyen bay!");
+                    Notification("Khong duoc de trong  ma may bay!");
                     PrintAddFlightDialog();
                     continue;//while(true)
                 }
