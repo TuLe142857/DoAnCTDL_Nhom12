@@ -14,7 +14,18 @@ void print_pas(PNode *root){
         print_pas(root->right);
     }
 }
-int main(){    
+int main(){
+	//Tao file
+	fstream file1("Data\\Flights.dat", ios::out);
+	fstream file2("Data\\Planes.txt", ios::out);
+	fstream file3("Data\\Passengers.dat", ios::out);
+	if(!(file1 && file2 && file3)){
+		cout << "Error creating file" << endl;
+		return 0;
+	}
+	file1.close();
+	file2.close();
+	file3.close();    
     system("cls");
     srand(time(0)); 
     DSMayBay plane_list;
