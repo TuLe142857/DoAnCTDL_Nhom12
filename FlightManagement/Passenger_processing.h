@@ -669,9 +669,9 @@ void insert_passenger(int &NodeCounter, PNode *&root, PNode**&Plist) {
     char *sex;
     
     if(checkbox[MALE].isClicked == true) {
-        sex = "NAM";
+        sex = "Nam";
     } else {
-        sex = "NU";
+        sex = "Nu";
     }
     
     Passenger pas(cccd, ho, ten, sex); 
@@ -1048,7 +1048,7 @@ void draw_edit_gui(int index) {
 	setcolor(0);
 	rectangle(x , y, x+width, y+height);
 	
-	if(strcmp(displayed_passengers[index].getSex(), "NAM") == 0 || strcmp(displayed_passengers[index].getSex(), "nam") == 0) {
+	if(strcmp(displayed_passengers[index].getSex(), "Nam") == 0) {
 		checkbox[MALE].isClicked = true;
 		checkbox[FEMALE].isClicked = false;
 		choose_box(male);
@@ -1141,9 +1141,9 @@ void edit_passenger(int index, int &page, PNode *&root, PNode**&Plist) {
 	char *new_sex;
 	
 	if(checkbox[MALE].isClicked == true) {
-        new_sex = "NAM";
+        new_sex = "Nam";
     } else {
-        new_sex = "NU";
+        new_sex = "Nu";
     }    
     
     

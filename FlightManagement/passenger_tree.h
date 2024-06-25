@@ -21,6 +21,64 @@ struct PNode {
     PNode() : pas("", "", "", ""), left(NULL), right(NULL), height(0) {}
 };
 
+struct Node {
+    PNode *pNode;
+    Node *next;
+    
+    Node(PNode *pNode) : pNode(pNode), next(NULL) {}
+};
+
+class Queue {
+private:
+    Node *front;
+    Node *rear;
+    
+public:
+    Queue() : front(NULL), rear(NULL) {}
+    
+    bool isEmpty() {
+        return front == NULL;
+    }
+    
+    void enqueue(PNode *pNode) {
+        Node *temp = new Node(pNode);
+        if (rear == NULL) {
+            front = rear = temp;
+            return;
+        }
+        rear->next = temp;
+        rear = temp;
+    }
+    
+    PNode *dequeue() {
+        if (isEmpty()) {
+            cout <<("Queue is empty");
+        }
+        Node *temp = front;
+        front = front->next;
+        
+        if (front == NULL) {
+            rear = NULL;
+        }
+        
+        PNode *pNode = temp->pNode;
+        delete temp;
+        return pNode;
+    }
+    
+    PNode *peek() {
+        if (isEmpty()) {
+            cout << ("Queue is empty");
+        }
+        return front->pNode;
+    }
+    
+    ~Queue() {
+        while (!isEmpty()) {
+            dequeue();
+        }
+    }
+};
 // STRUCT HERE
 
 
@@ -59,6 +117,7 @@ int getBalance(PNode *N)
 }
 
 PNode *singleRotateLeft(PNode *x) {
+	cout << "single rotate" << endl;
     PNode *w = x->left;
     x->left = w->right;
     w->right = x;
@@ -69,6 +128,7 @@ PNode *singleRotateLeft(PNode *x) {
 }
 
 PNode *singleRotateRight(PNode *x) {
+	cout << "single rotate" << endl;
     PNode *w = x->right;
     x->right = w->left;
     w->left = x;
@@ -81,11 +141,13 @@ PNode *singleRotateRight(PNode *x) {
 }
 
 PNode *doubleRotateLeft(PNode *z) {
+	cout << "double rotate" << endl;
     z->left = singleRotateRight(z->left);
     return singleRotateLeft(z);
 }
 
 PNode *doubleRotateRight(PNode *z) {
+	cout << "double rotate" << endl;
     z->right = singleRotateLeft(z->right);
     return singleRotateRight(z);
 }
@@ -172,87 +234,34 @@ void loadTreeData(PNode *&root) {
 	}
 	f.close();
 }
-  
-// start load data
-
-int countObjects() {
-    //ifstream file("passengers.dat", ios::binary);
-    ifstream file("Data//Passengers.dat", ios::binary |ios::in |ios::out);
-    if (!file) {
-        cerr << "Could not open file." << endl;
-        return -1;
-    }
-
-    Passenger temp;
-    int count = 0;
-    while (file.read(reinterpret_cast<char*>(&temp), sizeof(Passenger))) {
-        count++;
-    }
-    
-    return count;
-}
-
-Passenger *buildArrayData(int count){
-    ifstream file("Data\\Passengers.dat", ios::binary|ios::in |ios::out);
-    if (!file) {
-        cerr << "Could not open file." << endl;
-    }
-
-    Passenger temp;
-
-    Passenger *pas_arr = new Passenger[count];
-    int index = 0;
-    while (file.read(reinterpret_cast<char*>(&temp), sizeof(Passenger))) {
-        pas_arr[index] = temp;
-        index++;
-    }
-    
-    file.close();
-    return pas_arr;
-}
-
-PNode *build(int start, int end, Passenger* data) {
-	  if (start > end) {
-            return NULL;
-        }
-
-        int mid = start + (end - start) / 2;
-        PNode *node = new PNode;
-        
-        node->pas = data[mid];
-
-        node->left = build(start, mid - 1, data);
-        node->right = build(mid + 1, end, data);
-
-        node->height = 1 + max(height(node->left), height(node->right));
-
-        return node;
-}
-
-PNode *buildAVLTree(){
-	int count = countObjects();
-	Passenger *passenger_array = buildArrayData(count);
-	int start = 0;
-	PNode *root = build(start, count-1, passenger_array);
-	delete[] passenger_array;
-	return root;
-}
-
-// end load data
 
 void save(PNode *root, fstream &f) {
-    if (root) {
-        save(root->left, f);
-        if (!f.write(reinterpret_cast<char*>(&(root->pas)), sizeof(Passenger))) {
+	PNode *temp;
+	Queue queue;
+	
+	if(!root) {
+		return;
+	}
+	
+	queue.enqueue(root);
+	while(!queue.isEmpty()) {
+		temp = queue.dequeue();
+		if (!f.write(reinterpret_cast<char*>(&(temp->pas)), sizeof(Passenger))) {
             cerr << "Error writing to file." << endl;
             return;
         }
-        save(root->right, f);
-    }
+        
+        if(temp->left) {
+        	queue.enqueue(temp->left);
+		}
+		
+		if(temp->right) {
+        	queue.enqueue(temp->right);
+		}
+	}
 }
 
 void saveData(PNode *root) {
-    //fstream f("passengers.dat", ios::binary | ios::out | ios::trunc); 
     fstream f("Data\\Passengers.dat", ios::binary | ios::out | ios::trunc);
     if (!f) {
         cerr << "Error opening file." << endl;
