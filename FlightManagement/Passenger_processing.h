@@ -606,9 +606,13 @@ void add_passenger(int &NodeCounter, int &page, int &pageMax, PNode *&root, PNod
 						notification_v3(message);
 						
 					}else {
-						insert_passenger(NodeCounter, root, Plist);
-						notification_v2("Inserted!!");
-						draw_add_gui();
+						if(!isCancel("Are you sure to submit!")){
+							insert_passenger(NodeCounter, root, Plist);
+							notification_v2("Inserted!!");
+							draw_add_gui();
+						}else{
+							draw_add_gui();
+						}
 					}
 					break;
 			}	     
