@@ -76,9 +76,9 @@ int MainMenu(){
     outtextxy(WORKSPACE_X + 100, WORKSPACE_Y + 100, "DE TAI: VIET CHUONG TRINH QUAN LY CHUYEN BAY");
     outtextxy(WORKSPACE_X + 100, WORKSPACE_Y + 150, "NHOM: 12");
     outtextxy(WORKSPACE_X + 100, WORKSPACE_Y + 200, "THANH VIEN:");
-	outtextxy(WORKSPACE_X + 150, WORKSPACE_Y + 250, "");
-    outtextxy(WORKSPACE_X + 150, WORKSPACE_Y + 300, "");
-    outtextxy(WORKSPACE_X + 150, WORKSPACE_Y + 350, "");
+	outtextxy(WORKSPACE_X + 150, WORKSPACE_Y + 250, "Le Ngoc Tu - N22DCCN193");
+    outtextxy(WORKSPACE_X + 150, WORKSPACE_Y + 300, "Dang Huu Hieu - N22DCCN127");
+    outtextxy(WORKSPACE_X + 150, WORKSPACE_Y + 350, "Nguyen Sy Kim Bang - N22DCCN106");
     for(int i = 0; i < MAX_TAB; i++)    
         tab_button[i].print();            
     int mx, my;//luu toa do chuot                                             
