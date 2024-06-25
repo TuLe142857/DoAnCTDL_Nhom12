@@ -9,8 +9,10 @@ int main(){
     //Khai bao cac danh sach va load data
     DSMayBay plane_list;               
     PTR_FLIGHT flight_list = NULL;
-    PNode *root = buildAVLTree(); 
-	        
+    
+    PNode *root =  NULL;
+    loadTreeData(root);
+	          
 	//Load data            
     if(!readfile(plane_list)){
     	return 0;
@@ -43,19 +45,19 @@ int main(){
                 choosen_tab = Passenger_processing(root, flight_list, plane_list); 
                 break;
             }
-            case MAIN_MENU:{      
+            case MAIN_MENU:{          
                 choosen_tab = MainMenu();  
-                break;
+                break;           
             }          
-        }   
+        }           
     }      
-                                                                            
+                                                                                
     closegraph();
- 
+    
     //Giai phong bo nho cac danh sach, cac bien cap phat dong tai day
     //...
     freeing_flight_memory(flight_list, plane_list);
-    freeing_plane(plane_list);
+    freeing_plane(plane_list); 
     deleteTree(root);
     return 0;
 }       
@@ -78,7 +80,7 @@ int MainMenu(){
     outtextxy(WORKSPACE_X + 150, WORKSPACE_Y + 300, "");
     outtextxy(WORKSPACE_X + 150, WORKSPACE_Y + 350, "");
     for(int i = 0; i < MAX_TAB; i++)    
-        tab_button[i].print();        
+        tab_button[i].print();            
     int mx, my;//luu toa do chuot                                             
     while(1){                
         //click chuot trai        
@@ -100,8 +102,8 @@ int MainMenu(){
                     tab_button[i].unhover();
         } 
         delay(100);
-    }
-}                                             
+    }        
+}                                                                     
 void SetupGraphic(){
     for(int i = 0; i < MAX_TAB; i++){
         tab_button[i].settext(3, HORIZ_DIR, 1);
