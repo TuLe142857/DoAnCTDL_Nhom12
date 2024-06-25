@@ -50,8 +50,8 @@ h)
   - Điều kiện chỉnh chuyến bay:
     - Chuyến bay có trạng thái `1: Còn vé` hoặc `2: Hết vé`
     - Không được chỉnh thời gian về gần với hiện tại(chỉ được lùi thời gian bay)
-      - Nếu đổi máy bay: Máy bay không được xung đột thời gian bay
-      - Hành khách không được xung đột thời gian bay
+    - Nếu đổi máy bay: Máy bay không được xung đột thời gian bay
+    - Hành khách không được xung đột thời gian bay
   - Điều kiện đặt/ hủy vé:
   - Điều kiện hủy chuyến bay: 
   - Điều kiện in danh sách hành khách trong chuyến bay: luôn in được
