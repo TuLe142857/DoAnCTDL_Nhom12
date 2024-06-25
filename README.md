@@ -13,11 +13,11 @@
 ## Đề tài<a name = "1"></a>
 #### - Quản lý chuyến bay nội địa
 #### - Cấu trúc dữ liệu:
-- [Máy bay](FlightManagement/Plane.h): Mảng con trỏ tối đa 300 máy bay. Mỗi máy bay có các thông tin(<u>Số hiệu MB</u>(C15), loại máy bay(C40), số dãy, số dòng); Mỗi máy bay có 1 số hiệu duy nhất; (số chỗ = số dãy * số dòng), số chỗ >= 20.
+- [Máy bay](FlightManagement/Plane.h): Mảng con trỏ tối đa 300 máy bay. Mỗi máy bay có các thông tin(**`Số hiệu MB`**(C15), loại máy bay(C40), số dãy, số dòng); Mỗi máy bay có 1 số hiệu duy nhất; (số chỗ = số dãy * số dòng), số chỗ >= 20.
     Nếu số dãy = 5 nghĩa là máy bay có 5 các dãy A, B, C, D, E; Nếu số dòng = 20 nghĩa là máy bay có các hàng ghế được đánh số từ 1 đến 20.Kết hợp dãy và hàng ghế ta sẽ có số vé
     Theo ví dụ trên, ta có 100 vé với các số vé A01, A02, ....A20, ... E19, E20.
-- [Chuyến bay](FlightManagement/Flight.h): danh sách liên kết đơn( <u>Mã CB</u>(C15), Ngày giờ khời hành, sân bay đến, trạng thái, Số hiệu MB, danh sách vé). Mỗi chuyến bay có 1 mã duy nhất; trạng thái chuyến bay bao gồm: `0: Hủy chuyến` `1: Còn vé` `2: Hết vé` `3: Hoàn tất`; danh sách vé cho biết thông tin vé trên chuyến bay, và số CMND của hành khách đã đặt vé đó. Danh sách vé được cấp phát bộ nhớ tự động dựa vào số chỗ của máy bay thực hiện chuyến bay. **Danh sách chuyến bay luôn có sẵn thứ tự theo mã chuyến bay.**
-- [Hành khách](FlightManagement/passenger_tree.h): cây nhị phân tìm kiếm cân bằng(<u>Số CMND</u>, Ho , Ten, Phai)
+- [Chuyến bay](FlightManagement/Flight.h): danh sách liên kết đơn( **`Mã CB`**(C15), Ngày giờ khời hành, sân bay đến, trạng thái, Số hiệu MB, danh sách vé). Mỗi chuyến bay có 1 mã duy nhất; trạng thái chuyến bay bao gồm: `0: Hủy chuyến` `1: Còn vé` `2: Hết vé` `3: Hoàn tất`; danh sách vé cho biết thông tin vé trên chuyến bay, và số CMND của hành khách đã đặt vé đó. Danh sách vé được cấp phát bộ nhớ tự động dựa vào số chỗ của máy bay thực hiện chuyến bay. **Danh sách chuyến bay luôn có sẵn thứ tự theo mã chuyến bay.**
+- [Hành khách](FlightManagement/passenger_tree.h): cây nhị phân tìm kiếm cân bằng(**`Số CMND`**, Ho , Ten, Phai)
 
 #### - Các chức năng theo yêu cầu đề bài:
 a) Cập nhật danh sách các máy bay(thêm/ xóa/ hiệu chỉnh)
