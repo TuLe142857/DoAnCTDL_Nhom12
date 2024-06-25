@@ -792,8 +792,8 @@ void get_input(InputBox ib, int s, int f, PNode **&Plist, PNode *root, int &Node
 				outtextxy(x + char_width*char_counter+ 8, y+height/2 - 5, "-");
 
 			}else if((isalnum(c) && char_counter < 12 && strcmp(ib.type, "CCCD") == 0 && c >= '0'&& c <= '9') || 
-					 (isalnum(c) && char_counter < 20 && strcmp(ib.type, "NAME") == 0) ||
-					 (isalnum(c) && char_counter < 20 && strcmp(ib.type, "SURNAME") == 0) || 
+					 (isalnum(c) && char_counter < 20 && strcmp(ib.type, "NAME") == 0 && c >= 'a' && c <= 'z') ||
+					 (isalnum(c) && char_counter < 20 && strcmp(ib.type, "SURNAME") == 0 && c >= 'a' && c <= 'z') || 
 					 (isalnum(c) && char_counter < 15 && ib.id == 1)){
 				if (c >= 'a' && c <= 'z') {
             		 c = c - 'a' + 'A';
