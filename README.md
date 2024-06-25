@@ -1,5 +1,5 @@
 # Đồ Án Cấu Trúc Dữ Liệu Và Giải Thuật - Nhóm 12
-### Thành viên:
+## Thành viên:
 - Lê Ngọc Tú
 - Đặng Hữu Hiếu
 - Nguyễn Sỹ Kim Bằng
@@ -10,7 +10,7 @@
 - [Đọc kỹ hdsd trước khi dùng](#3)
 - [Kết quả thi](#4)
 
-### Đề tài<a name = "1"></a>
+## Đề tài<a name = "1"></a>
 #### - Quản lý chuyến bay nội địa
 #### - Cấu trúc dữ liệu:
 - [Máy bay](FlightManagement/Plane.h): Mảng con trỏ tối đa 300 máy bay. Mỗi máy bay có các thông tin(<u>Số hiệu MB</u>(C15), loại máy bay(C40), số dãy, số dòng); Mỗi máy bay có 1 số hiệu duy nhất; (số chỗ = số dãy * số dòng), số chỗ >= 20.
@@ -21,17 +21,24 @@
 
 #### - Các chức năng theo yêu cầu đề bài:
 a) Cập nhật danh sách các máy bay(thêm/ xóa/ hiệu chỉnh)
+
 b) Cập nhật chuyến bay: 
+
 c)
+
 d)
+
 e)
+
 f)
+
 g)
+
 h)
 > [!NOTE]
 > Lưu ý: Chương trình cho phép lưu các danh sách vào file; Kiểm tra điều kiện khi nhập dữ liệu làm dữ liệu bị sai
 
-### Xây dựng chương trình <a name = "2"></a>
+## Xây dựng chương trình <a name = "2"></a>
 #### - Phân công thành viên:    
 - Chương trình có 3 cấu trúc dữ liệu chính => mỗi thành viên code 1 CTDL
 - Chương trình xử lý 3 vấn đề(tương tác thêm/chỉnh,... 3 cấu trúc dữ liệu chính), chia chương trình thành 3 phần tương ứng, mỗi thành viên một phần(tương ứng với cấu trúc dữ liệu của người đó code)
@@ -50,7 +57,7 @@ h)
   - Điều kiện in danh sách hành khách trong chuyến bay: luôn in được
 - **`Hành khách`**:
 
-### Hướng dẫn chạy CT + ảnh demo <a name = "3"></a>
+## Hướng dẫn chạy CT + ảnh demo <a name = "3"></a>
 
 #### - Hướng dẫn tải và chạy CT
 - Chương trình sử dụng đồ họa Graphics.h
@@ -74,7 +81,7 @@ h)
 ![](Image/passengertab1.png)
 
 
-### Kết quả thi<a name = "4"></a>
+## Kết quả thi<a name = "4"></a>
 > `25/6/2024`Mai thi mà nay chưa học xong cây AVL với Heap sort :)
 
 - [ ] Qua môn :satisfied:
