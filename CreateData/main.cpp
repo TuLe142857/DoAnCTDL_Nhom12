@@ -1,12 +1,12 @@
 #include"..\\FlightManagement\\Plane.h"
 #include"..\\FlightManagement\\Flight.h"
-#include"CreatePassenger.h"
+#include"CreatePassenger.h"   
 #include"CreatePlane.h"
 #include"CreateFlight.h"
 #include<windows.h>
 #include<iostream>
 using namespace std;
-void print_pas(PNode *root){
+void print_pas(PNode *root){  
     if(root != NULL){
         print_pas(root->left);
         cout << root->pas.getCccd() << endl

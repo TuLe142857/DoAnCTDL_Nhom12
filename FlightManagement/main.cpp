@@ -1,12 +1,12 @@
 #include"Plane_processing.h"
 #include"Flight_processing.h"
 #include"Passenger_processing.h"
-                                                      
-int MainMenu();                 
+                                                                                    
+int MainMenu();                   
 void SetupGraphic();                                                                                   
 int main(){ 
     cout << "Khoi dong CT" << endl;                  
-    //Khai bao cac danh sach va load data
+    //Khai bao cac danh sach va load data             
     DSMayBay plane_list;               
     PTR_FLIGHT flight_list = NULL;
     
@@ -81,7 +81,7 @@ int MainMenu(){
     outtextxy(WORKSPACE_X + 150, WORKSPACE_Y + 350, "Nguyen Sy Kim Bang - N22DCCN106");
     for(int i = 0; i < MAX_TAB; i++)    
         tab_button[i].print();            
-    int mx, my;//luu toa do chuot                                             
+    int mx, my;//luu toa do chuot                                               
     while(1){                
         //click chuot trai        
         if(ismouseclick(WM_LBUTTONDOWN)){
@@ -91,7 +91,7 @@ int MainMenu(){
                     click_tab(i);
                     return i;
                 }
-        }
+        }   
         //di chuyen chuot
         else if(ismouseclick(WM_MOUSEMOVE)){ 
             getmouseclick(WM_MOUSEMOVE, mx, my);

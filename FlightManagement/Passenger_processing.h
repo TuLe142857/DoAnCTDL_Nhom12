@@ -49,7 +49,6 @@ void draw_delete_gui();
 void drawDropDown(int x, int y);
 void drawViewFlightGUI(int index, PTR_FLIGHT &flight_list);
 
-
 void which_hovered_row(int x, int y, int &page, int &pageMax, int &NodeCounter);
 int which_checkBox(int x, int y);
 int which_input(int x, int y);
@@ -65,6 +64,7 @@ void input_hightlight(InputBox ib);
 void input_unhightlight(InputBox ib);
 void focus_input(InputBox ib, int s, int f);
 void row_hightlight(int index, Passenger pas);
+void draw_edit_gui_v2();
 
 void get_input(InputBox ib, int s, int f, PNode **&Plist, PNode *root, int &NodeCounter,int &pageMax, int &page, PTR_FLIGHT &flight_list, DSMayBay &plane_list);
 void choose_box(CheckBox cb);
@@ -430,7 +430,6 @@ void input_unhightlight(InputBox ib) {
 void focus_input(InputBox ib, int s, int f) {
 	int char_counter = strlen(ib.content);
 
-
 	int x = ib.x, y = ib.y, height = ib.height, width = ib.width,  color = ib.color; char *type = ib.type;
 	int char_height = textheight("W");
 	int char_width = textwidth("W");
@@ -603,15 +602,14 @@ void add_passenger(int &NodeCounter, int &page, int &pageMax, PNode *&root, PNod
 				case SUBMITBUTTON:
 					char * message = check_info(root);
 					if (strcmp(message, "ok") != 0) {
-						notification_v3(message);
-						
+						notification_v3(message);		
 					}else {
 						if(!isCancel("Are you sure to submit!")){
 							insert_passenger(NodeCounter, root, Plist);
 							notification_v2("Inserted!!");
 							draw_add_gui();
 						}else{
-							draw_add_gui();
+							draw_edit_gui_v2();
 						}
 					}
 					break;
@@ -834,10 +832,9 @@ void get_input(InputBox ib, int s, int f, PNode **&Plist, PNode *root, int &Node
 						outtextxy(x + char_width*(char_counter-1) + char_width +8, y+height/2 - 5, "-");
 					}	
 				}
-			}else if(c == '\r') {
+			}else if(c == '\r' && (ib.id == 0 || ib.id == 1)) {
 				ultimateFilter(Plist, root, flight_list, pageMax, page, NodeCounter, plane_list);
 			}
-
 		}else if(ismouseclick(WM_LBUTTONDOWN)) {
 			int xc, yc;
 			getmouseclick(WM_LBUTTONDOWN, xc, yc);
@@ -1022,8 +1019,47 @@ void drawDropDown(int x, int y) {
 
 // edit feature //
 
-void draw_edit_gui(int index) {
+
+void draw_gui() {
+	const int xmax = getmaxx();
+	const int ymax = getmaxy();	
 	
+	int height = 400;
+	int width = 500;
+	int x = xmax/2 - width/2;
+	int y = ymax/2 - height/2;
+	
+	rounded_bar(WORKSPACE_X,WORKSPACE_Y, WORKSPACE_WIDTH, WORKSPACE_HEIGHT, 11);
+	
+	setfillstyle(SOLID_FILL, 15);
+	bar(x , y, x+width, y+height);
+	
+	addCccdInput.drawInputBox();
+	addHoInput.drawInputBox();
+	addTenInput.drawInputBox();
+	
+	fillText(ADD_HO_INPUT, 15);
+	fillText(ADD_TEN_INPUT, 15);
+	fillText(ADD_CCCD_INPUT, 7);
+	
+	male.draw_checkBox();
+	female.draw_checkBox();
+	submitAddButton.draw_button();
+	backButton.draw_button();
+	setcolor(0);
+	rectangle(x , y, x+width, y+height);
+	
+//	if(strcmp(displayed_passengers[index].getSex(), "Nam") == 0) {
+//		checkbox[MALE].isClicked = true;
+//		checkbox[FEMALE].isClicked = false;
+//		choose_box(male);
+//	}else {
+//		checkbox[FEMALE].isClicked = true;
+//		checkbox[MALE].isClicked = false;
+//		choose_box(female);
+//	}
+}
+void draw_edit_gui(int index) {
 	const int xmax = getmaxx();
 	const int ymax = getmaxy();	
 	
@@ -1062,6 +1098,48 @@ void draw_edit_gui(int index) {
 		choose_box(female);
 	}
 }
+
+void draw_edit_gui_v2() {
+	const int xmax = getmaxx();
+	const int ymax = getmaxy();	
+	
+	int height = 400;
+	int width = 500;
+	int x = xmax/2 - width/2;
+	int y = ymax/2 - height/2;
+	
+	rounded_bar(WORKSPACE_X,WORKSPACE_Y, WORKSPACE_WIDTH, WORKSPACE_HEIGHT, 11);
+	
+	setfillstyle(SOLID_FILL, 15);
+	bar(x , y, x+width, y+height);
+	
+	addCccdInput.drawInputBox();
+	addHoInput.drawInputBox();
+	addTenInput.drawInputBox();
+	
+	fillText(ADD_HO_INPUT, 15);
+	fillText(ADD_TEN_INPUT, 15);
+	fillText(ADD_CCCD_INPUT, 15);
+	
+	if(checkbox[MALE].isClicked == true){
+		male.draw_checkBox();
+		choose_box(male);
+		female.draw_checkBox();
+	}
+	
+	if(checkbox[FEMALE].isClicked == true){
+		female.draw_checkBox();
+		choose_box(female);
+		male.draw_checkBox();
+	}
+	
+	submitAddButton.draw_button();
+	backButton.draw_button();
+	setcolor(0);
+	rectangle(x , y, x+width, y+height);
+	
+}
+
 
 
 void edit_passenger_logic(int index, int& page, PNode*&root, PNode**&Plist, int &NodeCounter, int &pageMax,PTR_FLIGHT &flight_list, DSMayBay &plane_list) {
