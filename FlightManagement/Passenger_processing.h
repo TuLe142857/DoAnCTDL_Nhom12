@@ -832,10 +832,9 @@ void get_input(InputBox ib, int s, int f, PNode **&Plist, PNode *root, int &Node
 						outtextxy(x + char_width*(char_counter-1) + char_width +8, y+height/2 - 5, "-");
 					}	
 				}
-			}else if(c == '\r') {
+			}else if(c == '\r' && (ib.id == 0 || ib.id == 1)) {
 				ultimateFilter(Plist, root, flight_list, pageMax, page, NodeCounter, plane_list);
 			}
-
 		}else if(ismouseclick(WM_LBUTTONDOWN)) {
 			int xc, yc;
 			getmouseclick(WM_LBUTTONDOWN, xc, yc);
@@ -1128,13 +1127,6 @@ void draw_edit_gui_v2() {
 	backButton.draw_button();
 	setcolor(0);
 	rectangle(x , y, x+width, y+height);
-	
-	if(male.isClicked) {
-		choose_box(male);
-	}else if(female.isClicked){
-		choose_box(female);
-	}
-
 }
 
 

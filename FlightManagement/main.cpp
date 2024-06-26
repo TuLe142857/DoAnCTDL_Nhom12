@@ -1,7 +1,7 @@
 #include"Plane_processing.h"
 #include"Flight_processing.h"
 #include"Passenger_processing.h"
-                                                                            
+                                                                                    
 int MainMenu();                 
 void SetupGraphic();                                                                                   
 int main(){ 
@@ -91,7 +91,7 @@ int MainMenu(){
                     click_tab(i);
                     return i;
                 }
-        }
+        }   
         //di chuyen chuot
         else if(ismouseclick(WM_MOUSEMOVE)){ 
             getmouseclick(WM_MOUSEMOVE, mx, my);
