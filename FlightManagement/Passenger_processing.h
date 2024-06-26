@@ -33,9 +33,6 @@
 
 using namespace std;
 
-// this is the list that will be displayed on the screen!!!!
-Passenger displayed_passengers[10];
-
 void draw_table(int &page, int& NodeCounter, int& pageMax, PNode**&Plist);
 void customer_manage();
 void draw_customer_workspace(int NodeCounter, int &pageMax, int &page, PNode **&Plist);
@@ -45,9 +42,9 @@ void draw_checkBox(char *content, int x, int y, int width, int height);
 void draw_row(int y, Passenger pas);
 void draw_add_gui();
 void draw_edit_gui(int index);
-void draw_delete_gui();
 void drawDropDown(int x, int y);
 void drawViewFlightGUI(int index, PTR_FLIGHT &flight_list);
+void fake_btn(int x, int y, int width, int height, int color, char* placeholder);
 
 void which_hovered_row(int x, int y, int &page, int &pageMax, int &NodeCounter);
 int which_checkBox(int x, int y);
@@ -65,11 +62,10 @@ void input_unhightlight(InputBox ib);
 void focus_input(InputBox ib, int s, int f);
 void row_hightlight(int index, Passenger pas);
 void draw_edit_gui_v2();
-
-void get_input(InputBox ib, int s, int f, PNode **&Plist, PNode *root, int &NodeCounter,int &pageMax, int &page, PTR_FLIGHT &flight_list, DSMayBay &plane_list);
 void choose_box(CheckBox cb);
 void unchoose_box(CheckBox cb);
-void fake_btn(int x, int y, int width, int height, int color, char* placeholder);
+
+void get_input(InputBox ib, int s, int f, PNode **&Plist, PNode *root, int &NodeCounter,int &pageMax, int &page, PTR_FLIGHT &flight_list, DSMayBay &plane_list);
 
 void render_table_data(int &NodeCounter, int &page, int &pageMax, PNode **&Plist);
 void render_s_table(Flight as[], int counter,int page, int pageMax, char* ticket_list[], int& maxRow);
@@ -79,7 +75,6 @@ void dropDownOption(int x, int y, int &NodeCounter, int &page, int &pageMax, PNo
 
 void add_passenger(int &NodeCounter, int &page, int &pageMax, PNode *&root, PNode **&Plist, PTR_FLIGHT &flight_list,DSMayBay &plane_list);
 void insert_passenger(int &NodeCounter, PNode*&root, PNode**&Plist);
-int delete_passenger_logic(int i, int &NodeCounter, int &page, PNode *&root, PNode **&Plist);
 void edit_passenger_logic(int index, int& page, PNode *&root, PNode**&Plist,int &NodeCounter, int &pageMax, PTR_FLIGHT &flight_list, DSMayBay &plane_list);
 void edit_passenger(int index, int &page, PNode*&root, PNode**&Plist);
 
@@ -106,10 +101,11 @@ char* concatenateStrings(const char* prefix, const char* suffix);
 char* removeTrailingSpace(const char* str);
 void fillText(int i, int bg);
 
+// this is the list that will be displayed on the screen!!!!
+Passenger displayed_passengers[10];
+
 // button definition
-
 enum Button_id {ADD_BUTTON = 5, NEXTBUTTON, PREVIOUSBUTTON, SUBMITBUTTON, BACKBUTTON, CANCELBUTTON, YESBUTTON, XBUTTON, VIEWBACKBUTTON};
-
 
 //	H_Button (x1, y1, width, height, type, color)
 H_Button addButton(X2_TABLE+ 20,Y1_TABLE - 90, 80, 50,"ADD", 2);
@@ -548,32 +544,6 @@ void draw_add_gui() {
 
 
 // THIS IS LOGIC SECTION
-
-int delete_passenger_logic(int i, int &NodeCounter, int &page, PNode *&root, PNode **&Plist) {
-	
-	bool re = isCancel("Do you want to delete?");
-	
-	if(re == true) {
-		return HANHKHACH;
-	}else {
-		root = deleteNode(root, displayed_passengers[i]);
-		delete []Plist;
-		
-		NodeCounter--;
-		Plist = new PNode*[NodeCounter];
-		int n = 0;
-		traverTree_ltl(root, Plist, n);
-		saveData(root);
-		
-		if(NodeCounter % 10 == 0) {
-			page--;
-		}
-   
-		return HANHKHACH;
-	}
-}
-
-
 void add_passenger(int &NodeCounter, int &page, int &pageMax, PNode *&root, PNode **&Plist, PTR_FLIGHT &flight_list, DSMayBay &plane_list) {
 	draw_add_gui();
 	int mx, my;
@@ -1048,17 +1018,8 @@ void draw_gui() {
 	backButton.draw_button();
 	setcolor(0);
 	rectangle(x , y, x+width, y+height);
-	
-//	if(strcmp(displayed_passengers[index].getSex(), "Nam") == 0) {
-//		checkbox[MALE].isClicked = true;
-//		checkbox[FEMALE].isClicked = false;
-//		choose_box(male);
-//	}else {
-//		checkbox[FEMALE].isClicked = true;
-//		checkbox[MALE].isClicked = false;
-//		choose_box(female);
-//	}
 }
+
 void draw_edit_gui(int index) {
 	const int xmax = getmaxx();
 	const int ymax = getmaxy();	
@@ -1285,10 +1246,6 @@ void render_table_data(int &NodeCounter, int &page, int &pageMax, PNode **&Plist
 			draw_row(Y_FIRSTROW + LINE_HEIGHT*i, displayed_passengers[i]);
 		}
 	}
-	
-//	for(int i = 0; i < NodeCounter; i++) {
-//		print(Plist[i]->pas);
-//	}
 }
 
 bool search_ticket(FlightNode *node, char *cccd, DSMayBay &plane_list) {
@@ -1856,9 +1813,4 @@ void ultimateFilter(PNode **&Plist, PNode *&root, FlightNode *node,int &pageMax,
 		render_table_data(NodeCounter,page,pageMax,Plist);
 	}
 }
-
-
-	
-
-
 // THIS IS END OF LOGIC SECTION

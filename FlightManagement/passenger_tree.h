@@ -79,22 +79,6 @@ public:
         }
     }
 };
-// STRUCT HERE
-
-
-
-PNode * minValueNode(PNode* node) 
-{ 
-    PNode* current = node; 
- 
-  
-    while (current->left != NULL) 
-        current = current->left; 
- 
-    return current; 
-}
-
-
 
 void print(Passenger p) {
     cout << p.getCccd() << " : " << p.getHo() << " : " << p.getTen() << " : " << p.getSex() <<endl;
@@ -106,14 +90,6 @@ int height(PNode *root) {
     } else {
         return root->height;
     }
-}
-
-int getBalance(PNode *N) 
-{ 
-    if (N == NULL) 
-        return 0; 
-    return height(N->left) - 
-           height(N->right); 
 }
 
 PNode *singleRotateLeft(PNode *x) {
@@ -216,15 +192,6 @@ void traverTree_ltl(PNode *root, PNode **Plist, int& n) {
     }
 }
 
-void traverTree(PNode *root) {
-    if (root) {
-        traverTree(root->left);
-		print(root->pas);
-		traverTree(root->right);
-	} 
-}
-
-
 void loadTreeData(PNode *&root) {
 	Passenger pas; 
 	//fstream f("passengers.dat", ios::binary |ios::out|ios::in);
@@ -272,89 +239,15 @@ void saveData(PNode *root) {
     save(root, f);
     f.close();
 }
-  
 
-PNode* deleteNode(PNode* root, Passenger pas) 
-{ 
-    if (root == NULL) 
-        return root; 
- 
-    if ( atoll(pas.getCccd()) < atoll(root->pas.getCccd() ) )
-        root->left = deleteNode(root->left, pas); 
- 
-    else if( atoll(pas.getCccd()) > atoll(root->pas.getCccd()) )
-        root->right = deleteNode(root->right, pas); 
-
-    else
-    { 
-  
-        if( (root->left == NULL) ||
-            (root->right == NULL) ) 
-        { 
-            PNode *temp = root->left ? 
-                         root->left : 
-                         root->right; 
- 
-            if (temp == NULL) 
-            { 
-                temp = root; 
-                root = NULL; 
-            } 
-            else 
-            *root = *temp; 
-                          
-            delete(temp); 
-        } 
-        else
-        { 
-
-            PNode* temp = minValueNode(root->right); 
- 
-         
-            root->pas.setCccd(temp->pas.getCccd()); 
- 
-            root->right = deleteNode(root->right, 
-                              temp->pas); 
-        } 
-    } 
- 
-
-    if (root == NULL) 
-    return root; 
- 
-    root->height = 1 + max(height(root->left), 
-                           height(root->right)); 
- 
-
-    int balance = getBalance(root); 
- 
-
-    if (balance > 1 && 
-        getBalance(root->left) >= 0) 
-        return singleRotateLeft(root); 
- 
-
-    if (balance > 1 && 
-        getBalance(root->left) < 0) 
-    { 
-        root->left = singleRotateRight(root->left); 
-        return singleRotateLeft(root); 
-    } 
- 
-    if (balance < -1 && 
-        getBalance(root->right) <= 0) 
-        return singleRotateRight(root); 
- 
-  
-    if (balance < -1 && 
-        getBalance(root->right) > 0) 
-    { 
-        root->right = singleRotateLeft(root->right); 
-        return singleRotateRight(root); 
-    } 
- 
-    return root; 
-} 
+void deleteTree(PNode *&node) {
+	if (node == NULL) {
+		return;
+	}
+	deleteTree(node->left);
+	deleteTree(node->right);
+	delete node;
+}
 
 PNode* search(PNode* root, char* target_id) {
     if (root == NULL || strcmp(root->pas.getCccd(), target_id) == 0)
@@ -364,15 +257,6 @@ PNode* search(PNode* root, char* target_id) {
         return search(root->right, target_id);
     
     return search(root->left, target_id);
-}
-
-void deleteTree(PNode *&node) {
-	if (node == NULL) {
-		return;
-	}
-	deleteTree(node->left);
-	deleteTree(node->right);
-	delete node;
 }
 
 

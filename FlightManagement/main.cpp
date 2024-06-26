@@ -1,7 +1,7 @@
 #include"Plane_processing.h"
 #include"Flight_processing.h"
 #include"Passenger_processing.h"
-                                                                                    
+                                                                                      
 int MainMenu();                   
 void SetupGraphic();                                                                                   
 int main(){ 
