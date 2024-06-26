@@ -1121,12 +1121,23 @@ void draw_edit_gui_v2() {
 	fillText(ADD_TEN_INPUT, 15);
 	fillText(ADD_CCCD_INPUT, 15);
 	
-	male.draw_checkBox();
-	female.draw_checkBox();
+	if(checkbox[MALE].isClicked == true){
+		male.draw_checkBox();
+		choose_box(male);
+		female.draw_checkBox();
+	}
+	
+	if(checkbox[FEMALE].isClicked == true){
+		female.draw_checkBox();
+		choose_box(female);
+		male.draw_checkBox();
+	}
+	
 	submitAddButton.draw_button();
 	backButton.draw_button();
 	setcolor(0);
 	rectangle(x , y, x+width, y+height);
+	
 }
 
 
