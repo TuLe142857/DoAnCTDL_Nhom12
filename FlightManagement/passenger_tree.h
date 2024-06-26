@@ -366,17 +366,13 @@ PNode* search(PNode* root, char* target_id) {
     return search(root->left, target_id);
 }
 
-int deleteTree(PNode* &node) {
-    if (node == nullptr)
-        return 0;
-
-    int numDeleted = 1 + deleteTree(node->left) + deleteTree(node->right);
-    
-    delete node;
-
-    node = nullptr;
-    
-    return numDeleted;
+void deleteTree(PNode *&node) {
+	if (node == NULL) {
+		return;
+	}
+	deleteTree(node->left);
+	deleteTree(node->right);
+	delete node;
 }
 
 
