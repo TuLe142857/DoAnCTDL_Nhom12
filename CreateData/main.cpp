@@ -6,7 +6,7 @@
 #include<windows.h>
 #include<iostream>
 using namespace std;
-void print_pas(PNode *root){
+void print_pas(PNode *root){  
     if(root != NULL){
         print_pas(root->left);
         cout << root->pas.getCccd() << endl

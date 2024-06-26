@@ -1,7 +1,7 @@
 #include"Plane_processing.h"
 #include"Flight_processing.h"
 #include"Passenger_processing.h"
-                                                      
+                                                                            
 int MainMenu();                 
 void SetupGraphic();                                                                                   
 int main(){ 
@@ -81,7 +81,7 @@ int MainMenu(){
     outtextxy(WORKSPACE_X + 150, WORKSPACE_Y + 350, "Nguyen Sy Kim Bang - N22DCCN106");
     for(int i = 0; i < MAX_TAB; i++)    
         tab_button[i].print();            
-    int mx, my;//luu toa do chuot                                             
+    int mx, my;//luu toa do chuot                                               
     while(1){                
         //click chuot trai        
         if(ismouseclick(WM_LBUTTONDOWN)){
