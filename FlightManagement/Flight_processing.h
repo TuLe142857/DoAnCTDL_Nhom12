@@ -1113,7 +1113,7 @@ bool ManageBookingTicket(Flight &flight, PTR_FLIGHT flight_list, DSMayBay &plane
                     {
                         //Huy ve
                         ischange = true;
-                        strcpy(flight.ticket[i][j], "none");
+                        strcpy(flight.ticket[i + start_col][j + start_row], "none");
                         bookedticket --;
                         if(flight.status == HETVE)
                             flight.status = CONVE;
