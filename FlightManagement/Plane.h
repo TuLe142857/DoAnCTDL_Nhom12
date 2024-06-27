@@ -69,4 +69,11 @@ void savedata(DSMayBay &c) {
     f.close();
 }
 
-
+void freeing_plane(DSMayBay &c){
+	for(int i=0;i<c.SoMayBay;i++){
+		delete c.n[i]; 
+		c.n[i]==nullptr; 
+	} 
+	c.SoMayBay=0;
+	cout<<"Giai phong bo nho may bay hoan tat!"<<endl; 
+}
