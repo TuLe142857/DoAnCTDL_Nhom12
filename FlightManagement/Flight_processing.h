@@ -1108,7 +1108,7 @@ bool ManageBookingTicket(Flight &flight, PTR_FLIGHT flight_list, DSMayBay &plane
                 else{
                     //ve da dat
                     if(Confirm("Ve " + get_ticket_name(i + start_col, j + start_row) + " da duoc dat",
-                                "CCCD cua hanh khach: " + string(flight.ticket[i][j]), 
+                                "CCCD cua hanh khach: " + string(flight.ticket[i + start_col][j + start_row]), 
                                 "Ban co muon huy khong?" ))
                     {
                         //Huy ve
