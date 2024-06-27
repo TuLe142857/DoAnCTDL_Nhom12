@@ -185,6 +185,7 @@ int Passenger_processing(PNode *&root, PTR_FLIGHT &flight_list, DSMayBay &plane_
                     unclick_tab(PASSENGER_TAB);
                     if(i == PASSENGER_TAB) return MAIN_MENU;
                     click_tab(i);
+					delete []Plist;
                     return i;
                 }
             }
@@ -271,7 +272,7 @@ int Passenger_processing(PNode *&root, PTR_FLIGHT &flight_list, DSMayBay &plane_
 		delay(50);
 	}
 	
-	delete []Plist;
+	
 	cout << "End customer" << endl;
 }
 
