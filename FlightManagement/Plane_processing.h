@@ -9,7 +9,7 @@
 #include <fstream>
 #define MAX 300 
 //moi sua
-#define CN 1//(1: Nhap lien tuc phai co gia tri, 2: Nhap don le ko can co gia tri)
+//#define CN 2//(1: Nhap lien tuc phai co gia tri, 2: Nhap don le ko can co gia tri)
 using namespace std;
 struct ThongKe{
 	char soHieuMB[16]; 
@@ -110,17 +110,17 @@ void nhap(char* n, int l, int x, int y){
 			else
 			outtextxy(x+textwidth(n),y,"_");
 		}
-		if(CN==1){
+//		if(CN==1){
 			if(i>0){
 				setbkcolor(8);
 				outtextxy(x, y, n); 
 				outtextxy(x+textwidth(n),y,"  ");
 				break;
 			}
-		}
-		else{
-			break;
-		}
+//		}
+//		else{
+//			break;
+//		}
 	}
 	outtextxy(x + textwidth(n), y, A); 
 }
@@ -168,15 +168,15 @@ int nhapso2(int &m, int l, int x, int y) {
 			else
 			outtextxy(x+textwidth(c),y,"_");
 		}
-		if(CN==1){
-			if(m>0){//
+//		if(CN==1){
+			if(m>0){
 				break;
 			}
-		}
-		else{
-			break;
-		}	
-	}//
+//		}
+//		else{
+//			break;
+//		}	
+	}
 	setbkcolor(8);
 	if(m!=0){
 		outtoxy(x,y,m);
@@ -414,77 +414,77 @@ void them(DSMayBay &maybay){
 							bar(400,120,1000,180);
 							outtextxy(420,200,A->SoHieuMB);
 //							Chuc nang bo xung cho phep nhap lien tuc 
-							if(bo==0&&CN==1){
-								setfillstyle(1,8);
-								setcolor(4);
-								setbkcolor(7); 
-								setfillstyle(1,7);
-								bar(400,185,1000,235);
-								outtextxy(420,200,A->SoHieuMB);
-								for(int i=1;i<4;i++){//CHUC NANG BO XUNG
-									if(i==1){
-										setcolor(11);
-										setbkcolor(8); 
-										setfillstyle(1,8);
-										bar(400,185+100*i,1000,235+100*i);
-										nhap(A->LoaiMB,40,420,300);
-									}
-									else{
-										setcolor(4);
-										setbkcolor(7); 
-										setfillstyle(1,7);
-										bar(400,185+100*1,1000,235+100*1);
-										if(A->LoaiMB[0]!='\0')
-										outtextxy(420,300,A->LoaiMB);
-										else{
-											setcolor(15);
-											outtextxy(420,300,MENU2[1]);
-										}
-									}
-									if(i==2){
-										setcolor(11);
-										setbkcolor(8); 
-										setfillstyle(1,8);
-										bar(400,185+100*i,1000,235+100*i);
-										nhapso2(A->SoDong,2,420,400);
-									}
-									else {
-										setcolor(4);
-										setbkcolor(7); 
-										setfillstyle(1,7);
-										bar(400,185+100*2,1000,235+100*2);
-										outtoxy(420,400,A->SoDong);
-									}
-									if(i==3){
-										setcolor(11);
-										setbkcolor(8); 
-										setfillstyle(1,8);
-										bar(400,185+100*i,1000,235+100*i);
-										while(1){
-											if(nhapso2(A->SoDay,2,420,500)*A->SoDong<20){
-												setbkcolor(14); 
-												setfillstyle(1,14); 
-												bar(400,440,1000,470); 
-												delay(50); 
-												setcolor(4);
-												outtextxy(405,450,"Khong hop le,moi tiep tuc nhap!"); 
-												setbkcolor(8); 
-												setcolor(11);
-												continue;
-											}
-											setfillstyle(1,14); 
-											bar(400,440,1000,470); 
-											break;
-										}
-										setcolor(4);
-										setbkcolor(7); 
-										setfillstyle(1,7);
-										bar(400,185+100*3,1000,235+100*3);
-										outtoxy(420,500,A->SoDay);
-									}
-								}//END
-								bo=1;
-							}
+//							if(bo==0&&CN==1){
+//								setfillstyle(1,8);
+//								setcolor(4);
+//								setbkcolor(7); 
+//								setfillstyle(1,7);
+//								bar(400,185,1000,235);
+//								outtextxy(420,200,A->SoHieuMB);
+//								for(int i=1;i<4;i++){//CHUC NANG BO XUNG
+//									if(i==1){
+//										setcolor(11);
+//										setbkcolor(8); 
+//										setfillstyle(1,8);
+//										bar(400,185+100*i,1000,235+100*i);
+//										nhap(A->LoaiMB,40,420,300);
+//									}
+//									else{
+//										setcolor(4);
+//										setbkcolor(7); 
+//										setfillstyle(1,7);
+//										bar(400,185+100*1,1000,235+100*1);
+//										if(A->LoaiMB[0]!='\0')
+//										outtextxy(420,300,A->LoaiMB);
+//										else{
+//											setcolor(15);
+//											outtextxy(420,300,MENU2[1]);
+//										}
+//									}
+//									if(i==2){
+//										setcolor(11);
+//										setbkcolor(8); 
+//										setfillstyle(1,8);
+//										bar(400,185+100*i,1000,235+100*i);
+//										nhapso2(A->SoDong,2,420,400);
+//									}
+//									else {
+//										setcolor(4);
+//										setbkcolor(7); 
+//										setfillstyle(1,7);
+//										bar(400,185+100*2,1000,235+100*2);
+//										outtoxy(420,400,A->SoDong);
+//									}
+//									if(i==3){
+//										setcolor(11);
+//										setbkcolor(8); 
+//										setfillstyle(1,8);
+//										bar(400,185+100*i,1000,235+100*i);
+//										while(1){
+//											if(nhapso2(A->SoDay,2,420,500)*A->SoDong<20){
+//												setbkcolor(14); 
+//												setfillstyle(1,14); 
+//												bar(400,440,1000,470); 
+//												delay(50); 
+//												setcolor(4);
+//												outtextxy(405,450,"Khong hop le,moi tiep tuc nhap!"); 
+//												setbkcolor(8); 
+//												setcolor(11);
+//												continue;
+//											}
+//											setfillstyle(1,14); 
+//											bar(400,440,1000,470); 
+//											break;
+//										}
+//										setcolor(4);
+//										setbkcolor(7); 
+//										setfillstyle(1,7);
+//										bar(400,185+100*3,1000,235+100*3);
+//										outtoxy(420,500,A->SoDay);
+//									}
+//								}//END
+//								bo=1;
+//							}
 							delay(50); 
 
 							break; 
@@ -495,50 +495,50 @@ void them(DSMayBay &maybay){
 							outtextxy(420,200,MENU2[0]);
 						} 
 					}
-					if(CN==1){
-						if(i==1&&A->SoHieuMB[0]!='\0'){
-							nhap(A->LoaiMB,40,420,300);
-						}
-						if(i==2){
-							while(1){
-								if(A->SoDay!=0&&nhapso2(A->SoDong,2,420,400)*A->SoDay<20){
-									setbkcolor(14); 
-									setfillstyle(1,14); 
-									bar(400,340,1000,370); 
-									delay(50); 
-									setcolor(4);
-									outtextxy(405,350,"Khong hop le,moi tiep tuc nhap!"); 
-									setcolor(11);
-									setbkcolor(8); 
-									delay(20); 
-									continue;
-								}
-								setfillstyle(1,14); 
-								bar(400,340,1000,370); 
-	
-								break;
-							}
-						}
-						if(i==3){
-							while(1){
-								if(A->SoDong!=0&&nhapso2(A->SoDay,2,420,500)*A->SoDong<20){
-									setbkcolor(14); 
-									setfillstyle(1,14); 
-									bar(400,440,1000,470); 
-									delay(50); 
-									setcolor(4);
-									outtextxy(405,450,"Khong hop le,moi tiep tuc nhap!"); 
-									setbkcolor(8); 
-									setcolor(11);
-									continue;
-								}
-								setfillstyle(1,14); 
-								bar(400,440,1000,470); 
-								break;
-							}
-						}
-					}
-					else{
+//					if(CN==1){
+//						if(i==1&&A->SoHieuMB[0]!='\0'){
+//							nhap(A->LoaiMB,40,420,300);
+//						}
+//						if(i==2){
+//							while(1){
+//								if(A->SoDay!=0&&nhapso2(A->SoDong,2,420,400)*A->SoDay<20){
+//									setbkcolor(14); 
+//									setfillstyle(1,14); 
+//									bar(400,340,1000,370); 
+//									delay(50); 
+//									setcolor(4);
+//									outtextxy(405,350,"Khong hop le,moi tiep tuc nhap!"); 
+//									setcolor(11);
+//									setbkcolor(8); 
+//									delay(20); 
+//									continue;
+//								}
+//								setfillstyle(1,14); 
+//								bar(400,340,1000,370); 
+//	
+//								break;
+//							}
+//						}
+//						if(i==3){
+//							while(1){
+//								if(A->SoDong!=0&&nhapso2(A->SoDay,2,420,500)*A->SoDong<20){
+//									setbkcolor(14); 
+//									setfillstyle(1,14); 
+//									bar(400,440,1000,470); 
+//									delay(50); 
+//									setcolor(4);
+//									outtextxy(405,450,"Khong hop le,moi tiep tuc nhap!"); 
+//									setbkcolor(8); 
+//									setcolor(11);
+//									continue;
+//								}
+//								setfillstyle(1,14); 
+//								bar(400,440,1000,470); 
+//								break;
+//							}
+//						}
+//					}
+//					else{
 						if(i==1){
 							nhap(A->LoaiMB,40,420,300);
 							if(A->LoaiMB[0]=='\0'){
@@ -599,7 +599,7 @@ void them(DSMayBay &maybay){
 								break;
 							}
 						}
-					}
+					//}
 				}
 			}
 			if(mx>=1190&&mx<=1300&&my>=660&&my<=700){
