@@ -8,7 +8,7 @@
 - [Đề tài](#1)
 - [Xây dựng chương trình](#2)
 - [Đọc kỹ hdsd trước khi dùng](#3)
-- [Kết quả thi](#4)
+- [Trải nghiệm thi](#4)
 
 ## Đề tài<a name = "1"></a>
 #### - Quản lý chuyến bay nội địa
@@ -22,19 +22,27 @@
 #### - Các chức năng theo yêu cầu đề bài:
 a) Cập nhật danh sách các máy bay(thêm/ xóa/ hiệu chỉnh)
 
-b) Cập nhật chuyến bay: 
+b) Cập nhật chuyến bay: cho phép lập chuyến bay mới, hiệu chỉnh ngày, giờ khởi hành của chuyến bay, sân bay đến, số hiệu máy bay, hủy chuyến.
 
-c)
+c)Đặt vé: cho phép đặt vé trên 1 chuyến bay; nếu thông tin hành khách chưa có thì tự động cập nhật và danh sách hành khách, nếu có rồi thì in ra màn hình để kiểm tra. Mỗi vé đều phải ghi nhận số CMND của hành khách; nếu hành khách chưa có số CMND thì yêu cầu nhập thông tin hành khách trước. Trên một chuyến bay, mỗi hành khách chỉ mua 1 vé.
 
-d)
+d)Hủy vé: cho phép hủy vé đã đặt của hành khách.
 
-e)
+e)In danh sách hành khách thuộc một chuyến bay dựa vào mã chuyến bay. Kết xuất:
 
-f)
+      DANH SÁCH HÀNH KHÁCH THUỘC CHUYẾN BAY #######
+      Ngày giờ khởi hành: dd/mm/yyy hh:mm.  Nơi đến: xxxxxxxx
 
-g)
+      STT         SỐ VÉ       SỐ CMND     HỌ TÊN      PHÁI
 
-h)
+f)In danh sách các chuyến bay khỏi hành trong ngày dd/mm/yyyy đến nơi XXXX (cho biết cụ thể số các vé còn trống và giờ khởi hành)
+
+g)In danh sách các vé còn trống của 1 chuyến bay có mã chuyến bay là X
+
+h)Thống kê số lượt thực hiện chuyến bay của từng máy bay theo thứ tự số lượt thực hiện giảm dần. Kết xuất:
+
+    Số hiệu máy bay             Số lượt thực hiện chuyến bay
+
 > [!NOTE]
 > Lưu ý: Chương trình cho phép lưu các danh sách vào file; Kiểm tra điều kiện khi nhập dữ liệu làm dữ liệu bị sai
 
@@ -42,18 +50,38 @@ h)
 #### - Phân công thành viên:    
 - Chương trình có 3 cấu trúc dữ liệu chính => mỗi thành viên code 1 CTDL
 - Chương trình xử lý 3 vấn đề(tương tác thêm/chỉnh,... 3 cấu trúc dữ liệu chính), chia chương trình thành 3 phần tương ứng, mỗi thành viên một phần(tương ứng với cấu trúc dữ liệu của người đó code)
+- Giao diện:
+  - Chia 3 tab xử lý chỉnh và 1 giao diện chờ mainmenu:
+    - Tab Máy bay
+    - Tab Chuyến bay
+    - Tab Hành khách
+    - Main menu: chờ tín hiệu click chuột để chuyến đến các tab xử lý + hiển thị giới thiệu đề tài, thành viên nhóm
 #### - Các vấn đề xử lý 
 - **`Máy bay`**: 
 - **`Chuyến bay`**:
   - Tự quy ước: Thời gian tối thiểu để một máy bay thực hiện hai chuyến bay liên tiếp là 3h = 3 * 60 phút = 180 phút
   - Điều kiện thêm chuyến bay:
+    - Mã chuyến bay không được trùng
+    - Mã máy bay phải tồn tại
+    - Thời gian khởi hành:
+      - Phải là thời gian đúng( ví dụ ngày 31 tháng 2 là thời gian sai)
+      - Không được là thời gian trong quá khứ
+      - Phải cách hiện tại ít nhất 3h
+      - Không được xảy ra xung đột thời gian bay( ví dụ: máy bay đã có một chuyến có thời gian khởi hành hơn kém dưới 3h so với thời gian của chuyến bay mới)
+  
   - Điều kiện chỉnh chuyến bay:
     - Chuyến bay có trạng thái `1: Còn vé` hoặc `2: Hết vé`
-    - Không được chỉnh thời gian về gần với hiện tại(chỉ được lùi thời gian bay)
-    - Nếu đổi máy bay: Máy bay không được xung đột thời gian bay
-    - Hành khách không được xung đột thời gian bay
-  - Điều kiện đặt/ hủy vé:
-  - Điều kiện hủy chuyến bay: 
+    - Mã số chuyến bay: Không được chỉnh
+    - Mã số máy bay: chỉ được đổi máy bay có cả số dãy và số dòng đều lớn hơn hoặc bằng số dãy và số dòng của máy bay cũ
+    - Thời gian: 
+      - Là thời gian đúng(vd: 31thg2 là thời gian sai)
+      - Không được điều chỉnh bay sớm hơn thời gian cũ
+      - Không được xung đột thời gian bay:
+        - Máy bay đã có chuyến bay khác có thời gian bay chênh lệch dưới 3h
+        - Có hành khách trong chuyến bay đã đồng thời đặt vé trong chuyến bay khác có thời gian bay chênh lệch dưới 3h
+
+  - Điều kiện đặt/ hủy vé: trạng thái chuyến bay là `1: Còn vé` hoặc `2: Hết vé`
+  - Điều kiện hủy chuyến bay: trạng thái chuyến bay là `1: Còn vé` hoặc `2: Hết vé`
   - Điều kiện in danh sách hành khách trong chuyến bay: luôn in được
 - **`Hành khách`**:
 
@@ -72,18 +100,28 @@ h)
 > Tìm hiểu thêm về các hàm trong thư viện Graphics.h: <https://home.cs.colorado.edu/~main/bgi/doc/>
 
 #### - Ảnh demo
+##### Main menu
 ![](Image/mainmenu.png)
 
+##### Plane tab
 ![](Image/planetab1.png)
 
+##### Flight tab
 ![](Image/flighttab1.png)
 
+##### Passenger tab
 ![](Image/passengertab1.png)
 
 
-## Kết quả thi<a name = "4"></a>
-> `25/6/2024`Mai thi mà nay chưa học xong cây AVL với Heap sort :)
+## Trải nghiệm thi<a name = "4"></a>
+Nhóm mình thi chiều ngày 27/6/2024
+Quá trình thầy chấm bài:
+- Xem các cấu trúc dữ liệu đã cài đặt đúng chưa
+- Xem các chức năng(giao diện sử dụng + code + yêu cầu giải thích ý tưởng thuật toán, ...)
+- Câu hỏi lý thuyết nàm trong các kiến thức về `Cấu trúc dữ liệu` đã học
+- Cuối cùng là một câu hỏi tương đối khó, thầy cho một khoảng thời gian suy nghĩ (~5phút), mỗi thành viên trong nhóm tự suy nghĩ trả lời, không làm chung. Câu hỏi dạng này là mỗi nhóm mỗi khác, chỉ khi nhóm trước không trả lời được thì có khả năng nhóm sau sẽ được đặt câu hỏi tương tự.
 
+Kết quả thi:
 - [ ] Qua môn :satisfied:
 - [ ] A+
 - [ ] A
