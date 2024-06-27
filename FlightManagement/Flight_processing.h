@@ -1138,7 +1138,7 @@ bool ManageBookingTicket(Flight &flight, PTR_FLIGHT flight_list, DSMayBay &plane
                 PrintSeat(flight, num_col, num_row, start_col, start_row);
             }
             if(right_button.inside(mx, my) && right_button.isactive()){
-                start_row += MAX_SEAT_COLUMN;
+                start_col += MAX_SEAT_COLUMN;
                 PrintSeat(flight, num_col, num_row, start_col, start_row);
             }
 
@@ -1169,7 +1169,7 @@ bool ManageBookingTicket(Flight &flight, PTR_FLIGHT flight_list, DSMayBay &plane
 
             if(right_button.inside(mx, my))
                 right_button.hover();
-            right_button.unhover();
+            else right_button.unhover();
         }
         delay(100);
     }
