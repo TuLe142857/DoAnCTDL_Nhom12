@@ -63,8 +63,8 @@ h) Thống kê số lượt thực hiện chuyến bay của từng máy bay the
     - Lọc theo : Mã MB, Mã CB, thời gian khời hành, nơi đến, trạng thái. Các nội dung nào được chọn thì lọc, không thì bỏ qua
     - Sắp xếp(dùng QuickSort): sắp xếp tăng/ giảm dần theo mã chuyến bay, mã máy bay, thời gian khởi hành, nơi đến
     - Lọc & sort mặc định: lọc các chuyến bay còn vé, sắp tăng dần theo thời gian khởi hành
-    > [!TIP]
-    > 1.Các dữ liệu in ra màn hình thông qua một mảng cấp phát động chứa địa chỉ chuyến bay trong danh sách gốc
+> [!TIP]
+> 1.Các dữ liệu in ra màn hình thông qua một mảng cấp phát động chứa địa chỉ chuyến bay trong danh sách gốc
 
   - Tự quy ước: Thời gian tối thiểu để một máy bay thực hiện hai chuyến bay liên tiếp là 3h = 3 * 60 phút = 180 phút
   - Điều kiện thêm chuyến bay:
