@@ -63,13 +63,9 @@ h) Thống kê số lượt thực hiện chuyến bay của từng máy bay the
     - Lọc theo : Mã MB, Mã CB, thời gian khời hành, nơi đến, trạng thái. Các nội dung nào được chọn thì lọc, không thì bỏ qua
     - Sắp xếp(dùng QuickSort): sắp xếp tăng/ giảm dần theo mã chuyến bay, mã máy bay, thời gian khởi hành, nơi đến
     - Lọc & sort mặc định: lọc các chuyến bay còn vé, sắp tăng dần theo thời gian khởi hành
-    > [!NOTE]
+    > [!TIP]
     > 1.Các dữ liệu in ra màn hình thông qua một mảng cấp phát động chứa địa chỉ chuyến bay trong danh sách gốc
-    > 2.Trong qua trình code, mình tận tính tăng dần theo mã máy bay của danh sách gốc lúc filter và sort như sau:
-    > - Filter: Nếu có lọc theo mã chuyến bay, duyệt danh sách chuyến bay và dùng lại khi gặp chuyến bay có mã số lớn hơn mã số cần lọc
-    > - Sort: Nếu sau khi filter, điều kiện lọc là lọc theo mã chuyến bay thì không cần QuickSort(sắp xếp tăng dần: giữ nguyên mảng, sắp xếp giảm dần: đảo mảng)
-    >
-    >3.Trong lúc vận hành chương trình, nếu ấn nút chuyến thứ tự sắp xếp(tăng dần <=> giảm dần), không gọi hàm QuickSort, chỉ cần đảo mảng dữ liệu hiện tại
+
   - Tự quy ước: Thời gian tối thiểu để một máy bay thực hiện hai chuyến bay liên tiếp là 3h = 3 * 60 phút = 180 phút
   - Điều kiện thêm chuyến bay:
     - Mã chuyến bay không được trùng
