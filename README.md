@@ -24,22 +24,22 @@ a) Cập nhật danh sách các máy bay(thêm/ xóa/ hiệu chỉnh)
 
 b) Cập nhật chuyến bay: cho phép lập chuyến bay mới, hiệu chỉnh ngày, giờ khởi hành của chuyến bay, sân bay đến, số hiệu máy bay, hủy chuyến.
 
-c)Đặt vé: cho phép đặt vé trên 1 chuyến bay; nếu thông tin hành khách chưa có thì tự động cập nhật và danh sách hành khách, nếu có rồi thì in ra màn hình để kiểm tra. Mỗi vé đều phải ghi nhận số CMND của hành khách; nếu hành khách chưa có số CMND thì yêu cầu nhập thông tin hành khách trước. Trên một chuyến bay, mỗi hành khách chỉ mua 1 vé.
+c) Đặt vé: cho phép đặt vé trên 1 chuyến bay; nếu thông tin hành khách chưa có thì tự động cập nhật và danh sách hành khách, nếu có rồi thì in ra màn hình để kiểm tra. Mỗi vé đều phải ghi nhận số CMND của hành khách; nếu hành khách chưa có số CMND thì yêu cầu nhập thông tin hành khách trước. Trên một chuyến bay, mỗi hành khách chỉ mua 1 vé.
 
-d)Hủy vé: cho phép hủy vé đã đặt của hành khách.
+d) Hủy vé: cho phép hủy vé đã đặt của hành khách.
 
-e)In danh sách hành khách thuộc một chuyến bay dựa vào mã chuyến bay. Kết xuất:
+e) In danh sách hành khách thuộc một chuyến bay dựa vào mã chuyến bay. Kết xuất:
 
       DANH SÁCH HÀNH KHÁCH THUỘC CHUYẾN BAY #######
       Ngày giờ khởi hành: dd/mm/yyy hh:mm.  Nơi đến: xxxxxxxx
 
       STT         SỐ VÉ       SỐ CMND     HỌ TÊN      PHÁI
 
-f)In danh sách các chuyến bay khỏi hành trong ngày dd/mm/yyyy đến nơi XXXX (cho biết cụ thể số các vé còn trống và giờ khởi hành)
+f) In danh sách các chuyến bay khỏi hành trong ngày dd/mm/yyyy đến nơi XXXX (cho biết cụ thể số các vé còn trống và giờ khởi hành)
 
-g)In danh sách các vé còn trống của 1 chuyến bay có mã chuyến bay là X
+g) In danh sách các vé còn trống của 1 chuyến bay có mã chuyến bay là X
 
-h)Thống kê số lượt thực hiện chuyến bay của từng máy bay theo thứ tự số lượt thực hiện giảm dần. Kết xuất:
+h) Thống kê số lượt thực hiện chuyến bay của từng máy bay theo thứ tự số lượt thực hiện giảm dần. Kết xuất:
 
     Số hiệu máy bay             Số lượt thực hiện chuyến bay
 
@@ -59,6 +59,17 @@ h)Thống kê số lượt thực hiện chuyến bay của từng máy bay theo
 #### - Các vấn đề xử lý 
 - **`Máy bay`**: 
 - **`Chuyến bay`**:
+  - Chức năng lọc và sắp xếp:
+    - Lọc theo : Mã MB, Mã CB, thời gian khời hành, nơi đến, trạng thái. Các nội dung nào được chọn thì lọc, không thì bỏ qua
+    - Sắp xếp(dùng QuickSort): sắp xếp tăng/ giảm dần theo mã chuyến bay, mã máy bay, thời gian khởi hành, nơi đến
+    - Lọc & sort mặc định: lọc các chuyến bay còn vé, sắp tăng dần theo thời gian khởi hành
+    > [!TIP]: 
+    > 1.Các dữ liệu in ra màn hình thông qua một mảng cấp phát động chứa địa chỉ chuyến bay trong danh sách gốc
+    > 2.Trong qua trình code, mình tận tính tăng dần theo mã máy bay của danh sách gốc lúc filter và sort như sau:
+    > - Filter: Nếu có lọc theo mã chuyến bay, duyệt danh sách chuyến bay và dùng lại khi gặp chuyến bay có mã số lớn hơn mã số cần lọc
+    > - Sort: Nếu sau khi filter, điều kiện lọc là lọc theo mã chuyến bay thì không cần QuickSort(sắp xếp tăng dần: giữ nguyên mảng, sắp xếp giảm dần: đảo mảng)
+    >
+    >3.Trong lúc vận hành chương trình, nếu ấn nút chuyến thứ tự sắp xếp(tăng dần <=> giảm dần), không gọi hàm QuickSort, chỉ cần đảo mảng dữ liệu hiện tại
   - Tự quy ước: Thời gian tối thiểu để một máy bay thực hiện hai chuyến bay liên tiếp là 3h = 3 * 60 phút = 180 phút
   - Điều kiện thêm chuyến bay:
     - Mã chuyến bay không được trùng
@@ -84,6 +95,8 @@ h)Thống kê số lượt thực hiện chuyến bay của từng máy bay theo
   - Điều kiện hủy chuyến bay: trạng thái chuyến bay là `1: Còn vé` hoặc `2: Hết vé`
   - Điều kiện in danh sách hành khách trong chuyến bay: luôn in được
 - **`Hành khách`**:
+
+
 
 ## Hướng dẫn chạy CT + ảnh demo <a name = "3"></a>
 
@@ -118,7 +131,7 @@ Nhóm mình thi chiều ngày 27/6/2024
 Quá trình thầy chấm bài:
 - Xem các cấu trúc dữ liệu đã cài đặt đúng chưa
 - Xem các chức năng(giao diện sử dụng + code + yêu cầu giải thích ý tưởng thuật toán, ...)
-- Câu hỏi lý thuyết nàm trong các kiến thức về `Cấu trúc dữ liệu` đã học
+- Câu hỏi lý thuyết nằm trong các kiến thức về `Cấu trúc dữ liệu` đã học
 - Cuối cùng là một câu hỏi tương đối khó, thầy cho một khoảng thời gian suy nghĩ (~5phút), mỗi thành viên trong nhóm tự suy nghĩ trả lời, không làm chung. Câu hỏi dạng này là mỗi nhóm mỗi khác, chỉ khi nhóm trước không trả lời được thì có khả năng nhóm sau sẽ được đặt câu hỏi tương tự.
 
 Kết quả thi:
