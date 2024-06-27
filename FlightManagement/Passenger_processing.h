@@ -1193,6 +1193,7 @@ void edit_passenger(int index, int &page, PNode *&root, PNode**&Plist) {
     
     Plist[lindex]->pas.setCccd(new_cccd);
     Plist[lindex]->pas.setHo(new_ho);
+	delete [] new_ho;
     Plist[lindex]->pas.setTen(new_ten);
     Plist[lindex]->pas.setSex(new_sex);
     
